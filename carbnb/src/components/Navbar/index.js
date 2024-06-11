@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import {
   Nav,
@@ -18,6 +19,11 @@ const onClick = () => {
 };
 
 const NavBar = () => {
+  const [showAside, setShowAside] = useState(false);
+
+  const handleToggleAside = () => {
+    setShowAside(!showAside);
+  };
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -29,7 +35,7 @@ const NavBar = () => {
               data-bs-toggle="offcanvas"
               data-bs-target="#staticBackdrop"
               aria-controls="staticBackdrop"
-              onClick={onClick}
+              onClick={handleToggleAside}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -88,6 +94,50 @@ const NavBar = () => {
           </div>
         </div>
       </nav>
+      <div
+        className={`offcanvas offcanvas-start ${showAside ? "show" : ""}`}
+        data-bs-backdrop="static"
+        tabIndex="-1"
+        id="staticBackdrop"
+        aria-labelledby="staticBackdropLabel"
+      >
+        <div className="offcanvas-header">
+          <h5 className="offcanvas-title" id="staticBackdropLabel">
+            CaRnR
+          </h5>
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+            onClick={handleToggleAside}
+          ></button>
+        </div>
+        <div class="list-group">
+          <a
+            href="#"
+            class="list-group-item list-group-item-action active"
+            aria-current="true"
+          >
+            Home
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            About
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            Discover
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            Log In
+          </a>
+          <a
+            class="list-group-item list-group-item-action disabled"
+            aria-disabled="true"
+          >
+            A disabled link item
+          </a>
+        </div>
+      </div>
     </>
   );
 };
