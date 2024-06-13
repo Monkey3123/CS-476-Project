@@ -1,14 +1,15 @@
 import "./App.css";
 import NavBar from "./components/Navbar";
-import { BrowserRouter as Router } from "react-router-dom";
-import { useState } from "react";
+import FindCars from "./components/Date/FindCars";
+
 
 function App() {
-  return (
-    <div>
-      <NavBar />
-    </div>
-  );
+   return (
+     <div>
+       <NavBar />
+       <FindCars />
+     </div>
+   );
 }
 
 export default App;
