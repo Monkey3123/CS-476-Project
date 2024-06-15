@@ -1,29 +1,7 @@
 import React from "react";
-import { useState } from "react";
-import { FaBars } from "react-icons/fa";
-import {
-  Nav,
-  NavBarContainer,
-  NavLogo,
-  MobileIcon,
-  NavMenu,
-  NavItems,
-  NavLink,
-  NavBtn,
-  NavBtnLink,
-} from "./NavBarElements";
-
-const onClick = () => {
-  // code to be executed when the button is clicked
-  console.log("Button clicked!");
-};
+import LoginModal from "./LoginModal";
 
 const NavBar = () => {
-  const [showAside, setShowAside] = useState(false);
-
-  const handleToggleAside = () => {
-    setShowAside(!showAside);
-  };
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -33,9 +11,8 @@ const NavBar = () => {
               className="btn btn-primary"
               type="button"
               data-bs-toggle="offcanvas"
-              data-bs-target="#staticBackdrop"
-              aria-controls="staticBackdrop"
-              onClick={handleToggleAside}
+              data-bs-target="#offcanvasSidebar"
+              aria-controls="offcanvasSidebar"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -82,9 +59,7 @@ const NavBar = () => {
               </li>
             </ul>
             <ul className="nav-item">
-              <a className="nav-link" href="#">
-                Log In
-              </a>
+              <LoginModal />
             </ul>
             <ul className="nav-item">
               <a className="nav-link" href="#">
@@ -95,14 +70,14 @@ const NavBar = () => {
         </div>
       </nav>
       <div
-        className={`offcanvas offcanvas-start ${showAside ? "show" : ""}`}
+        className="offcanvas offcanvas-start"
         data-bs-backdrop="static"
         tabIndex="-1"
-        id="staticBackdrop"
-        aria-labelledby="staticBackdropLabel"
+        id="offcanvasSidebar"
+        aria-labelledby="offcanvasSidebarLabel"
       >
         <div className="offcanvas-header">
-          <h5 className="offcanvas-title" id="staticBackdropLabel">
+          <h5 className="offcanvas-title" id="offcanvasSidebarLabel">
             CaRnR
           </h5>
           <button
@@ -110,28 +85,24 @@ const NavBar = () => {
             className="btn-close"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
-            onClick={handleToggleAside}
           ></button>
         </div>
-        <div class="list-group">
+        <div className="list-group">
           <a
             href="#"
-            class="list-group-item list-group-item-action active"
+            className="list-group-item list-group-item-action active"
             aria-current="true"
           >
             Home
           </a>
-          <a href="#" class="list-group-item list-group-item-action">
+          <a href="#" className="list-group-item list-group-item-action">
             About
           </a>
-          <a href="#" class="list-group-item list-group-item-action">
+          <a href="#" className="list-group-item list-group-item-action">
             Discover
           </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            Log In
-          </a>
           <a
-            class="list-group-item list-group-item-action disabled"
+            className="list-group-item list-group-item-action disabled"
             aria-disabled="true"
           >
             A disabled link item
