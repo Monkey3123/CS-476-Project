@@ -2,14 +2,16 @@ import React from "react";
 import Calender from "./Calender";
 import Clock from "./Clock";
 import But from "./But";
-
+import Map from "./Map";
 const FindCars = () => {
   return (
     <div>
       <h1 className="display-1 text-primary text-center font-weight-bold">
         FindCars
       </h1>
-
+      <div className="d-flex justify-content-center">
+        <Map></Map>
+      </div>
       <div className="row">
         <div className="col-4" />
 
@@ -27,7 +29,6 @@ const FindCars = () => {
           <Clock />
         </div>
       </div>
-
       <div className="d-flex justify-content-center">
         <But>Submit</But>
       </div>
