@@ -1,14 +1,21 @@
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/Navbar";
-import { BrowserRouter as Router } from "react-router-dom";
-import { useState } from "react";
-import LoginModal from "./components/Navbar/LoginModal";
+import Home from "./components/Home/Home"; // Adjust the path as per your project structure
+import RentalDetails from "./components/RentalDetails/RentalDetails";
 
 function App() {
   return (
-    <div>
-      <NavBar />
-    </div>
+    <Router>
+      <div>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/rental-details" element={<RentalDetails />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
