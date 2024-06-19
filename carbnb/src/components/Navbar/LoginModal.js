@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "bootstrap";
 import NavBar from "./index";
+import { Link } from "react-router-dom";
 
 function LoginModal() {
   const [show, setShow] = useState(false);
@@ -82,9 +83,10 @@ function LoginModal() {
                   Submit
                 </button>
 
-                <a className="link-opacity-75-hover" href="#">
-                  I don't have an account Sign In
-                </a>
+                
+                  <Link to="/SignUpPage" className="link-opacity-75-hover" onClick={handleClose}>I don't have an account Sign In</Link>
+                  
+                
               </form>
             </div>
             <div className="modal-footer">

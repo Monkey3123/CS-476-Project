@@ -1,5 +1,6 @@
 import React from "react";
 import LoginModal from "./LoginModal";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
@@ -62,9 +63,11 @@ const NavBar = () => {
               <LoginModal />
             </ul>
             <ul className="nav-item">
-              <a className="nav-link" href="#">
-                Sign Up
-              </a>
+              
+              <Link to="/SignUpPage" className="nav-link">
+              Sign Up
+                </Link>
+            
             </ul>
           </div>
         </div>

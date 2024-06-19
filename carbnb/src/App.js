@@ -4,6 +4,7 @@ import "./App.css";
 import NavBar from "./components/Navbar";
 import Home from "./components/Home/Home"; // Adjust the path as per your project structure
 import RentalDetails from "./components/RentalDetails/RentalDetails";
+import SignUpPage from "./components/SignUpPage/SignUpPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/rental-details" element={<RentalDetails />} />
+          <Route path="/SignUpPage" element= {<SignUpPage />}/>
         </Routes>
       </div>
     </Router>
