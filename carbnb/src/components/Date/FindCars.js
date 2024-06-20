@@ -1,7 +1,6 @@
 import React from "react";
 import Calender from "./Calender";
 import Clock from "./Clock";
-import But from "./But";
 import Map from "./Map";
 import { useNavigate } from "react-router-dom";
 
@@ -37,8 +36,10 @@ const FindCars = () => {
           <Clock />
         </div>
       </div>
-      <div className="d-flex justify-content-center" onClick={CarPage}>
-        <But>Submit</But>
+      <div className="d-flex justify-content-center">
+        <button className="btn btn-primary" onClick={CarPage}>
+          Submit
+        </button>
       </div>
     </div>
   );
