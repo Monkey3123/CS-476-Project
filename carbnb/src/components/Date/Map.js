@@ -2,35 +2,38 @@
 
 import React from "react";
 import { useState } from "react";
-import {
-  APIProvider,
-  Map,
-  AdvancedMarker,
-  Pin,
-  InfoWindow,
-} from "@vis.gl/react-google-maps";
+import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 
 export default function Intro() {
   const [Lat, setLat] = useState("");
   const [Long, setLong] = useState("");
 
+  const [MLat, MsetLat] = useState("");
+  const [MLong, MsetLong] = useState("");
+
   React.useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position.coords);
       setLat(position.coords.latitude);
       setLong(position.coords.longitude);
     });
   });
-  //const position = { lat: Lat, lng: Long };
 
   return (
     <APIProvider apiKey={process.env.REACT_APP_API_KEY}>
       <div style={{ height: "50vh", width: "50%" }}>
         <Map
+          onClick={(ev) => {
+            console.log("latitide = ", ev.detail.latLng.lat);
+            console.log("latitide = ", ev.detail.latLng.lng);
+            MsetLat(ev.detail.latLng.lat);
+            MsetLong(ev.detail.latLng.lng);
+          }}
           defaultZoom={14}
           defaultCenter={{ lat: Lat, lng: Long }}
           mapId={process.env.REACT_APP_MAP_KEY}
-        ></Map>
+        >
+          {MLat && <AdvancedMarker position={{ lat: MLat, lng: MLong }} />}
+        </Map>
       </div>
     </APIProvider>
   );

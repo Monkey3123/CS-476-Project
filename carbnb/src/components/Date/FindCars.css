@@ -1,0 +1,13 @@
+.box{
+height: 100vh;
+max-width: 75rem;
+box-shadow: 0px 50px 20px 16px #000000;
+margin: auto;
+background-color: white;
+
+}
+
+.bground{
+
+background-image: url('../../images/Roadmap.jpg');
+}
