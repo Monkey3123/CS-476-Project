@@ -44,17 +44,25 @@ const NavBar = () => {
           <div className="collapse navbar-collapse" id="navbarText">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <Link to="/" className="nav-link active" aria-current="page">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#about">
-                  About
-                </a>
+                <Link
+                  to="/FindCars"
+                  className="nav-link active"
+                  aria-current="page"
+                >
+                  Rent
+                </Link>
               </li>
               <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#contact">
+                <a
+                  className="nav-link active"
+                  aria-current="page"
+                  href="#contact"
+                >
                   Contact
                 </a>
               </li>
@@ -63,11 +71,9 @@ const NavBar = () => {
               <LoginModal />
             </ul>
             <ul className="nav-item">
-              
               <Link to="/SignUpPage" className="nav-link">
-              Sign Up
-                </Link>
-            
+                Sign Up
+              </Link>
             </ul>
           </div>
         </div>
