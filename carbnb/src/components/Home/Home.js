@@ -25,6 +25,9 @@ const Home = () => {
                 <Link to="/FindCars" className="btn fancy-button">
                   Rent a Car
                 </Link>
+                <Link to="/ListACarPage" className="btn fancy-button">
+                  List a Car
+                </Link>
               </div>
             </div>
           </div>
