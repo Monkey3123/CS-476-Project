@@ -23,12 +23,19 @@ router.post("/", async (req, res) => {
     let newDoc = {
       first: req.body.first,
       last: req.body.last,
-      emai: req.body.email,
+      email: req.body.email,
       password: req.body.password,
     };
+
     let collection = await db.collection("records");
-    let result = await collection.insertOne(newDoc);
-    res.send(result).status(204);
+
+    let check = await collection.findOne({ email: req.body.email });
+    if (!check) {
+      let result = await collection.insertOne(newDoc);
+      res.send(result).status(204);
+    } else {
+      res.sendStatus("Email in use").status(500);
+    }
   } catch (err) {
     console.error(err);
     res.status(500).send("Error Posting");

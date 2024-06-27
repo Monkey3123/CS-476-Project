@@ -82,11 +82,11 @@ const SignUpPage = () => {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      const person = { ...form };
-      try {
-        let response;
-        if (isNew) {
-          alert("Form Submitted successfully");
+      if (isNew) {
+        const person = { ...form };
+        try {
+          let response;
+
           response = await fetch("http://localhost:5050/record", {
             method: "POST",
             headers: {
@@ -94,18 +94,25 @@ const SignUpPage = () => {
             },
             body: JSON.stringify(person),
           });
-        } else {
-          alert("That account already exists");
+          if (response.status === 200) {
+            alert("Form Submitted successfully");
+            setForm({
+              first: "",
+              last: "",
+              email: "",
+              password: "",
+              cpassword: "",
+            });
+            navigate("/");
+          } else {
+            alert("Email in Use");
+          }
+        } catch (error) {
+          console.error(
+            "A problem occurred with your fetch operation: ",
+            error
+          );
         }
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-      } catch (error) {
-        console.error("A problem occurred with your fetch operation: ", error);
-      } finally {
-        setForm({ first: "", last: "", email: "", password: "" });
-        navigate("/");
       }
     }
   }
