@@ -1,5 +1,6 @@
 # Getting Started with Create React App
 
+Note: run server by going into server file and running: node --env-file=config.env server
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
