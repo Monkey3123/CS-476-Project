@@ -41,14 +41,12 @@ const SignUpPage = () => {
     return;
   }, [params.id, navigate]);
 
-  // These methods will update the state properties.
   function updateForm(value) {
     return setForm((prev) => {
       return { ...prev, ...value };
     });
   }
 
-  // This function will handle the submission.
   async function onSubmit(e) {
     e.preventDefault();
     const validationErrors = {};
@@ -84,14 +82,11 @@ const SignUpPage = () => {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      alert("Form Submitted successfully");
-      // Handle form submission, e.g., send data to the server
-
       const person = { ...form };
       try {
         let response;
         if (isNew) {
-          // if we are adding a new record we will POST to /record.
+          alert("Form Submitted successfully");
           response = await fetch("http://localhost:5050/record", {
             method: "POST",
             headers: {
@@ -100,14 +95,7 @@ const SignUpPage = () => {
             body: JSON.stringify(person),
           });
         } else {
-          // if we are updating a record we will PATCH to /record/:id.
-          response = await fetch(`http://localhost:5050/record/${params.id}`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(person),
-          });
+          alert("That account already exists");
         }
 
         if (!response.ok) {
