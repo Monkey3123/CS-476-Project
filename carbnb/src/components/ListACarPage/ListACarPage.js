@@ -7,6 +7,31 @@ import Map from "../Date/Map";
 
 const ListACarPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [carDetails, setCarDetails] = useState({
+    make: "",
+    model: "",
+    year: "",
+    odometer: "",
+    transmission: "",
+    fuelType: "",
+    seatingCapacity: "",
+    color: "",
+    description: "",
+    dailyRate: "",
+    location: "",
+    fromDate: "",
+    toDate: "",
+    fromTime: "",
+    toTime: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCarDetails({
+      ...carDetails,
+      [name]: value,
+    });
+  };
 
   const handleNext = () => {
     if (currentStep < 4) {
@@ -17,6 +42,27 @@ const ListACarPage = () => {
   const handlePrev = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5050/api/cars", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(carDetails),
+      });
+      if (response.ok) {
+        alert("Car listed successfully!");
+      } else {
+        alert("Failed to list car.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error listing car.");
     }
   };
 
@@ -50,7 +96,7 @@ const ListACarPage = () => {
       }}
     >
       <div className="signup template d-flex justify-content-center align-items-center vh-100">
-        <form className="form1 p-4 bg-light border rounded">
+        <form className="form1 p-4 bg-light border rounded" onSubmit={handleSubmit}>
           <h1>List your vehicle to CaRnR</h1>
           {renderProgressBar()}
           {currentStep === 1 && (
@@ -59,50 +105,81 @@ const ListACarPage = () => {
 
               <input
                 type="text"
+                name="make"
                 placeholder="Car Make"
                 className="form-control"
+                value={carDetails.make}
+                onChange={handleChange}
               />
               <input
                 type="text"
+                name="model"
                 placeholder="Car Model"
                 className="form-control"
+                value={carDetails.model}
+                onChange={handleChange}
               />
 
               <input
-                type="Text"
+                type="text"
+                name="year"
                 placeholder="Model Year"
                 className="form-control"
+                value={carDetails.year}
+                onChange={handleChange}
               />
 
               <input
                 type="text"
+                name="odometer"
                 placeholder="Odometer Reading"
                 className="form-control"
+                value={carDetails.odometer}
+                onChange={handleChange}
               />
 
               <input
                 type="text"
+                name="transmission"
                 placeholder="Transmission"
                 className="form-control"
+                value={carDetails.transmission}
+                onChange={handleChange}
               />
 
               <input
                 type="text"
+                name="fuelType"
                 placeholder="Fuel Type"
                 className="form-control"
+                value={carDetails.fuelType}
+                onChange={handleChange}
               />
 
               <input
                 type="text"
+                name="seatingCapacity"
                 placeholder="Seating Capacity"
                 className="form-control"
+                value={carDetails.seatingCapacity}
+                onChange={handleChange}
               />
 
-              <input type="text" placeholder="Color" className="form-control" />
+              <input
+                type="text"
+                name="color"
+                placeholder="Color"
+                className="form-control"
+                value={carDetails.color}
+                onChange={handleChange}
+              />
 
               <textarea
-                placeholder="Description(You can add aditional features here)...."
+                name="description"
+                placeholder="Description(You can add additional features here)...."
                 className="form-control"
+                value={carDetails.description}
+                onChange={handleChange}
               ></textarea>
             </div>
           )}
@@ -120,9 +197,12 @@ const ListACarPage = () => {
                 <span class="input-group-text">$</span>
                 <input
                   type="text"
-                  class="form-control"
+                  name="dailyRate"
+                  className="form-control"
                   placeholder="Daily Rate"
                   aria-label="Amount (to the nearest dollar)"
+                  value={carDetails.dailyRate}
+                  onChange={handleChange}
                 />
               </div>
               <label className="form-label">
