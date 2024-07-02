@@ -24,6 +24,7 @@ const ListACarPage = () => {
     fromTime: "",
     toTime: "",
   });
+  const [carPhoto, setCarPhoto] = useState(null); // State to handle file input
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,6 +32,10 @@ const ListACarPage = () => {
       ...carDetails,
       [name]: value,
     });
+  };
+
+  const handleFileChange = (e) => {
+    setCarPhoto(e.target.files[0]); // Set the file input to state
   };
 
   const handleNext = () => {
@@ -47,13 +52,17 @@ const ListACarPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    for (const key in carDetails) {
+      formData.append(key, carDetails[key]);
+    }
+    formData.append("carPhoto", carPhoto); // Append the file to the form data
+
     try {
       const response = await fetch("http://localhost:5050/api/cars", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(carDetails),
+        body: formData, // Use formData to send the request
       });
       if (response.ok) {
         alert("Car listed successfully!");
@@ -96,7 +105,11 @@ const ListACarPage = () => {
       }}
     >
       <div className="signup template d-flex justify-content-center align-items-center vh-100">
-        <form className="form1 p-4 bg-light border rounded" onSubmit={handleSubmit}>
+        <form
+          className="form1 p-4 bg-light border rounded"
+          onSubmit={handleSubmit}
+          encType="multipart/form-data" // Important for file uploads
+        >
           <h1>List your vehicle to CaRnR</h1>
           {renderProgressBar()}
           {currentStep === 1 && (
@@ -176,7 +189,7 @@ const ListACarPage = () => {
 
               <textarea
                 name="description"
-                placeholder="Description(You can add additional features here)...."
+                placeholder="Description (You can add additional features here)...."
                 className="form-control"
                 value={carDetails.description}
                 onChange={handleChange}
@@ -186,15 +199,21 @@ const ListACarPage = () => {
           {currentStep === 2 && (
             <div>
               <h2>Photos</h2>
-              <input type="file" multiple className="form-control" />
+              <input
+                type="file"
+                name="carPhoto"
+                className="form-control"
+                onChange={handleFileChange}
+                required
+              />
             </div>
           )}
           {currentStep === 3 && (
             <div>
               <h2>Pricing & Availability</h2>
 
-              <div class="input-group mb-3">
-                <span class="input-group-text">$</span>
+              <div className="input-group mb-3">
+                <span className="input-group-text">$</span>
                 <input
                   type="text"
                   name="dailyRate"
