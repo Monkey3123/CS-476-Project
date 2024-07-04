@@ -19,6 +19,15 @@ function LoginModal() {
     setShow(true);
   };
 
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log(email, password);
+  };
+
   return (
     <>
       <a
@@ -53,7 +62,7 @@ function LoginModal() {
               ></button>
             </div>
             <div className="modal-body">
-              <form>
+              <form className="login" onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">
                     Email address
@@ -63,6 +72,8 @@ function LoginModal() {
                     className="form-control"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
+                    value={email}
+                    onChange={(e) => setemail(e.target.value)}
                   />
                   <div id="emailHelp" className="form-text">
                     We'll never share your email with anyone else.
@@ -76,6 +87,8 @@ function LoginModal() {
                     type="password"
                     className="form-control"
                     id="exampleInputPassword1"
+                    value={password}
+                    onChange={(e) => setpassword(e.target.value)}
                   />
                 </div>
 
@@ -83,10 +96,13 @@ function LoginModal() {
                   Submit
                 </button>
 
-                
-                  <Link to="/SignUpPage" className="link-opacity-75-hover" onClick={handleClose}>I don't have an account Sign In</Link>
-                  
-                
+                <Link
+                  to="/SignUpPage"
+                  className="link-opacity-75-hover"
+                  onClick={handleClose}
+                >
+                  I don't have an account Sign In
+                </Link>
               </form>
             </div>
             <div className="modal-footer">
