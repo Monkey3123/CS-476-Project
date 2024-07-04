@@ -21,4 +21,16 @@ router.post('/', upload.single('carPhoto'), async (req, res) => {
   }
 });
 
+// Route to get all listed cars
+router.get('/', async (req, res) => {
+  try {
+    const collection = db.collection('listed_cars');
+    const cars = await collection.find({}).toArray();
+    res.status(200).json(cars);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: 'Failed to fetch cars' });
+  }
+});
+
 export default router;
