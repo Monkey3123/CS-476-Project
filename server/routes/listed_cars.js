@@ -1,4 +1,5 @@
 import express from 'express';
+import { ObjectId } from 'mongodb'; // Import ObjectId for MongoDB
 import db from '../db/connection.js';
 import upload from '../upload.js'; // Import the Multer configuration
 
@@ -30,6 +31,22 @@ router.get('/', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send({ message: 'Failed to fetch cars' });
+  }
+});
+
+// Route to get a single car by ID
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const collection = db.collection('listed_cars');
+    const car = await collection.findOne({ _id: new ObjectId(id) });
+    if (!car) {
+      return res.status(404).send({ message: 'Car not found' });
+    }
+    res.status(200).json(car);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: 'Failed to fetch car' });
   }
 });
 

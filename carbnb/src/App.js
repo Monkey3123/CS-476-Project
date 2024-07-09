@@ -7,6 +7,7 @@ import RentalDetails from "./components/RentalDetails/RentalDetails";
 import SignUpPage from "./components/SignUpPage/SignUpPage";
 import FindCars from "./components/Date/FindCars";
 import CarPage from "./components/CarsPage/CarPage";
+import CarDetail from './components/CarsPage/CarDetail';
 import ListACarPage from "./components/ListACarPage/ListACarPage";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="FindCars" element={<FindCars />} />
           <Route path="CarPage" element={<CarPage />} />
           <Route path="/ListACarPage" element={<ListACarPage />} />
+          <Route path="/car/:id" element={<CarDetail />} />
         </Routes>
       </div>
     </Router>

@@ -28,12 +28,13 @@ const CarPage = () => {
         {cars.map(car => (
           <Card
             key={car._id}
+            id={car._id}
             imgSrc={`http://localhost:5050/${car.photo}`}
             imgAlt={`${car.make} ${car.model}`}
             title={`${car.make} ${car.model} - ${car.year}`}
             description={car.description}
             buttonText={`Rent for $${car.dailyRate} per day`}
-            link="#"
+            link=""
           />
         ))}
       </div>
