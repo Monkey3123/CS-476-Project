@@ -1,22 +1,19 @@
 import { useState } from "react";
 import { useUserContext } from "./useUserContext";
 
-export const useSignup = () => {
+export const useLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useUserContext();
 
-  const signup = async (first, last, email, password) => {
+  const login = async (email, password) => {
     setIsLoading(true);
     setError(null);
-    const response = await fetch(
-      "http://localhost:4000/api/userRoutes/signup",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ first, last, email, password }),
-      }
-    );
+    const response = await fetch("http://localhost:4000/api/userRoutes/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
     const json = await response.json();
 
     if (response.status === 200) {
@@ -31,5 +28,5 @@ export const useSignup = () => {
     }
   };
 
-  return { signup, isLoading, error };
+  return { login, isLoading, error };
 };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "bootstrap";
 import NavBar from "./index";
 import { Link } from "react-router-dom";
+import { useLogin } from "../../hooks/useLogin";
 
 function LoginModal() {
   const [show, setShow] = useState(false);
@@ -21,11 +22,11 @@ function LoginModal() {
 
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-
+  const { login, error, isLoading } = useLogin();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email, password);
+    await login(email, password);
   };
 
   return (
@@ -92,9 +93,14 @@ function LoginModal() {
                   />
                 </div>
 
-                <button type="submit" className="btn btn-primary">
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="btn btn-primary"
+                >
                   Submit
                 </button>
+                {error && <div className="error">{error}</div>}
 
                 <Link
                   to="/SignUpPage"
