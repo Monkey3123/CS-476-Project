@@ -9,4 +9,6 @@ router.post("/login", loginUser);
 
 router.post("/signup", signupUser);
 
+//all info in local storage
+
 export default router;

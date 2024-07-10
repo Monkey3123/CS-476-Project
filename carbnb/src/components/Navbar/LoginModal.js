@@ -97,6 +97,7 @@ function LoginModal() {
                   type="submit"
                   disabled={isLoading}
                   className="btn btn-primary"
+                  onClick={handleClose}
                 >
                   Submit
                 </button>
