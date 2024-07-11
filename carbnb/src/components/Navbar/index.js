@@ -1,8 +1,16 @@
 import React from "react";
 import LoginModal from "./LoginModal";
 import { Link } from "react-router-dom";
+import { useLogout } from "../../hooks/useLogout";
+import { useUserContext } from "../../hooks/useUserContext";
 
 const NavBar = () => {
+  const { logout } = useLogout();
+  const { user } = useUserContext();
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -67,14 +75,27 @@ const NavBar = () => {
                 </a>
               </li>
             </ul>
-            <ul className="nav-item">
-              <LoginModal />
-            </ul>
-            <ul className="nav-item">
-              <Link to="/SignUpPage" className="nav-link">
-                Sign Up
-              </Link>
-            </ul>
+            {user && (
+              <>
+                <ul>Signed in with {user.email}</ul>
+                <ul className="nav-item">
+                  <button onClick={handleLogout}>Logout</button>
+                </ul>
+              </>
+            )}
+
+            {!user && (
+              <>
+                <ul>
+                  <LoginModal />
+                </ul>
+                <ul>
+                  <Link to="/SignUpPage" className="nav-link">
+                    Sign Up
+                  </Link>
+                </ul>
+              </>
+            )}
           </div>
         </div>
       </nav>

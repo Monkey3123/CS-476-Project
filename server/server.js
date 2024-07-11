@@ -1,18 +1,33 @@
-import express from 'express';
-import cors from 'cors';
-import records from './routes/record.js';
-import carRoutes from './routes/listed_cars.js';
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import carRoutes from "./routes/carRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import mongoose from "mongoose";
 
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT || 4000;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/uploads', express.static('uploads')); // Serve static files from the uploads directory
+app.use("/uploads", express.static("uploads")); // Serve static files from the uploads directory
 
-app.use('/record', records);
-app.use('/api/cars', carRoutes);
-
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+app.use((req, res, next) => {
+  console.log(req.path, req.method);
+  next();
 });
+
+app.use("/api/carRoutes", carRoutes);
+app.use("/api/userRoutes", userRoutes);
+
+mongoose
+  .connect(process.env.ATLUS_URI)
+  .then(() => {
+    // listen for requests
+    app.listen(process.env.PORT, () => {
+      console.log("connected to db & listening on port", process.env.PORT);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });

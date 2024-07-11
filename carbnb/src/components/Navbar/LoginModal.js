@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "bootstrap";
-import NavBar from "./index";
 import { Link } from "react-router-dom";
+import { useLogin } from "../../hooks/useLogin";
 
 function LoginModal() {
   const [show, setShow] = useState(false);
@@ -17,6 +17,15 @@ function LoginModal() {
     const modal = new Modal(modalRef.current);
     modal.show();
     setShow(true);
+  };
+
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const { login, error, isLoading } = useLogin();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    await login(email, password);
   };
 
   return (
@@ -53,7 +62,7 @@ function LoginModal() {
               ></button>
             </div>
             <div className="modal-body">
-              <form>
+              <form className="login" onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">
                     Email address
@@ -63,6 +72,8 @@ function LoginModal() {
                     className="form-control"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
+                    value={email}
+                    onChange={(e) => setemail(e.target.value)}
                   />
                   <div id="emailHelp" className="form-text">
                     We'll never share your email with anyone else.
@@ -76,17 +87,28 @@ function LoginModal() {
                     type="password"
                     className="form-control"
                     id="exampleInputPassword1"
+                    value={password}
+                    onChange={(e) => setpassword(e.target.value)}
                   />
                 </div>
 
-                <button type="submit" className="btn btn-primary">
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="btn btn-primary"
+                  onClick={!error ? handleClose : null}
+                >
                   Submit
                 </button>
+                {error && <div className="error">{error}</div>}
 
-                
-                  <Link to="/SignUpPage" className="link-opacity-75-hover" onClick={handleClose}>I don't have an account Sign In</Link>
-                  
-                
+                <Link
+                  to="/SignUpPage"
+                  className="link-opacity-75-hover"
+                  onClick={handleClose}
+                >
+                  I don't have an account Sign In
+                </Link>
               </form>
             </div>
             <div className="modal-footer">
