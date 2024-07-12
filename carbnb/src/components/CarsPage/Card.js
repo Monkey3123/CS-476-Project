@@ -1,6 +1,7 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Card.css';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./Card.css";
+import { useFetchCar } from "../../hooks/usegetcar";
 
 const Card = ({ id, imgSrc, imgAlt, title, description, buttonText, link }) => {
   const navigate = useNavigate();

@@ -6,7 +6,7 @@ import requiretoke from "../middleware/requiretoke.js";
 
 const router = express.Router();
 
-router.use(requiretoke);
+// router.use(requiretoke);
 router.post("/list", listCar);
 
 router.get("/getCar", getallCar);
