@@ -4,6 +4,7 @@ import "./ListACarPage.css";
 import Clock from "../Date/Clock";
 import Calender from "../Date/Calender";
 import Map from "../Date/Map";
+import { useListCar } from "../../hooks/useListCar";
 
 const ListACarPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -50,30 +51,20 @@ const ListACarPage = () => {
     }
   };
 
+  const { listCar } = useListCar();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    for (const key in carDetails) {
-      formData.append(key, carDetails[key]);
-    }
-    formData.append("carPhoto", carPhoto); // Append the file to the form data
-
-    try {
-      const response = await fetch("http://localhost:5050/api/cars", {
-        method: "POST",
-        body: formData, // Use formData to send the request
-      });
-      if (response.ok) {
-        alert("Car listed successfully!");
-      } else {
-        alert("Failed to list car.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Error listing car.");
-    }
+    await listCar(carDetails);
   };
+
+  // const { signup, error, isLoading } = useSignup();
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   console.log(first, last, email, password);
+  //   await signup(first, last, email, password);
+  // };
 
   const renderProgressBar = () => {
     const stepPercentage = (currentStep / 4) * 100;
