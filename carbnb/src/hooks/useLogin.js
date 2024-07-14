@@ -22,9 +22,11 @@ export const useLogin = () => {
       dispatch({ type: "LOGIN", payload: json });
 
       setIsLoading(false);
+      return true;
     } else {
       setIsLoading(false);
       setError(json.error);
+      return false;
     }
   };
 

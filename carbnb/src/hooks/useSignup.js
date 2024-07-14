@@ -20,14 +20,16 @@ export const useSignup = () => {
     const json = await response.json();
 
     if (response.status === 200) {
+      setIsLoading(false);
+      setError(null);
       localStorage.setItem("user", JSON.stringify(json));
 
       dispatch({ type: "LOGIN", payload: json });
-
-      setIsLoading(false);
+      return true;
     } else {
       setIsLoading(false);
       setError(json.error);
+      return false;
     }
   };
 

@@ -19,9 +19,9 @@ const NavBar = () => {
             <button
               className="btn btn-primary"
               type="button"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasSidebar"
-              aria-controls="offcanvasSidebar"
+              // data-bs-toggle="offcanvas"
+              // data-bs-target="#offcanvasSidebar"
+              // aria-controls="offcanvasSidebar"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -35,9 +35,10 @@ const NavBar = () => {
               </svg>
             </button>
           </a>
-          <a className="navbar-brand" href="#">
+
+          <Link to="/" className="navbar-brand" aria-current="page">
             CaRnR
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -66,13 +67,13 @@ const NavBar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <a
+                <Link
+                  to="/ListACarPage"
                   className="nav-link active"
                   aria-current="page"
-                  href="#contact"
                 >
-                  Contact
-                </a>
+                  List
+                </Link>
               </li>
             </ul>
             {user && (
@@ -99,7 +100,7 @@ const NavBar = () => {
           </div>
         </div>
       </nav>
-      <div
+      {/* <div
         className="offcanvas offcanvas-start"
         data-bs-backdrop="static"
         tabIndex="-1"
@@ -138,7 +139,7 @@ const NavBar = () => {
             A disabled link item
           </a>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

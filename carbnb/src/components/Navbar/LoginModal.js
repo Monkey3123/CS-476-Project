@@ -23,9 +23,13 @@ function LoginModal() {
   const [password, setpassword] = useState("");
   const { login, error, isLoading } = useLogin();
   const handleSubmit = async (e) => {
+    const modal = Modal.getInstance(modalRef.current);
     e.preventDefault();
-
-    await login(email, password);
+    const res = await login(email, password);
+    if (res) {
+      modal.hide();
+      setShow(false);
+    }
   };
 
   return (
@@ -96,7 +100,6 @@ function LoginModal() {
                   type="submit"
                   disabled={isLoading}
                   className="btn btn-primary"
-                  onClick={!error ? handleClose : null}
                 >
                   Submit
                 </button>

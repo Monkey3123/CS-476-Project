@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import carBanner from "../../images/option2.jpg";
 import "./SignupPage.css";
 import { useSignup } from "../../hooks/useSignup";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const [first, setfirst] = useState("");
   const [last, setlast] = useState("");
   const [email, setemail] = useState("");
@@ -13,8 +15,10 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(first, last, email, password);
-    await signup(first, last, email, password);
+    const res = await signup(first, last, email, password);
+    if (res) {
+      navigate("/");
+    }
   };
 
   return (
