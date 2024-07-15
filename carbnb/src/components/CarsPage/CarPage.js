@@ -17,7 +17,7 @@ const CarPage = () => {
           <Card
             key={car._id}
             id={car._id}
-            imgSrc={`http://localhost:5050/${car.photo}`}
+            imgSrc={`${car.photo}`}
             imgAlt={`${car.make} ${car.model}`}
             title={`${car.make} ${car.model} - ${car.year}`}
             description={car.description}
