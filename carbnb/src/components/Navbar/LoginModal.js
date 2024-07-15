@@ -36,10 +36,15 @@ function LoginModal() {
     <>
       <a
         href="#"
-        className="list-group-item list-group-item-action nav-link"
+        className="nav-link"
         onClick={handleShow}
       >
+        <button
+        className="btn"
+        style={{ backgroundColor: '#2b4275', color: '#ffffff', borderColor: '#001f3f' }}
+      >
         Log In
+      </button>
       </a>
 
       <div
