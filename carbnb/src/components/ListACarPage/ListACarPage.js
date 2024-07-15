@@ -35,10 +35,6 @@ const ListACarPage = () => {
     });
   };
 
-  const handleFileChange = (e) => {
-    setCarPhoto(e.target.files[0]); // Set the file input to state
-  };
-
   const handleNext = () => {
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
@@ -53,18 +49,38 @@ const ListACarPage = () => {
 
   const { listCar } = useListCar();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await listCar(carDetails);
+  const uploadFile = async (type) => {
+    const formData = new FormData();
+    formData.append("file", carPhoto);
+    formData.append("upload_preset", "User images");
+    try {
+      let api = "https://api.cloudinary.com/v1_1/dzbppy2qi/image/upload";
+      let response = await fetch(api, {
+        method: "POST",
+        body: formData,
+      });
+      let data = await response.json();
+      console.log(data.url);
+      return data.url;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  // const { signup, error, isLoading } = useSignup();
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   console.log(first, last, email, password);
-  //   await signup(first, last, email, password);
-  // };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const imgURL = await uploadFile("image");
+      console.log("Image URL:", imgURL); // Debug log
+      // const carData = { ...carDetails, photo: imgURL };
+      // console.log("Car Data:", carData); // Debug log
+      await listCar(carDetails, imgURL);
+      setCarPhoto(null);
+      console.log("File upload success");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const renderProgressBar = () => {
     const stepPercentage = (currentStep / 4) * 100;
@@ -194,7 +210,7 @@ const ListACarPage = () => {
                 type="file"
                 name="carPhoto"
                 className="form-control"
-                onChange={handleFileChange}
+                onChange={(e) => setCarPhoto((prev) => e.target.files[0])}
                 required
               />
             </div>
