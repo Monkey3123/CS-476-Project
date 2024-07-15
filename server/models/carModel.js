@@ -9,9 +9,11 @@ const carSchema = new Schema({
   model: {
     type: String,
   },
+
   year: {
     type: String,
   },
+
   odometer: {
     type: String,
   },
@@ -49,6 +51,9 @@ const carSchema = new Schema({
     type: String,
   },
   photo: {
+    type: String,
+  },
+  listerid: {
     type: String,
   },
 });

@@ -19,6 +19,7 @@ const listCar = async (req, res) => {
       fromTime: req.body.fromTime,
       toTime: req.body.toTime,
       photo: req.body.photo,
+      listerid: req.body.listerid,
     });
 
     carmodel.save();
