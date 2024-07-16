@@ -4,6 +4,9 @@ import { Link as RouterLink, useLocation } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
 import { useUserContext } from "../../hooks/useUserContext";
 import { Link as ScrollLink } from "react-scroll";
+import Dropdown from "react-bootstrap/Dropdown";
+
+import CustomUserIcon from "./user.png"
 
 const NavBar = () => {
   const { logout } = useLogout();
@@ -32,11 +35,11 @@ const NavBar = () => {
           <img
             src={require("./logo.png")}
             alt="logo"
-            style={{ height: "52px", marginLeft: "75px" }} 
+            style={{ height: "52px", marginLeft: "75px" }}
           />
         </RouterLink>
         <div className="collapse navbar-collapse" id="navbarText">
-        {location.pathname === "/" && (
+          {location.pathname === "/" && (
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <ScrollLink to="about" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
@@ -50,12 +53,12 @@ const NavBar = () => {
               </li>
               <li className="nav-item">
                 <ScrollLink to="testimonials" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
-                Testimonials
+                  Testimonials
                 </ScrollLink>
               </li>
               <li className="nav-item">
                 <ScrollLink to="complaint" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
-                Complaints
+                  Complaints
                 </ScrollLink>
               </li>
               <li className="nav-item">
@@ -67,18 +70,18 @@ const NavBar = () => {
           )}
           <div className="d-flex align-items-center ms-auto">
             {user ? (
-              <>
-                <span className="navbar-text" style={{ marginRight: "10px" }}>
-                  {user.first} {user.last}
-                </span>
-                <button
-                  className="btn"
-                  style={{ backgroundColor: '#324b5f', color: '#ffffff', borderColor: '#001f3f' }}
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              </>
+              <Dropdown align="end">
+                <Dropdown.Toggle variant="link" id="dropdown-basic" className="custom-dropdown-toggle">
+                  <img src={CustomUserIcon} alt="User Icon" style={{ width: '38px', height: '38px' }} />
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.ItemText>{user.first} {user.last}</Dropdown.ItemText>
+                  <Dropdown.Divider />
+                  <Dropdown.Item as={RouterLink} to="/your-listings">Your Listings</Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             ) : (
               <>
                 <ul className="navbar-nav">
@@ -101,6 +104,11 @@ const NavBar = () => {
           </div>
         </div>
       </div>
+      <style>{`
+        .custom-dropdown-toggle::after {
+          display: none !important;
+        }
+      `}</style>
     </nav>
   );
 };

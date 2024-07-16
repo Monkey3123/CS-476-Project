@@ -1,0 +1,56 @@
+.login-btn {
+    background-color: #324b5f;
+    color: #ffffff;
+    border-color: #001f3f;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+  .modal-header {
+    background-color: #8aa67f;
+    color: white;
+  }
+  
+  .modal-content {
+    border-radius: 10px;
+  }
+  
+  .modal-title {
+    font-size: 1.5rem;
+  }
+  
+  .form-label {
+    font-weight: bold;
+    color: #324b5f;
+  }
+  
+  .form-control {
+    border: 1px solid #8aa67f;
+    border-radius: 5px;
+  }
+  
+  .submit-btn {
+    background-color: #324b5f;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+  
+  .error {
+    color: red;
+    margin-top: 10px;
+  }
+  
+  .sign-up-link {
+    margin-top: 15px;
+    text-align: center;
+  }
+  
+  .sign-up-link a {
+    color: #324b5f;
+    text-decoration: underline;
+  }
+  

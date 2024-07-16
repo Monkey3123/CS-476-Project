@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "bootstrap";
 import { Link } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
+import "./LoginModal.css";
 
 function LoginModal() {
   const [show, setShow] = useState(false);
@@ -22,6 +23,7 @@ function LoginModal() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const { login, error, isLoading } = useLogin();
+
   const handleSubmit = async (e) => {
     const modal = Modal.getInstance(modalRef.current);
     e.preventDefault();
@@ -34,21 +36,17 @@ function LoginModal() {
 
   return (
     <>
-      <a
-        href="#"
-        className="nav-link"
-        onClick={handleShow}
-      >
+      <a href="#" className="nav-link" onClick={handleShow}>
         <button
-        className="btn"
-        style={{ backgroundColor: '#324b5f', color: '#ffffff', borderColor: '#001f3f' }}
-      >
-        Log In
-      </button>
+          className="btn"
+          style={{ backgroundColor: '#324b5f', color: '#ffffff', borderColor: '#001f3f' }}
+        >
+          Log In
+        </button>
       </a>
 
       <div
-        className="modal"
+        className="modal fade"
         ref={modalRef}
         id="loginModal"
         data-bs-backdrop="static"
@@ -57,12 +55,10 @@ function LoginModal() {
         aria-labelledby="loginModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="loginModalLabel">
-                CaRnR Login
-              </h1>
+              <h4 id="loginModalLabel">CaRnR Login</h4>
               <button
                 type="button"
                 className="btn-close"
@@ -73,9 +69,7 @@ function LoginModal() {
             <div className="modal-body">
               <form className="login" onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label htmlFor="exampleInputEmail1" className="form-label">
-                    Email address
-                  </label>
+                  <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                   <input
                     type="email"
                     className="form-control"
@@ -84,14 +78,10 @@ function LoginModal() {
                     value={email}
                     onChange={(e) => setemail(e.target.value)}
                   />
-                  <div id="emailHelp" className="form-text">
-                    We'll never share your email with anyone else.
-                  </div>
+                  <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="exampleInputPassword1" className="form-label">
-                    Password
-                  </label>
+                  <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                   <input
                     type="password"
                     className="form-control"
@@ -100,23 +90,25 @@ function LoginModal() {
                     onChange={(e) => setpassword(e.target.value)}
                   />
                 </div>
-
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="btn btn-primary"
+                  className="btn"
+                  style={{ backgroundColor: '#324b5f', color: '#ffffff', borderColor: '#001f3f' }}
                 >
                   Submit
                 </button>
                 {error && <div className="error">{error}</div>}
-
-                <Link
-                  to="/SignUpPage"
-                  className="link-opacity-75-hover"
-                  onClick={handleClose}
-                >
-                  I don't have an account Sign In
-                </Link>
+                <div className="sign-up-link">
+                  <span>Need an account? </span>
+                  <Link
+                    to="/SignUpPage"
+                    className="link-opacity-75-hover"
+                    onClick={handleClose}
+                  >
+                    Sign up
+                  </Link>
+                </div>
               </form>
             </div>
             <div className="modal-footer">
