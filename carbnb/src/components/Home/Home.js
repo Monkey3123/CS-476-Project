@@ -137,7 +137,7 @@ const Home = () => {
             <h2 className="section-title">Contact Us</h2>
             <p className="section-text">
               Have questions or need assistance? Reach out to us at
-              contact@carnr.com
+              carnr476@gmail.com
             </p>
             <p className="section-text">
               Follow us on social media for updates and news.
