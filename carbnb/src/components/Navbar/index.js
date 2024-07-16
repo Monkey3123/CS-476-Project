@@ -40,12 +40,27 @@ const NavBar = () => {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <ScrollLink to="about" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
-                  About Us
+                  About
+                </ScrollLink>
+              </li>
+              <li className="nav-item">
+                <ScrollLink to="services" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
+                  Services
+                </ScrollLink>
+              </li>
+              <li className="nav-item">
+                <ScrollLink to="testimonials" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
+                Testimonials
+                </ScrollLink>
+              </li>
+              <li className="nav-item">
+                <ScrollLink to="complaint" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
+                Complaints
                 </ScrollLink>
               </li>
               <li className="nav-item">
                 <ScrollLink to="contact" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
-                  Contact Us
+                  Contact
                 </ScrollLink>
               </li>
             </ul>
@@ -58,7 +73,7 @@ const NavBar = () => {
                 </span>
                 <button
                   className="btn"
-                  style={{ backgroundColor: '#2b4275', color: '#ffffff', borderColor: '#001f3f' }}
+                  style={{ backgroundColor: '#324b5f', color: '#ffffff', borderColor: '#001f3f' }}
                   onClick={handleLogout}
                 >
                   Logout
@@ -74,7 +89,7 @@ const NavBar = () => {
                     <RouterLink to="/SignUpPage" className="nav-link">
                       <button
                         className="btn"
-                        style={{ backgroundColor: '#2b4275', color: '#ffffff', borderColor: '#001f3f' }}
+                        style={{ backgroundColor: '#324b5f', color: '#ffffff', borderColor: '#001f3f' }}
                       >
                         Sign Up
                       </button>

@@ -41,7 +41,7 @@ function LoginModal() {
       >
         <button
         className="btn"
-        style={{ backgroundColor: '#2b4275', color: '#ffffff', borderColor: '#001f3f' }}
+        style={{ backgroundColor: '#324b5f', color: '#ffffff', borderColor: '#001f3f' }}
       >
         Log In
       </button>

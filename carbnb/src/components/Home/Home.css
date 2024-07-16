@@ -1,104 +1,175 @@
+.home-page {
+  position: relative;
+}
+
 .banner {
-    position: relative;
-    height: 500px; 
-    color: #fff;
-    text-align: center;
-  }
-  
-  .banner-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4); 
-  }
-  
-  .banner-content {
-    position: relative;
-    z-index: 1;
-    padding: 100px 0; 
-  }
-  
-  .banner-title {
-    font-size: 3.5rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .banner-text {
-    font-size: 1.5rem;
-    margin-bottom: 30px;
-  }
-  
-  .banner .btn {
-    font-size: 1.2rem;
-    padding: 15px 30px;
-    margin-right: 15px; 
-  }
-  
-  .banner .btn:last-child {
-    margin-right: 0;
-  }
-  
-  .banner .btn:hover {
-    transform: scale(1.05);
-  }
-  
-  .fancy-button {
-    display: inline-block;
-    padding: 12px 24px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #000000;
-    background-color: #ffffff !important; 
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, transform 0.2s;
-  }
-  
-  .fancy-button:hover {
-    background-color: #2b4275 !important; 
-    transform: scale(1.05);
-  }
-  
-  .about-section {
-    background-color: #f8f9fa; 
-    padding: 50px 0;
-  }
-  
-  .section-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
-  .section-text {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .contact-section {
-    background-color: #8aa67f; 
-    padding: 50px 0;
-  }
-  
-  .contact-section .section-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
-  .contact-section .section-text {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
+  position: relative;
+  color: #fff;
+  text-align: center;
+}
+
+.banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.banner-content {
+  position: relative;
+  z-index: 1;
+}
+
+.banner-title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.banner-text {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.banner .btn {
+  font-size: 1.2rem;
+  padding: 15px 30px;
+  margin-right: 15px;
+}
+
+.banner .btn:last-child {
+  margin-right: 0;
+}
+
+.banner .btn:hover {
+  transform: scale(1.05);
+}
+
+.fancy-button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #000000;
+  background-color: #ffffff !important;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.fancy-button:hover {
+  background-color: #324b5f !important;
+  transform: scale(1.05);
+}
+
+.about-section, .services-section, .testimonials-section, .complaint-section, .contact-section {
+  padding: 50px 0;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.section-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.services-section {
+  background-color: #f9f9f9;
+}
+
+.services-list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.service-item {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 250px;
+}
+
+.service-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.service-icon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 15px;
+}
+
+.service-item h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.service-item p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.testimonials {
+  text-align: center;
+}
+
+.testimonial {
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.complaint-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.testimonials-section, .about-section {
+  background-color: #8aa67f;
+}
+
+.contact-section{
+  background-color: #324b5f;
+  color: white;
+}
+
+.complaint-section, .services-section {
+  background-color: #e9ede6;
+}
+
+.contact-section .section-title,
+.contact-section .section-text {
+  text-align: center;
+}
