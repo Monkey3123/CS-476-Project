@@ -1,8 +1,9 @@
 import React from "react";
 import LoginModal from "./LoginModal";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
 import { useUserContext } from "../../hooks/useUserContext";
+import { Link as ScrollLink } from "react-scroll";
 
 const NavBar = () => {
   const { logout } = useLogout();
@@ -26,20 +27,20 @@ const NavBar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <Link to="/" className="navbar-brand" aria-current="page">
+        <RouterLink to="/" className="navbar-brand" aria-current="page">
           <img
             src={require("./logo.png")}
             alt="logo"
-            style={{ height: "52px", marginLeft: "75px" }} // Adjusted margin for the logo
+            style={{ height: "52px", marginLeft: "75px" }} 
           />
-        </Link>
+        </RouterLink>
         <div className="collapse navbar-collapse" id="navbarText">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link to="/Rent" className="nav-link">About Us</Link>
+            <ScrollLink to="about" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>About Us</ScrollLink>
             </li>
             <li className="nav-item">
-              <Link to="/List" className="nav-link">Contact Us</Link>
+            <ScrollLink to="contact" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>Contact Us</ScrollLink>
             </li>
           </ul>
           <div className="d-flex align-items-center ms-auto">
@@ -63,14 +64,14 @@ const NavBar = () => {
                     <LoginModal />
                   </li>
                   <li className="nav-item">
-                    <Link to="/SignUpPage" className="nav-link">
+                    <RouterLink to="/SignUpPage" className="nav-link">
                       <button
                         className="btn"
                         style={{ backgroundColor: '#2b4275', color: '#ffffff', borderColor: '#001f3f' }}
                       >
                         Sign Up
                       </button>
-                    </Link>
+                    </RouterLink>
                   </li>
                 </ul>
               </>

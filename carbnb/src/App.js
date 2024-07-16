@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/Navbar";
-import Home from "./components/Home/Home"; // Adjust the path as per your project structure
+import Home from "./components/Home/Home"; 
 import RentalDetails from "./components/RentalDetails/RentalDetails";
 import SignUpPage from "./components/SignUpPage/SignUpPage";
 import FindCars from "./components/Date/FindCars";

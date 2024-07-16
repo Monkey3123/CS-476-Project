@@ -60,7 +60,7 @@
   }
   
   .fancy-button:hover {
-    background-color: #acb1f3 !important; 
+    background-color: #2b4275 !important; 
     transform: scale(1.05);
   }
   
@@ -84,7 +84,7 @@
   }
   
   .contact-section {
-    background-color: #acb1f3; 
+    background-color: #8aa67f; 
     padding: 50px 0;
   }
   
