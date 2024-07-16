@@ -1,6 +1,6 @@
 import React from "react";
 import LoginModal from "./LoginModal";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
 import { useUserContext } from "../../hooks/useUserContext";
 import { Link as ScrollLink } from "react-scroll";
@@ -8,6 +8,7 @@ import { Link as ScrollLink } from "react-scroll";
 const NavBar = () => {
   const { logout } = useLogout();
   const { user } = useUserContext();
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
@@ -35,14 +36,20 @@ const NavBar = () => {
           />
         </RouterLink>
         <div className="collapse navbar-collapse" id="navbarText">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-            <ScrollLink to="about" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>About Us</ScrollLink>
-            </li>
-            <li className="nav-item">
-            <ScrollLink to="contact" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>Contact Us</ScrollLink>
-            </li>
-          </ul>
+        {location.pathname === "/" && (
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <ScrollLink to="about" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
+                  About Us
+                </ScrollLink>
+              </li>
+              <li className="nav-item">
+                <ScrollLink to="contact" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
+                  Contact Us
+                </ScrollLink>
+              </li>
+            </ul>
+          )}
           <div className="d-flex align-items-center ms-auto">
             {user ? (
               <>
