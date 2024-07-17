@@ -1,5 +1,6 @@
 import React from "react";
 import LoginModal from "./LoginModal";
+import SignUpModal from "./SignUpModal";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
 import { useUserContext } from "../../hooks/useUserContext";
@@ -89,14 +90,7 @@ const NavBar = () => {
                     <LoginModal />
                   </li>
                   <li className="nav-item">
-                    <RouterLink to="/SignUpPage" className="nav-link">
-                      <button
-                        className="btn"
-                        style={{ backgroundColor: '#324b5f', color: '#ffffff', borderColor: '#001f3f' }}
-                      >
-                        Sign Up
-                      </button>
-                    </RouterLink>
+                    <SignUpModal />
                   </li>
                 </ul>
               </>
