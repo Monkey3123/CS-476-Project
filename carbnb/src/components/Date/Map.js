@@ -12,7 +12,7 @@ import {
   useAdvancedMarkerRef,
 } from "@vis.gl/react-google-maps";
 
-export default function Intro() {
+export default function MyMap() {
   const [Lat, setLat] = useState("");
   const [Long, setLong] = useState("");
 

@@ -35,7 +35,10 @@ const carSchema = new Schema({
   dailyRate: {
     type: String,
   },
-  location: {
+  lat: {
+    type: String,
+  },
+  long: {
     type: String,
   },
   fromDate: {

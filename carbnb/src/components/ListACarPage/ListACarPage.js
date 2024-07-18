@@ -5,9 +5,12 @@ import Clock from "../Date/Clock";
 import Calender from "../Date/Calender";
 import Map from "../Date/Map";
 import { useListCar } from "../../hooks/useListCar";
+import { useNavigate } from "react-router-dom";
 
 const ListACarPage = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
+  const { mylat, mylong } = Map();
   const [carDetails, setCarDetails] = useState({
     make: "",
     model: "",
@@ -19,7 +22,8 @@ const ListACarPage = () => {
     color: "",
     description: "",
     dailyRate: "",
-    location: "",
+    lat: "",
+    long: "",
     fromDate: "",
     toDate: "",
     fromTime: "",
@@ -69,6 +73,10 @@ const ListACarPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(mylat, " ", mylong);
+    setCarDetails({ ...carDetails, lat: mylat });
+    setCarDetails({ ...carDetails, long: mylong });
+
     try {
       const imgURL = await uploadFile("image");
       console.log("Image URL:", imgURL); // Debug log
@@ -80,6 +88,7 @@ const ListACarPage = () => {
     } catch (error) {
       console.error(error);
     }
+    navigate("/");
   };
 
   const renderProgressBar = () => {
