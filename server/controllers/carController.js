@@ -56,6 +56,27 @@ const getCar = async (req, res) => {
   res.status(200).json(car);
 };
 
+const getlisterCars = async (req, res) => {
+  const { listerid } = req.params;
+
+  if (!listerid) {
+    return res.status(400).json({ message: "Lister ID is required" });
+  }
+
+  try {
+    const cars = await Car.find({ listerid });
+
+    if (!cars || cars.length === 0) {
+      return res.status(404).json({ message: "No cars found for this lister" });
+    }
+
+    res.status(200).json(cars);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Failed to fetch cars" });
+  }
+};
 export default listCar;
 export { getallCar };
 export { getCar };
+export { getlisterCars };

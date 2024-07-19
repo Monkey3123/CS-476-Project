@@ -1,7 +1,10 @@
 import express from "express";
 import listCar from "../controllers/carController.js";
-import { getallCar } from "../controllers/carController.js";
-import { getCar } from "../controllers/carController.js";
+import {
+  getallCar,
+  getCar,
+  getlisterCars,
+} from "../controllers/carController.js";
 import requiretoke from "../middleware/requiretoke.js";
 
 const router = express.Router();
@@ -13,6 +16,6 @@ router.get("/getCar", getallCar);
 
 router.get("/:id", getCar);
 
-//all info in local storage
+router.get("/getlisterCars?listerid=:id", getlisterCars);
 
 export default router;

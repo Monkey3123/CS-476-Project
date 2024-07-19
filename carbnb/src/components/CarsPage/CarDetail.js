@@ -37,10 +37,7 @@ const CarDetail = () => {
       <Card>
         <Row noGutters>
           <Col md={6}>
-            <Card.Img
-              variant="top"
-              src={`http://localhost:5050/${car.photo}`}
-            />
+            <Card.Img variant="top" src={`${car.photo}`} />
           </Col>
           <Col md={6}>
             <Card.Body>
