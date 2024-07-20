@@ -12,12 +12,9 @@ import {
   useAdvancedMarkerRef,
 } from "@vis.gl/react-google-maps";
 
-export default function MyMap() {
-  const [Lat, setLat] = useState("");
-  const [Long, setLong] = useState("");
-
-  const [myLat, mysetLat] = useState("");
-  const [myLong, mysetLong] = useState("");
+const MyMap = ({ onLocationSelect }) => {
+  const [Lat, setLat] = useState(null);
+  const [Long, setLong] = useState(null);
 
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [markerRef, marker] = useAdvancedMarkerRef();
@@ -31,11 +28,22 @@ export default function MyMap() {
       if (place.geometry?.viewport) {
         map.fitBounds(place.geometry?.viewport);
       }
+
       marker.position = place.geometry?.location;
-      mysetLat(marker.position.lat);
-      mysetLong(marker.position.lng);
-      console.log("LAT:", myLat, "LONG:", myLong);
+
+      const position = place.geometry?.location;
+      if (position) {
+        const lat = position.lat();
+        const lng = position.lng();
+
+        if (lat !== Lat || lng !== Long) {
+          setLat(lat);
+          setLong(lng);
+          onLocationSelect({ lat, lng });
+        }
+      }
     }, [map, place, marker]);
+
     return null;
   };
 
@@ -53,6 +61,7 @@ export default function MyMap() {
 
       setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
     }, [places]);
+
     useEffect(() => {
       if (!placeAutocomplete) return;
 
@@ -60,6 +69,7 @@ export default function MyMap() {
         onPlaceSelect(placeAutocomplete.getPlace());
       });
     }, [onPlaceSelect, placeAutocomplete]);
+
     return (
       <div className="autocomplete-container">
         <input ref={inputRef} />
@@ -72,14 +82,14 @@ export default function MyMap() {
       setLat(position.coords.latitude);
       setLong(position.coords.longitude);
     });
-  });
+  }, []);
 
   return (
     <APIProvider apiKey={process.env.REACT_APP_API_KEY}>
       <div style={{ height: "50vh", width: "50%" }}>
         <Map
           defaultZoom={14}
-          defaultCenter={{ lat: Lat, lng: Long }}
+          defaultCenter={{ lat: Lat || 0, lng: Long || 0 }}
           mapId={process.env.REACT_APP_MAP_KEY}
         >
           <AdvancedMarker ref={markerRef} position={null} />
@@ -93,4 +103,6 @@ export default function MyMap() {
       </div>
     </APIProvider>
   );
-}
+};
+
+export default MyMap;

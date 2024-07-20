@@ -3,14 +3,13 @@ import carBanner from "../../images/camp.jpg";
 import "./ListACarPage.css";
 import Clock from "../Date/Clock";
 import Calender from "../Date/Calender";
-import Map from "../Date/Map";
+import MyMap from "../Date/Map"; // Ensure to import the correct component
 import { useListCar } from "../../hooks/useListCar";
 import { useNavigate } from "react-router-dom";
 
 const ListACarPage = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-  const { mylat, mylong } = Map();
   const [carDetails, setCarDetails] = useState({
     make: "",
     model: "",
@@ -71,17 +70,22 @@ const ListACarPage = () => {
     }
   };
 
+  const handleLocationSelect = ({ lat, lng }) => {
+    setCarDetails((prevDetails) => ({
+      ...prevDetails,
+      lat: lat,
+      long: lng,
+    }));
+    console.log("Location Selected:", lat, lng);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(mylat, " ", mylong);
-    setCarDetails({ ...carDetails, lat: mylat });
-    setCarDetails({ ...carDetails, long: mylong });
+    console.log("Submitting Car Details:", carDetails);
 
     try {
       const imgURL = await uploadFile("image");
       console.log("Image URL:", imgURL); // Debug log
-      // const carData = { ...carDetails, photo: imgURL };
-      // console.log("Car Data:", carData); // Debug log
       await listCar(carDetails, imgURL);
       setCarPhoto(null);
       console.log("File upload success");
@@ -219,7 +223,7 @@ const ListACarPage = () => {
                 type="file"
                 name="carPhoto"
                 className="form-control"
-                onChange={(e) => setCarPhoto((prev) => e.target.files[0])}
+                onChange={(e) => setCarPhoto(e.target.files[0])}
                 required
               />
             </div>
@@ -244,7 +248,10 @@ const ListACarPage = () => {
                 Choose Pickup and dropoff Location
               </label>
               <div className="d-flex justify-content-center">
-                <Map className="small-map"></Map>
+                <MyMap
+                  onLocationSelect={handleLocationSelect}
+                  className="small-map"
+                />
               </div>
               <div>
                 <label className="form-label">From Date :</label>
