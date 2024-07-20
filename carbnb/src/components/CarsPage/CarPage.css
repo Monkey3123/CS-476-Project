@@ -1,17 +1,40 @@
-.page{
-    box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
-    font-family: Arial, Helvetica, sans-serif;
-    position: sticky
-}
-
-.Cards
-{
+.page {
+    padding: 20px;
+  }
+  
+  .sort-options {
     display: flex;
-    flex-direction: row;
     justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .sort-options label {
+    margin-right: 10px;
+    font-weight: bold;
+    color: #324b5f;
+  }
+  
+  .sort-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #324b5f;
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .sort-btn:hover {
+    transform: scale(1.2);
+  }
+  
+  .Cards {
+    display: flex;
     flex-wrap: wrap;
-    align-content: flex-start;
-    gap: 1em;
-}
+    justify-content: center;
+  }
+  
+  .Cards .Card {
+    margin: 10px;
+  }
+  

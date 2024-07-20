@@ -4,6 +4,7 @@ export const useFetchCars = () => {
   const [cars, setCars] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [sortOrder, setSortOrder] = useState("asc"); 
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -32,5 +33,19 @@ export const useFetchCars = () => {
     fetchCars();
   }, []);
 
-  return { cars, isLoading, error };
+  // Sorting cars whenever the cars array or sortOrder changes
+  useEffect(() => {
+    if (cars.length > 0) {
+      const sortedCars = [...cars].sort((a, b) => {
+        if (sortOrder === "asc") {
+          return a.dailyRate - b.dailyRate;
+        } else {
+          return b.dailyRate - a.dailyRate;
+        }
+      });
+      setCars(sortedCars);
+    }
+  }, [cars, sortOrder]);
+
+  return { cars, isLoading, error, setSortOrder };
 };
