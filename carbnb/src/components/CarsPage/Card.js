@@ -1,23 +1,29 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Card.css";
-import { useFetchCar } from "../../hooks/usegetcar";
 
-const Card = ({ id, imgSrc, imgAlt, title, description, buttonText, link }) => {
+const Card = ({ id, imgSrc, imgAlt, title, description, price }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
     navigate(`/car/${id}`);
   };
 
+  const truncate = (str, maxLength) => {
+    if (str.length <= maxLength) return str;
+    return str.slice(0, maxLength) + '...';
+  };
+
   return (
     <div className="card-container" onClick={handleCardClick}>
-      {imgSrc && <img src={imgSrc} alt={imgAlt} className="card-img" />}
-      <h1 className="card-title">{title}</h1>
-      <p className="card-description">{description}</p>
-      <a href={link} className="card-link">
-        {buttonText}
-      </a>
+      <div className="card-img-container">
+        {imgSrc && <img src={imgSrc} alt={imgAlt} className="card-img" />}
+      </div>
+      <div className="card-content">
+        <h2 className="card-title">{truncate(title, 50)}</h2>
+        <p className="card-description">{truncate(description, 55)}</p>
+        <div className="card-price">{`$${price} CAD day`}</div>
+      </div>
     </div>
   );
 };

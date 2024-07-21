@@ -16,9 +16,6 @@ const CarPage = () => {
 
   return (
     <div className="page">
-      <h2 className="display-4 text-primary text-center font-weight-bold">
-        Showing results for Cars in your Area
-      </h2>
       <div className="sort-options">
         <label htmlFor="sort">Sort by price: </label>
         <button
@@ -31,7 +28,7 @@ const CarPage = () => {
       </div>
       {isLoading && <p>Loading cars...</p>}
       {error && <p>{error}</p>}
-      <div className="Cards">
+      <div className="cards-container">
         {cars.map((car) => (
           <Card
             key={car._id}
@@ -40,8 +37,7 @@ const CarPage = () => {
             imgAlt={`${car.make} ${car.model}`}
             title={`${car.make} ${car.model} - ${car.year}`}
             description={car.description}
-            buttonText={`Rent for $${car.dailyRate} per day`}
-            link=""
+            price={car.dailyRate}
           />
         ))}
       </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "bootstrap";
 import { Link } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
+import SignUpModal from "./SignUpModal";
 import "./LoginModal.css";
 
 function LoginModal() {
@@ -100,14 +101,9 @@ function LoginModal() {
                 </button>
                 {error && <div className="error">{error}</div>}
                 <div className="sign-up-link">
-                  <span>Need an account? </span>
-                  <Link
-                    to="/SignUpPage"
-                    className="link-opacity-75-hover"
-                    onClick={handleClose}
-                  >
-                    Sign up
-                  </Link>
+                  <div onClick={handleClose}><span>Need an account? </span>
+                  <SignUpModal />
+                  </div>
                 </div>
               </form>
             </div>

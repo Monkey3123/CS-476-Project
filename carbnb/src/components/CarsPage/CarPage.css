@@ -1,5 +1,8 @@
 .page {
     padding: 20px;
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
   }
   
   .sort-options {
@@ -28,13 +31,9 @@
     transform: scale(1.2);
   }
   
-  .Cards {
+  .cards-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-  }
-  
-  .Cards .Card {
-    margin: 10px;
   }
   
