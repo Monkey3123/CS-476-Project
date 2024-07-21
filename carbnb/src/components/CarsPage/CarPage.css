@@ -1,6 +1,5 @@
 .page {
     padding: 20px;
-    /* background-color: #e9ede6;  */
     min-height: 100vh; 
     display: flex;
     flex-direction: column;
