@@ -6,7 +6,7 @@ export const useListCar = () => {
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useUserContext();
 
-  const listCar = async (carDetails, carPhoto, lat, lng) => {
+  const listCar = async (carDetails, carPhoto) => {
     setIsLoading(true);
     setError(null);
 

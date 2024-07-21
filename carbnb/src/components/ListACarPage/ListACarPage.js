@@ -23,15 +23,29 @@ const ListACarPage = () => {
     dailyRate: "",
     lat: "",
     long: "",
-    fromDate: "",
-    toDate: "",
-    fromTime: "",
-    toTime: "",
+    fromDate: new Date(),
+    toDate: new Date(),
+    fromTime: "10:00",
+    toTime: "10:00",
   });
   const [carPhoto, setCarPhoto] = useState(null); // State to handle file input
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setCarDetails({
+      ...carDetails,
+      [name]: value,
+    });
+  };
+
+  const handleDateChange = (name, value) => {
+    setCarDetails({
+      ...carDetails,
+      [name]: value,
+    });
+  };
+
+  const handleTimeChange = (name, value) => {
     setCarDetails({
       ...carDetails,
       [name]: value,
@@ -255,17 +269,27 @@ const ListACarPage = () => {
               </div>
               <div>
                 <label className="form-label">From Date :</label>
-                <Calender />
+                <Calender
+                  selected={carDetails.fromDate}
+                  onChange={(date) => handleDateChange("fromDate", date)}
+                />
                 <label className="form-label">To Date :</label>
-                <Calender />
+                <Calender
+                  selected={carDetails.toDate}
+                  onChange={(date) => handleDateChange("toDate", date)}
+                />
               </div>
               <div>
                 <label className="form-label">From Time :</label>
-                <Clock />
-                <label htmlFor="exampleInputFirstName" className="form-label">
-                  To Time :
-                </label>
-                <Clock />
+                <Clock
+                  value={carDetails.fromTime}
+                  onChange={(time) => handleTimeChange("fromTime", time)}
+                />
+                <label className="form-label">To Time :</label>
+                <Clock
+                  value={carDetails.toTime}
+                  onChange={(time) => handleTimeChange("toTime", time)}
+                />
               </div>
             </div>
           )}

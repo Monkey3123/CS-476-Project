@@ -1,20 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const Calender = () => {
-  const [D, setD] = useState(new Date());
-  return (
-    <>
-      <DatePicker
-        selected={D}
-        onChange={(D) => {
-          setD(D);
-          console.log(D);
-        }}
-      />
-    </>
-  );
+const Calender = ({ selected, onChange }) => {
+  return <DatePicker selected={selected} onChange={onChange} />;
 };
 
 export default Calender;
