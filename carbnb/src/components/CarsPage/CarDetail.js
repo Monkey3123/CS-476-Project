@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Spinner } from "react-bootstrap";
 import "./CarDetail.css";
+import SnackbarAlert from "../RedirectPage/SnackbarAlert";
 import { useFetchCar } from "../../hooks/usegetcar";
+import { useUserContext } from "../../hooks/useUserContext";
 
 const CarDetail = () => {
   const { id } = useParams();
   const { car, isLoading, error } = useFetchCar(id);
+  const { user } = useUserContext();
+  const [showAlert, setShowAlert] = useState(false);
+
+  const handleRentClick = () => {
+    if (!user) {
+      setShowAlert(true);
+    } else {
+      // Booking logic #tejas
+    }
+  };
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
 
   if (isLoading) {
     return (
@@ -34,6 +50,11 @@ const CarDetail = () => {
 
   return (
     <Container className="my-5">
+      <SnackbarAlert 
+        open={showAlert} 
+        message="You need to be logged in to rent a car." 
+        onClose={handleCloseAlert} 
+      />
       <Card>
         <Row noGutters>
           <Col md={6}>
@@ -74,7 +95,9 @@ const CarDetail = () => {
               <Card.Text>
                 <strong>Available To:</strong> {car.toDate} {car.toTime}
               </Card.Text>
-              <Button variant="primary">Rent this car</Button>
+              <Button variant="primary" onClick={handleRentClick}>
+                Rent this car
+              </Button>
             </Card.Body>
           </Col>
         </Row>
