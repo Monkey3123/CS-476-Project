@@ -14,8 +14,8 @@ router.post("/list", listCar);
 
 router.get("/getCar", getallCar);
 
-router.get("/:id", getCar);
+router.post("/getlisterCars", getlisterCars);
 
-router.get("/getlisterCars?listerid=:id", getlisterCars);
+router.get("/:id", getCar);
 
 export default router;

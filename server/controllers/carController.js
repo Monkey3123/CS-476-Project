@@ -57,14 +57,14 @@ const getCar = async (req, res) => {
 };
 
 const getlisterCars = async (req, res) => {
-  const { listerid } = req.params;
+  const lid = req.body.listerid;
 
-  if (!listerid) {
+  if (!lid) {
     return res.status(400).json({ message: "Lister ID is required" });
   }
 
   try {
-    const cars = await Car.find({ listerid });
+    const cars = await Car.find({ listerid: lid });
 
     if (!cars || cars.length === 0) {
       return res.status(404).json({ message: "No cars found for this lister" });
