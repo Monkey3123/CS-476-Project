@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { Container, Row, Col, Card, Button, Spinner } from "react-bootstrap";
+import { useParams, useNavigate  } from "react-router-dom";
+import { Container, Row, Col, Card, Spinner, Modal } from "react-bootstrap";
 import SnackbarAlert from "../RedirectPage/SnackbarAlert";
 import "./CarDetail.css";
 import { useFetchCar } from "../../hooks/usegetcar";
@@ -10,20 +10,28 @@ import { faUser, faCheckCircle, faCalendarAlt } from "@fortawesome/free-solid-sv
 
 const CarDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { car, isLoading, error } = useFetchCar(id);
   const { user } = useUserContext();
   const [showAlert, setShowAlert] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleRentClick = () => {
     if (!user) {
       setShowAlert(true);
     } else {
-      // Booking logic
+      // Booking logic #tejas
+      setShowModal(true);
     }
   };
 
   const handleCloseAlert = () => {
     setShowAlert(false);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    navigate(-1); 
   };
 
   if (isLoading) {
@@ -57,6 +65,24 @@ const CarDetail = () => {
         message="You need to be logged in to book a car."
         onClose={handleCloseAlert}
       />
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Booking Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Your booking request for {car.make} {car.model} has been confirmed!
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            data-bs-dismiss="modal"
+            onClick={handleCloseModal}
+          >
+            Close
+          </button>
+        </Modal.Footer>
+      </Modal>
       <div className="title-section">
         <h1 className="car-title">{car.make} {car.model} - {car.year}</h1>
       </div>
