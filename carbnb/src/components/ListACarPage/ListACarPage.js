@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import carBanner from "../../images/camp.jpg";
+import carBanner from "../../images/listingbanner.jpg";
 import "./ListACarPage.css";
 import Clock from "../Date/Clock";
 import Calender from "../Date/Calender";
-import MyMap from "../Date/Map"; // Ensure to import the correct component
+import MyMap from "../Date/Map";
 import { useListCar } from "../../hooks/useListCar";
 import { useNavigate } from "react-router-dom";
 
 const ListACarPage = () => {
   const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0); // Start from the welcome step
   const [carDetails, setCarDetails] = useState({
     make: "",
     model: "",
@@ -28,7 +28,7 @@ const ListACarPage = () => {
     fromTime: "10:00",
     toTime: "10:00",
   });
-  const [carPhoto, setCarPhoto] = useState(null); // State to handle file input
+  const [carPhoto, setCarPhoto] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -59,7 +59,7 @@ const ListACarPage = () => {
   };
 
   const handlePrev = () => {
-    if (currentStep > 1) {
+    if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
   };
@@ -77,7 +77,6 @@ const ListACarPage = () => {
         body: formData,
       });
       let data = await response.json();
-      console.log(data.url);
       return data.url;
     } catch (error) {
       console.error(error);
@@ -90,236 +89,187 @@ const ListACarPage = () => {
       lat: lat,
       long: lng,
     }));
-    console.log("Location Selected:", lat, lng);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting Car Details:", carDetails);
-
     try {
       const imgURL = await uploadFile("image");
-      console.log("Image URL:", imgURL); // Debug log
       await listCar(carDetails, imgURL);
       setCarPhoto(null);
-      console.log("File upload success");
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
-    navigate("/");
-  };
-
-  const renderProgressBar = () => {
-    const stepPercentage = (currentStep / 4) * 100;
-    return (
-      <div
-        className="progress"
-        role="progressbar"
-        aria-label="Progress bar"
-        aria-valuenow={stepPercentage}
-        aria-valuemin="0"
-        aria-valuemax="100"
-      >
-        <div
-          className="progress-bar"
-          style={{ width: `${stepPercentage}%` }}
-        ></div>
-      </div>
-    );
   };
 
   return (
-    <div
-      className="banner-image"
-      style={{
-        backgroundImage: `url(${carBanner})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        height: "100vh",
-      }}
-    >
-      <div className="signup template d-flex justify-content-center align-items-center vh-100">
-        <form
-          className="form1 p-4 bg-light border rounded"
-          onSubmit={handleSubmit}
-          encType="multipart/form-data" // Important for file uploads
-        >
-          <h1>List your vehicle to CaRnR</h1>
-          {renderProgressBar()}
-          {currentStep === 1 && (
-            <div>
-              <h2>Car Details</h2>
-
-              <input
-                type="text"
-                name="make"
-                placeholder="Car Make"
-                className="form-control"
-                value={carDetails.make}
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                name="model"
-                placeholder="Car Model"
-                className="form-control"
-                value={carDetails.model}
-                onChange={handleChange}
-              />
-
-              <input
-                type="text"
-                name="year"
-                placeholder="Model Year"
-                className="form-control"
-                value={carDetails.year}
-                onChange={handleChange}
-              />
-
-              <input
-                type="text"
-                name="odometer"
-                placeholder="Odometer Reading"
-                className="form-control"
-                value={carDetails.odometer}
-                onChange={handleChange}
-              />
-
-              <input
-                type="text"
-                name="transmission"
-                placeholder="Transmission"
-                className="form-control"
-                value={carDetails.transmission}
-                onChange={handleChange}
-              />
-
-              <input
-                type="text"
-                name="fuelType"
-                placeholder="Fuel Type"
-                className="form-control"
-                value={carDetails.fuelType}
-                onChange={handleChange}
-              />
-
-              <input
-                type="text"
-                name="seatingCapacity"
-                placeholder="Seating Capacity"
-                className="form-control"
-                value={carDetails.seatingCapacity}
-                onChange={handleChange}
-              />
-
-              <input
-                type="text"
-                name="color"
-                placeholder="Color"
-                className="form-control"
-                value={carDetails.color}
-                onChange={handleChange}
-              />
-
-              <textarea
-                name="description"
-                placeholder="Description (You can add additional features here)...."
-                className="form-control"
-                value={carDetails.description}
-                onChange={handleChange}
-              ></textarea>
+    <div>
+      {currentStep === 0 ? (
+        <div className="welcome-section">
+          <div className="welcome-text">
+            <h1>Welcome to CaRnR</h1>
+            <p>List your car and start earning today!</p>
+            <button className="btn fancy-button" onClick={handleNext}>
+              Get Started
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="list-car-page">
+          <div className="step-progress">
+            <div className={`step ${currentStep >= 1 ? "completed" : ""}`}>
+              1. Car Details
             </div>
-          )}
-          {currentStep === 2 && (
-            <div>
-              <h2>Photos</h2>
-              <input
-                type="file"
-                name="carPhoto"
-                className="form-control"
-                onChange={(e) => setCarPhoto(e.target.files[0])}
-                required
-              />
+            <div className={`step ${currentStep >= 2 ? "completed" : ""}`}>
+              2. Photos
             </div>
-          )}
-          {currentStep === 3 && (
-            <div>
-              <h2>Pricing & Availability</h2>
+            <div className={`step ${currentStep >= 3 ? "completed" : ""}`}>
+              3. Pricing & Availability
+            </div>
+          </div>
 
-              <div className="input-group mb-3">
-                <span className="input-group-text">$</span>
+          <form onSubmit={handleSubmit}>
+            {currentStep === 1 && (
+              <div className="step-content">
+                <h2>Car Details</h2>
                 <input
                   type="text"
-                  name="dailyRate"
-                  className="form-control"
-                  placeholder="Daily Rate"
-                  aria-label="Amount (to the nearest dollar)"
-                  value={carDetails.dailyRate}
+                  name="make"
+                  placeholder="Car Make"
+                  value={carDetails.make}
                   onChange={handleChange}
                 />
+                <input
+                  type="text"
+                  name="model"
+                  placeholder="Car Model"
+                  value={carDetails.model}
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  name="year"
+                  placeholder="Model Year"
+                  value={carDetails.year}
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  name="odometer"
+                  placeholder="Odometer Reading"
+                  value={carDetails.odometer}
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  name="transmission"
+                  placeholder="Transmission"
+                  value={carDetails.transmission}
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  name="fuelType"
+                  placeholder="Fuel Type"
+                  value={carDetails.fuelType}
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  name="seatingCapacity"
+                  placeholder="Seating Capacity"
+                  value={carDetails.seatingCapacity}
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  name="color"
+                  placeholder="Color"
+                  value={carDetails.color}
+                  onChange={handleChange}
+                />
+                <textarea
+                  name="description"
+                  placeholder="Description"
+                  value={carDetails.description}
+                  onChange={handleChange}
+                ></textarea>
               </div>
-              <label className="form-label">
-                Choose Pickup and dropoff Location
-              </label>
-              <div className="d-flex justify-content-center">
-                <MyMap
-                  onLocationSelect={handleLocationSelect}
-                  className="small-map"
-                />
-              </div>
-              <div>
-                <label className="form-label">From Date :</label>
-                <Calender
-                  selected={carDetails.fromDate}
-                  onChange={(date) => handleDateChange("fromDate", date)}
-                />
-                <label className="form-label">To Date :</label>
-                <Calender
-                  selected={carDetails.toDate}
-                  onChange={(date) => handleDateChange("toDate", date)}
-                />
-              </div>
-              <div>
-                <label className="form-label">From Time :</label>
-                <Clock
-                  value={carDetails.fromTime}
-                  onChange={(time) => handleTimeChange("fromTime", time)}
-                />
-                <label className="form-label">To Time :</label>
-                <Clock
-                  value={carDetails.toTime}
-                  onChange={(time) => handleTimeChange("toTime", time)}
-                />
-              </div>
-            </div>
-          )}
-          <div className="mt-3 d-flex justify-content-between">
-            {currentStep > 1 && (
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={handlePrev}
-              >
-                Previous
-              </button>
             )}
-            {currentStep < 3 && (
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleNext}
-              >
+
+            {currentStep === 2 && (
+              <div className="step-content">
+                <h2>Photos</h2>
+                <input
+                  type="file"
+                  name="carPhoto"
+                  onChange={(e) => setCarPhoto(e.target.files[0])}
+                  required
+                />
+              </div>
+            )}
+
+            {currentStep === 3 && (
+              <div className="step-content">
+                <h2>Pricing & Availability</h2>
+                <div className="input-group">
+                  <span className="input-group-text">$</span>
+                  <input
+                    type="text"
+                    name="dailyRate"
+                    placeholder="Daily Rate"
+                    value={carDetails.dailyRate}
+                    onChange={handleChange}
+                  />
+                </div>
+                <label>Choose Pickup and Dropoff Location</label>
+                <MyMap onLocationSelect={handleLocationSelect} />
+                <div className="date-time-picker">
+                  <label>From Date</label>
+                  <Calender
+                    selected={carDetails.fromDate}
+                    onChange={(date) => handleDateChange("fromDate", date)}
+                  />
+                  <label>To Date</label>
+                  <Calender
+                    selected={carDetails.toDate}
+                    onChange={(date) => handleDateChange("toDate", date)}
+                  />
+                  <label>From Time</label>
+                  <Clock
+                    value={carDetails.fromTime}
+                    onChange={(time) => handleTimeChange("fromTime", time)}
+                  />
+                  <label>To Time</label>
+                  <Clock
+                    value={carDetails.toTime}
+                    onChange={(time) => handleTimeChange("toTime", time)}
+                  />
+                </div>
+              </div>
+            )}
+
+            <div className="navigation-buttons">
+              {currentStep > 0 && (
+                <button type="button" className="btn btn-secondary" onClick={handlePrev}>
+                  Previous
+                </button>
+              )}
+              {currentStep < 3 && (
+                <button className="btn" onClick={handleNext} style={{ backgroundColor: '#324b5f', color: '#ffffff', borderColor: '#001f3f', width: '9%'}}>
                 Next
-              </button>
-            )}
-            {currentStep >= 3 && (
-              <button type="submit" className="btn btn-success">
-                Submit
-              </button>
-            )}
-          </div>
-        </form>
-      </div>
+               </button>
+              )}
+              {currentStep === 3 && (
+                <button type="submit" className="btn btn-success">
+                  Submit
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 };
