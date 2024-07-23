@@ -26,20 +26,19 @@ export const useListCar = () => {
         body: JSON.stringify(value),
       });
 
-      const json = await response.json();
-
-      if (response.ok) {
-        setIsLoading(false);
-        return json;
-      } else {
-        setIsLoading(false);
-        setError(json.message || "Failed to list car.");
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error response from server:", errorData);
+        throw new Error(errorData.errors.map((err) => err.msg).join(", "));
       }
+
+      const data = await response.json();
+      return data;
     } catch (error) {
-      setIsLoading(false);
-      setError(error.message || "An error occurred while listing the car.");
+      console.error("Error listing car:", error);
+      throw error;
     }
   };
 
-  return { listCar, isLoading, error };
+  return { listCar };
 };
