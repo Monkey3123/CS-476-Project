@@ -59,6 +59,9 @@ const carSchema = new Schema({
   listerid: {
     type: String,
   },
+  booked: {
+    type: Boolean,
+  },
 });
 
 const Car = mongoose.model("Car", carSchema);

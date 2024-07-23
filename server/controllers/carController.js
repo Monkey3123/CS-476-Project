@@ -21,6 +21,7 @@ const listCar = async (req, res) => {
       toTime: req.body.toTime,
       photo: req.body.photo,
       listerid: req.body.listerid,
+      booked: false,
     });
 
     carmodel.save();
@@ -33,7 +34,7 @@ const listCar = async (req, res) => {
 
 const getallCar = async (req, res) => {
   try {
-    const cars = await Car.find({});
+    const cars = await Car.find({ booked: false });
 
     res.status(200).json(cars);
   } catch (err) {
@@ -76,7 +77,30 @@ const getlisterCars = async (req, res) => {
     res.status(500).send({ message: "Failed to fetch cars" });
   }
 };
+
+const booked = async (req, res) => {
+  const cid = req.body.cid;
+  if (!cid) {
+    return res.status(400).json({ message: "Error: Car ID not found" });
+  }
+  try {
+    const cars = await Car.findById(cid);
+
+    if (!cars) {
+      return res.status(404).json({ message: "Car not found" });
+    }
+    cars.booked = true;
+    const result = await Car.replaceOne({ _id: cid }, cars);
+
+    res.status(200).json({ message: "Car sucessfully Booked" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Failed to fetch cars" });
+  }
+};
+
 export default listCar;
 export { getallCar };
 export { getCar };
 export { getlisterCars };
+export { booked };

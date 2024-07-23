@@ -2,7 +2,7 @@ import React from "react";
 import { useFetchListerCars } from "../../hooks/useCarListings";
 import Card from "../CarsPage/Card";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useUserContext } from "../../hooks/useUserContext";
+import "./Listings.css";
 
 const MyListings = () => {
   const { listings, isLoading, error } = useFetchListerCars();

@@ -1,0 +1,22 @@
+import { useState } from "react";
+
+export const useBooked = () => {
+  const [error, setError] = useState(null);
+  const booked = async (cid) => {
+    const response = await fetch("http://localhost:4000/api/carRoutes/booked", {
+      method: "Put",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cid }),
+    });
+
+    const json = await response.json();
+
+    if (response.ok) {
+      return json;
+    } else {
+      return "Failed to list car.";
+    }
+  };
+
+  return { booked };
+};
