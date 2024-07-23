@@ -23,8 +23,7 @@ const MyListings = () => {
             imgAlt={`${car.make} ${car.model}`}
             title={`${car.make} ${car.model} - ${car.year}`}
             description={car.description}
-            buttonText={`Rent for $${car.dailyRate} per day`}
-            link=""
+            price={car.dailyRate}
           />
         ))}
       </div>
