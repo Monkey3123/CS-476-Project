@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const ListACarPage = () => {
   const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(0); // Start from the welcome step
+  const [currentStep, setCurrentStep] = useState(0); 
   const [carDetails, setCarDetails] = useState({
     make: "",
     model: "",
