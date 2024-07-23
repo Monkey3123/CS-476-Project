@@ -134,7 +134,7 @@ const Home = () => {
       <Element name="contact">
         <section id="contact" className="contact-section">
           <div className="container">
-            <h2 className="section-title">Contact Us</h2>
+            <h2 className="contact_section-title">Contact Us</h2>
             <p className="section-text">
               Have questions or need assistance? Reach out to us at
               carnr476@gmail.com

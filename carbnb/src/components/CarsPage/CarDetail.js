@@ -1,27 +1,37 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { Container, Row, Col, Card, Button, Spinner } from "react-bootstrap";
-import "./CarDetail.css";
+import { useParams, useNavigate  } from "react-router-dom";
+import { Container, Row, Col, Card, Spinner, Modal } from "react-bootstrap";
 import SnackbarAlert from "../RedirectPage/SnackbarAlert";
+import "./CarDetail.css";
 import { useFetchCar } from "../../hooks/usegetcar";
 import { useUserContext } from "../../hooks/useUserContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faCheckCircle, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 
 const CarDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { car, isLoading, error } = useFetchCar(id);
   const { user } = useUserContext();
   const [showAlert, setShowAlert] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleRentClick = () => {
     if (!user) {
       setShowAlert(true);
     } else {
       // Booking logic #tejas
+      setShowModal(true);
     }
   };
 
   const handleCloseAlert = () => {
     setShowAlert(false);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    navigate(-1); 
   };
 
   if (isLoading) {
@@ -49,59 +59,79 @@ const CarDetail = () => {
   }
 
   return (
-    <Container className="my-5">
-      <SnackbarAlert 
-        open={showAlert} 
-        message="You need to be logged in to rent a car." 
-        onClose={handleCloseAlert} 
+    <Container className="my-5 car-detail-container">
+      <SnackbarAlert
+        open={showAlert}
+        message="You need to be logged in to book a car."
+        onClose={handleCloseAlert}
       />
-      <Card>
-        <Row noGutters>
-          <Col md={6}>
-            <Card.Img variant="top" src={`${car.photo}`} />
-          </Col>
-          <Col md={6}>
-            <Card.Body>
-              <Card.Title>
-                {car.make} {car.model} - {car.year}
-              </Card.Title>
-              <Card.Text>
-                <strong>Odometer:</strong> {car.odometer}
-              </Card.Text>
-              <Card.Text>
-                <strong>Transmission:</strong> {car.transmission}
-              </Card.Text>
-              <Card.Text>
-                <strong>Fuel Type:</strong> {car.fuelType}
-              </Card.Text>
-              <Card.Text>
-                <strong>Seating Capacity:</strong> {car.seatingCapacity}
-              </Card.Text>
-              <Card.Text>
-                <strong>Color:</strong> {car.color}
-              </Card.Text>
-              <Card.Text>
-                <strong>Description:</strong> {car.description}
-              </Card.Text>
-              <Card.Text>
-                <strong>Daily Rate:</strong> ${car.dailyRate}
-              </Card.Text>
-              <Card.Text>
-                <strong>Location:</strong> {car.location}
-              </Card.Text>
-              <Card.Text>
-                <strong>Available From:</strong> {car.fromDate} {car.fromTime}
-              </Card.Text>
-              <Card.Text>
-                <strong>Available To:</strong> {car.toDate} {car.toTime}
-              </Card.Text>
-              <Button variant="primary" onClick={handleRentClick}>
-                Rent this car
-              </Button>
-            </Card.Body>
-          </Col>
-        </Row>
-      </Card>
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Booking Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Your booking request for {car.make} {car.model} has been confirmed!
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            data-bs-dismiss="modal"
+            onClick={handleCloseModal}
+          >
+            Close
+          </button>
+        </Modal.Footer>
+      </Modal>
+      <div className="title-section">
+        <h1 className="car-title">{car.make} {car.model} - {car.year}</h1>
+      </div>
+      <div className="image-section1">
+        <img src={car.photo} className="car-photo1" alt="Car" />
+      </div>
+      <Row className="content-row">
+        <Col md={8}>
+          <Row>
+            <Col md={12} className="more-info-section">
+              <div className="info-item">
+                <FontAwesomeIcon icon={faUser} className="info-icon" />
+                <span><strong>Listed by:</strong> {car.listerid}</span>
+              </div>
+              <div className="info-item">
+                <FontAwesomeIcon icon={faCheckCircle} className="info-icon" />
+                <span><strong>Free Cancellation:</strong> Get a full refund if you change your mind</span>
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={12} className="car-detail-section">
+              <h2 className="section-title">Car Details</h2>
+              <hr className="fancy-line" />
+              <Card.Text><strong>Odometer:</strong> {car.odometer}</Card.Text>
+              <Card.Text><strong>Transmission:</strong> {car.transmission}</Card.Text>
+              <Card.Text><strong>Fuel Type:</strong> {car.fuelType}</Card.Text>
+              <Card.Text><strong>Seating Capacity:</strong> {car.seatingCapacity}</Card.Text>
+              <Card.Text><strong>Color:</strong> {car.color}</Card.Text>
+              <Card.Text><strong>Description:</strong> {car.description}</Card.Text>
+              <Card.Text><strong>Location:</strong> {car.location}</Card.Text>
+              <Card.Text><strong>Available From:</strong> {car.fromDate} {car.fromTime}</Card.Text>
+              <Card.Text><strong>Available To:</strong> {car.toDate} {car.toTime}</Card.Text>
+            </Col>
+          </Row>
+        </Col>
+        <Col md={4} className="price-breakdown-col">
+          <div className="car-price-section">
+            <h2 className="section-title">Price Breakdown</h2>
+            <hr className="fancy-line" />
+            <Card.Text><strong>Daily Rate:</strong> ${car.dailyRate}</Card.Text>
+            <Card.Text><strong>Service Fee:</strong> ${Math.round(car.dailyRate * 0.1)}</Card.Text>
+            <Card.Text><strong>Total:</strong> ${Math.round(car.dailyRate * 1.1)}</Card.Text>
+            <button onClick={handleRentClick} className="btn" style={{ backgroundColor: '#324b5f', color: '#ffffff', borderColor: '#001f3f', width: '100%'}}>
+              Book Now
+            </button>
+          </div>
+        </Col>
+      </Row>
     </Container>
   );
 };
