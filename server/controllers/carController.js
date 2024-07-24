@@ -48,6 +48,7 @@ const listCar = async (req, res) => {
       toTime: req.body.toTime,
       photo: req.body.photo,
       listerid: req.body.listerid,
+      booked: req.body.booked,
     });
 
     await carmodel.save();

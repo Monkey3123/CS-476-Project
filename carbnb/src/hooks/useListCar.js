@@ -10,20 +10,19 @@ export const useListCar = () => {
     setIsLoading(true);
     setError(null);
 
-    const formData = new FormData();
-    for (const key in carDetails) {
-      formData.append(key, carDetails[key]);
-    }
-    formData.append("photo", carPhoto);
-    const listerid = user.id;
-    formData.append("listerid", listerid);
-    const value = Object.fromEntries(formData.entries());
+    // Construct the data object
+    const data = {
+      ...carDetails,
+      photo: carPhoto,
+      listerid: user.id,
+      booked: false, // Ensure this is a boolean
+    };
 
     try {
       const response = await fetch("http://localhost:4000/api/carRoutes/list", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(value),
+        body: JSON.stringify(data), // Send as JSON
       });
 
       if (!response.ok) {
@@ -32,13 +31,15 @@ export const useListCar = () => {
         throw new Error(errorData.errors.map((err) => err.msg).join(", "));
       }
 
-      const data = await response.json();
-      return data;
+      const result = await response.json();
+      return result;
     } catch (error) {
       console.error("Error listing car:", error);
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { listCar };
+  return { listCar, error, isLoading };
 };
