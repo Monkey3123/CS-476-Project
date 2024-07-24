@@ -79,7 +79,7 @@ const NavBar = () => {
                 <Dropdown.Menu>
                   <Dropdown.ItemText>{user.first} {user.last}</Dropdown.ItemText>
                   <Dropdown.Divider />
-                  <Dropdown.Item as={RouterLink} to="/your-listings">Your Listings</Dropdown.Item>
+                  <Dropdown.Item as={RouterLink} to="/my-listings">My Listings</Dropdown.Item>
                   <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
