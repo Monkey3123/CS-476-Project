@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import carBanner from "../../images/camp.jpg";
+import carBanner from "../../images/listingbanner.jpg";
 import "./ListACarPage.css";
 import Clock from "../Date/Clock";
 import Calender from "../Date/Calender";
-import MyMap from "../Date/Map"; // Ensure to import the correct component
+import MyMap from "../Date/Map";
 import { useListCar } from "../../hooks/useListCar";
 import { useNavigate } from "react-router-dom";
 
 const ListACarPage = () => {
   const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
   const [carDetails, setCarDetails] = useState({
     make: "",
     model: "",
@@ -28,8 +28,8 @@ const ListACarPage = () => {
     fromTime: "10:00",
     toTime: "10:00",
   });
-  const [carPhoto, setCarPhoto] = useState(null); // State to handle file input
-  const [errors, setErrors] = useState({}); // State to handle errors
+  const [carPhoto, setCarPhoto] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const { listCar } = useListCar();
 
@@ -56,19 +56,18 @@ const ListACarPage = () => {
   };
 
   const handleNext = () => {
-    setErrors({}); // Clear previous errors
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
     }
   };
 
   const handlePrev = () => {
-    if (currentStep > 1) {
+    if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
   };
 
-  const uploadFile = async () => {
+  const uploadFile = async (type) => {
     const formData = new FormData();
     formData.append("file", carPhoto);
     formData.append("upload_preset", "User images");
@@ -98,7 +97,6 @@ const ListACarPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitting Car Details:", carDetails);
-
     try {
       let imgURL = "";
       if (carPhoto) {
@@ -113,275 +111,272 @@ const ListACarPage = () => {
     }
   };
 
-  const renderProgressBar = () => {
-    const stepPercentage = (currentStep / 4) * 100;
-    return (
-      <div
-        className="progress"
-        role="progressbar"
-        aria-label="Progress bar"
-        aria-valuenow={stepPercentage}
-        aria-valuemin="0"
-        aria-valuemax="100"
-      >
-        <div
-          className="progress-bar"
-          style={{ width: `${stepPercentage}%` }}
-        ></div>
-      </div>
-    );
-  };
-
   return (
-    <div
-      className="banner-image"
-      style={{
-        backgroundImage: `url(${carBanner})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        height: "100vh",
-      }}
-    >
-      <div className="signup template d-flex justify-content-center align-items-center vh-100">
-        <form
-          className="form1 p-4 bg-light border rounded"
-          onSubmit={handleSubmit}
-          encType="multipart/form-data" // Important for file uploads
-        >
-          <h1>List your vehicle to CaRnR</h1>
-          {renderProgressBar()}
+    <div>
+      {currentStep === 0 ? (
+        <div className="welcome-section">
+          <div className="welcome-text">
+            <h1>Welcome to CaRnR</h1>
+            <p>List your car and start earning today!</p>
+            <button className="btn fancy-button" onClick={handleNext}>
+              Get Started
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="list-car-page">
+          <div className="step-progress">
+            <div className={`step ${currentStep >= 1 ? "completed" : ""}`}>
+              1. Car Details
+            </div>
+            <div className={`step ${currentStep >= 2 ? "completed" : ""}`}>
+              2. Photos
+            </div>
+            <div className={`step ${currentStep >= 3 ? "completed" : ""}`}>
+              3. Pricing & Availability
+            </div>
+          </div>
           {errors.form && (
             <div className="alert alert-danger">{errors.form}</div>
           )}
-          {currentStep === 1 && (
-            <div>
-              <h2>Car Details</h2>
-              <input
-                type="text"
-                name="make"
-                placeholder="Car Make"
-                className={`form-control ${errors.make ? "is-invalid" : ""}`}
-                value={carDetails.make}
-                onChange={handleChange}
-              />
-              {errors.make && (
-                <div className="invalid-feedback">{errors.make}</div>
-              )}
-
-              <input
-                type="text"
-                name="model"
-                placeholder="Car Model"
-                className={`form-control ${errors.model ? "is-invalid" : ""}`}
-                value={carDetails.model}
-                onChange={handleChange}
-              />
-              {errors.model && (
-                <div className="invalid-feedback">{errors.model}</div>
-              )}
-
-              <input
-                type="text"
-                name="year"
-                placeholder="Model Year"
-                className={`form-control ${errors.year ? "is-invalid" : ""}`}
-                value={carDetails.year}
-                onChange={handleChange}
-              />
-              {errors.year && (
-                <div className="invalid-feedback">{errors.year}</div>
-              )}
-
-              <input
-                type="text"
-                name="odometer"
-                placeholder="Odometer Reading"
-                className={`form-control ${
-                  errors.odometer ? "is-invalid" : ""
-                }`}
-                value={carDetails.odometer}
-                onChange={handleChange}
-              />
-              {errors.odometer && (
-                <div className="invalid-feedback">{errors.odometer}</div>
-              )}
-
-              <input
-                type="text"
-                name="transmission"
-                placeholder="Transmission"
-                className={`form-control ${
-                  errors.transmission ? "is-invalid" : ""
-                }`}
-                value={carDetails.transmission}
-                onChange={handleChange}
-              />
-              {errors.transmission && (
-                <div className="invalid-feedback">{errors.transmission}</div>
-              )}
-
-              <input
-                type="text"
-                name="fuelType"
-                placeholder="Fuel Type"
-                className={`form-control ${
-                  errors.fuelType ? "is-invalid" : ""
-                }`}
-                value={carDetails.fuelType}
-                onChange={handleChange}
-              />
-              {errors.fuelType && (
-                <div className="invalid-feedback">{errors.fuelType}</div>
-              )}
-
-              <input
-                type="text"
-                name="seatingCapacity"
-                placeholder="Seating Capacity"
-                className={`form-control ${
-                  errors.seatingCapacity ? "is-invalid" : ""
-                }`}
-                value={carDetails.seatingCapacity}
-                onChange={handleChange}
-              />
-              {errors.seatingCapacity && (
-                <div className="invalid-feedback">{errors.seatingCapacity}</div>
-              )}
-
-              <input
-                type="text"
-                name="color"
-                placeholder="Color"
-                className={`form-control ${errors.color ? "is-invalid" : ""}`}
-                value={carDetails.color}
-                onChange={handleChange}
-              />
-              {errors.color && (
-                <div className="invalid-feedback">{errors.color}</div>
-              )}
-
-              <textarea
-                name="description"
-                placeholder="Description"
-                className={`form-control ${
-                  errors.description ? "is-invalid" : ""
-                }`}
-                value={carDetails.description}
-                onChange={handleChange}
-              />
-              {errors.description && (
-                <div className="invalid-feedback">{errors.description}</div>
-              )}
-            </div>
-          )}
-
-          {currentStep === 2 && (
-            <div>
-              <h2>Upload Car Photo</h2>
-              <input
-                type="file"
-                onChange={(e) => setCarPhoto(e.target.files[0])}
-                className={`form-control ${
-                  errors.carPhoto ? "is-invalid" : ""
-                }`}
-              />
-              {errors.carPhoto && (
-                <div className="invalid-feedback">{errors.carPhoto}</div>
-              )}
-            </div>
-          )}
-
-          {currentStep === 3 && (
-            <div>
-              <h2>Pricing & Availability</h2>
-              <div className="input-group mb-3">
-                <span className="input-group-text">$</span>
+          <form onSubmit={handleSubmit} encType="multipart/form-data">
+            {currentStep === 1 && (
+              <div className="step-content">
+                <h2>Car Details</h2>
                 <input
                   type="text"
-                  name="dailyRate"
-                  className={`form-control ${
-                    errors.dailyRate ? "is-invalid" : ""
-                  }`}
-                  placeholder="Daily Rate"
-                  aria-label="Amount (to the nearest dollar)"
-                  value={carDetails.dailyRate}
+                  name="make"
+                  placeholder="Car Make"
+                  className={`form-control ${errors.make ? "is-invalid" : ""}`}
+                  value={carDetails.make}
                   onChange={handleChange}
                 />
-              </div>
-              {errors.dailyRate && (
-                <div className="invalid-feedback">{errors.dailyRate}</div>
-              )}
-              <label className="form-label">
-                Choose Pickup and dropoff Location
-              </label>
-              <div className="d-flex justify-content-center">
-                <MyMap
-                  onLocationSelect={handleLocationSelect}
-                  className="small-map"
-                />
-              </div>
-              {errors.lat && (
-                <div className="invalid-feedback">{errors.lat}</div>
-              )}
-              {errors.long && (
-                <div className="invalid-feedback">{errors.long}</div>
-              )}
+                {errors.make && (
+                  <div className="invalid-feedback">{errors.make}</div>
+                )}
 
-              <div>
-                <label className="form-label">From Date :</label>
-                <Calender
-                  selected={carDetails.fromDate}
-                  onChange={(date) => handleDateChange("fromDate", date)}
+                <input
+                  type="text"
+                  name="model"
+                  placeholder="Car Model"
+                  className={`form-control ${errors.model ? "is-invalid" : ""}`}
+                  value={carDetails.model}
+                  onChange={handleChange}
                 />
-                <label className="form-label">To Date :</label>
-                <Calender
-                  selected={carDetails.toDate}
-                  onChange={(date) => handleDateChange("toDate", date)}
+                {errors.model && (
+                  <div className="invalid-feedback">{errors.model}</div>
+                )}
+
+                <input
+                  type="text"
+                  name="year"
+                  placeholder="Model Year"
+                  className={`form-control ${errors.year ? "is-invalid" : ""}`}
+                  value={carDetails.year}
+                  onChange={handleChange}
                 />
+                {errors.year && (
+                  <div className="invalid-feedback">{errors.year}</div>
+                )}
+
+                <input
+                  type="text"
+                  name="odometer"
+                  placeholder="Odometer Reading"
+                  className={`form-control ${
+                    errors.odometer ? "is-invalid" : ""
+                  }`}
+                  value={carDetails.odometer}
+                  onChange={handleChange}
+                />
+                {errors.odometer && (
+                  <div className="invalid-feedback">{errors.odometer}</div>
+                )}
+
+                <input
+                  type="text"
+                  name="transmission"
+                  placeholder="Transmission"
+                  className={`form-control ${
+                    errors.transmission ? "is-invalid" : ""
+                  }`}
+                  value={carDetails.transmission}
+                  onChange={handleChange}
+                />
+                {errors.transmission && (
+                  <div className="invalid-feedback">{errors.transmission}</div>
+                )}
+
+                <input
+                  type="text"
+                  name="fuelType"
+                  placeholder="Fuel Type"
+                  className={`form-control ${
+                    errors.fuelType ? "is-invalid" : ""
+                  }`}
+                  value={carDetails.fuelType}
+                  onChange={handleChange}
+                />
+                {errors.fuelType && (
+                  <div className="invalid-feedback">{errors.fuelType}</div>
+                )}
+
+                <input
+                  type="text"
+                  name="seatingCapacity"
+                  placeholder="Seating Capacity"
+                  className={`form-control ${
+                    errors.seatingCapacity ? "is-invalid" : ""
+                  }`}
+                  value={carDetails.seatingCapacity}
+                  onChange={handleChange}
+                />
+                {errors.seatingCapacity && (
+                  <div className="invalid-feedback">
+                    {errors.seatingCapacity}
+                  </div>
+                )}
+
+                <input
+                  type="text"
+                  name="color"
+                  placeholder="Color"
+                  className={`form-control ${errors.color ? "is-invalid" : ""}`}
+                  value={carDetails.color}
+                  onChange={handleChange}
+                />
+                {errors.color && (
+                  <div className="invalid-feedback">{errors.color}</div>
+                )}
+
+                <textarea
+                  name="description"
+                  placeholder="Description"
+                  className={`form-control ${
+                    errors.description ? "is-invalid" : ""
+                  }`}
+                  value={carDetails.description}
+                  onChange={handleChange}
+                />
+                {errors.description && (
+                  <div className="invalid-feedback">{errors.description}</div>
+                )}
               </div>
-              <div>
-                <label className="form-label">From Time :</label>
-                <Clock
-                  value={carDetails.fromTime}
-                  onChange={(time) => handleTimeChange("fromTime", time)}
+            )}
+
+            {currentStep === 2 && (
+              <div className="step-content">
+                <h2>Photos</h2>
+                <input
+                  type="file"
+                  name="carPhoto"
+                  className={`form-control ${
+                    errors.carPhoto ? "is-invalid" : ""
+                  }`}
+                  onChange={(e) => setCarPhoto(e.target.files[0])}
+                  required
                 />
-                <label className="form-label">To Time :</label>
-                <Clock
-                  value={carDetails.toTime}
-                  onChange={(time) => handleTimeChange("toTime", time)}
-                />
+                {errors.carPhoto && (
+                  <div className="invalid-feedback">{errors.carPhoto}</div>
+                )}
               </div>
+            )}
+
+            {currentStep === 3 && (
+              <div className="step-content">
+                <h2>Pricing & Availability</h2>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">$</span>
+                  <input
+                    type="text"
+                    name="dailyRate"
+                    className={`form-control ${
+                      errors.dailyRate ? "is-invalid" : ""
+                    }`}
+                    placeholder="Daily Rate"
+                    aria-label="Amount (to the nearest dollar)"
+                    value={carDetails.dailyRate}
+                    onChange={handleChange}
+                  />
+                </div>
+                {errors.dailyRate && (
+                  <div className="invalid-feedback">{errors.dailyRate}</div>
+                )}
+
+                <label>Choose Pickup and Dropoff Location</label>
+                <div className="d-flex justify-content-center">
+                  <MyMap
+                    onLocationSelect={handleLocationSelect}
+                    className="small-map"
+                  />
+                </div>
+                {errors.lat && (
+                  <div className="invalid-feedback">{errors.lat}</div>
+                )}
+                {errors.long && (
+                  <div className="invalid-feedback">{errors.long}</div>
+                )}
+
+                <div className="date-time-picker">
+                  <label>From Date</label>
+                  <Calender
+                    selected={carDetails.fromDate}
+                    onChange={(date) => handleDateChange("fromDate", date)}
+                  />
+                  <label>To Date</label>
+                  <Calender
+                    selected={carDetails.toDate}
+                    onChange={(date) => handleDateChange("toDate", date)}
+                  />
+                  <label>From Time</label>
+                  <Clock
+                    value={carDetails.fromTime}
+                    onChange={(time) => handleTimeChange("fromTime", time)}
+                  />
+                  <label>To Time</label>
+                  <Clock
+                    value={carDetails.toTime}
+                    onChange={(time) => handleTimeChange("toTime", time)}
+                  />
+                </div>
+              </div>
+            )}
+
+            <div className="navigation-buttons mt-3 d-flex justify-content-between">
+              {currentStep > 0 && (
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handlePrev}
+                >
+                  Previous
+                </button>
+              )}
+              {currentStep < 3 && (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleNext}
+                  style={{
+                    backgroundColor: "#324b5f",
+                    color: "#ffffff",
+                    borderColor: "#001f3f",
+                    width: "9%",
+                  }}
+                >
+                  Next
+                </button>
+              )}
+              {currentStep >= 3 && (
+                <button type="submit" className="btn btn-success">
+                  Submit
+                </button>
+              )}
             </div>
-          )}
-          <div className="mt-3 d-flex justify-content-between">
-            {currentStep > 1 && (
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={handlePrev}
-              >
-                Previous
-              </button>
-            )}
-            {currentStep < 3 && (
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleNext}
-              >
-                Next
-              </button>
-            )}
-            {currentStep >= 3 && (
-              <button type="submit" className="btn btn-success">
-                Submit
-              </button>
-            )}
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 };
-
 export default ListACarPage;
