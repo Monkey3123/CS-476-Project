@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Spinner, Modal } from "react-bootstrap";
 import SnackbarAlert from "../RedirectPage/SnackbarAlert";
@@ -20,7 +20,9 @@ const CarDetail = () => {
   const { user } = useUserContext();
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [city, setCity] = useState("");
   const { booked } = useBooked();
+
   const handleRentClick = async () => {
     if (!user) {
       setShowAlert(true);
@@ -41,6 +43,34 @@ const CarDetail = () => {
     setShowModal(false);
     navigate(-1);
   };
+
+  useEffect(() => {
+    const fetchCityName = async () => {
+      if (car && car.lat && car.long) {
+        try {
+          const response = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${car.lat},${car.long}&key=AIzaSyBotUHtXai93ly5YG8OPEWTKKls5JpSCJ8`
+          );
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+          }
+          const data = await response.json();
+          const results = data.results;
+          if (results && results.length > 0) {
+            const addressComponents = results[0].address_components;
+            const cityComponent = addressComponents.find((component) =>
+              component.types.includes("locality")
+            );
+            setCity(cityComponent ? cityComponent.long_name : "Unknown City");
+          }
+        } catch (error) {
+          console.error("Error fetching city name:", error);
+        }
+      }
+    };
+
+    fetchCityName();
+  }, [car]);
 
   if (isLoading) {
     return (
@@ -141,7 +171,7 @@ const CarDetail = () => {
                 <strong>Description:</strong> {car.description}
               </Card.Text>
               <Card.Text>
-                <strong>Location:</strong> {car.location}
+                <strong>Location:</strong> {city}
               </Card.Text>
               <Card.Text>
                 <strong>Available From:</strong> {car.fromDate} {car.fromTime}

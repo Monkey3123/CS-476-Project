@@ -59,9 +59,30 @@ const listCar = async (req, res) => {
 };
 const getallCar = async (req, res) => {
   try {
-    const cars = await Car.find({});
+    const cars = await Car.find({ booked: false });
 
     res.status(200).json(cars);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Failed to fetch cars" });
+  }
+};
+
+const booked = async (req, res) => {
+  const cid = req.body.cid;
+  if (!cid) {
+    return res.status(400).json({ message: "Error: Car ID not found" });
+  }
+  try {
+    const cars = await Car.findById(cid);
+
+    if (!cars) {
+      return res.status(404).json({ message: "Car not found" });
+    }
+    cars.booked = true;
+    const result = await Car.replaceOne({ _id: cid }, cars);
+
+    res.status(200).json({ message: "Car sucessfully Booked" });
   } catch (err) {
     console.error(err);
     res.status(500).send({ message: "Failed to fetch cars" });
@@ -83,23 +104,22 @@ const getCar = async (req, res) => {
 };
 
 const getlisterCars = async (req, res) => {
-  const { listerid } = req.params;
+  const lid = req.body.listerid;
 
-  if (!listerid) {
+  if (!lid) {
     return res.status(400).json({ message: "Lister ID is required" });
   }
 
   try {
-    const cars = await Car.find({ listerid });
+    const cars = await Car.find({ listerid: lid });
 
     if (!cars || cars.length === 0) {
       return res.status(404).json({ message: "No cars found for this lister" });
     }
-
     res.status(200).json(cars);
   } catch (err) {
     console.error(err);
     res.status(500).send({ message: "Failed to fetch cars" });
   }
 };
-export { validateCar, listCar, getallCar, getCar, getlisterCars };
+export { validateCar, listCar, getallCar, getCar, getlisterCars, booked };
