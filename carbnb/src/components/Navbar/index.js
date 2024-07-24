@@ -6,16 +6,17 @@ import { useLogout } from "../../hooks/useLogout";
 import { useUserContext } from "../../hooks/useUserContext";
 import { Link as ScrollLink } from "react-scroll";
 import Dropdown from "react-bootstrap/Dropdown";
-
-import CustomUserIcon from "./user.png"
+import { useNavigate } from "react-router-dom";
+import CustomUserIcon from "./user.png";
 
 const NavBar = () => {
   const { logout } = useLogout();
   const { user } = useUserContext();
   const location = useLocation();
-
+  const navigate = useNavigate();
   const handleLogout = () => {
     logout();
+    navigate("/");
   };
 
   return (
@@ -43,27 +44,57 @@ const NavBar = () => {
           {location.pathname === "/" && (
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <ScrollLink to="about" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
+                <ScrollLink
+                  to="about"
+                  smooth={true}
+                  duration={5}
+                  className="nav-link"
+                  style={{ cursor: "pointer" }}
+                >
                   About
                 </ScrollLink>
               </li>
               <li className="nav-item">
-                <ScrollLink to="services" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
+                <ScrollLink
+                  to="services"
+                  smooth={true}
+                  duration={5}
+                  className="nav-link"
+                  style={{ cursor: "pointer" }}
+                >
                   Services
                 </ScrollLink>
               </li>
               <li className="nav-item">
-                <ScrollLink to="testimonials" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
+                <ScrollLink
+                  to="testimonials"
+                  smooth={true}
+                  duration={5}
+                  className="nav-link"
+                  style={{ cursor: "pointer" }}
+                >
                   Testimonials
                 </ScrollLink>
               </li>
               <li className="nav-item">
-                <ScrollLink to="complaint" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
+                <ScrollLink
+                  to="complaint"
+                  smooth={true}
+                  duration={5}
+                  className="nav-link"
+                  style={{ cursor: "pointer" }}
+                >
                   Complaints
                 </ScrollLink>
               </li>
               <li className="nav-item">
-                <ScrollLink to="contact" smooth={true} duration={5} className="nav-link" style={{ cursor: 'pointer' }}>
+                <ScrollLink
+                  to="contact"
+                  smooth={true}
+                  duration={5}
+                  className="nav-link"
+                  style={{ cursor: "pointer" }}
+                >
                   Contact
                 </ScrollLink>
               </li>
@@ -72,14 +103,29 @@ const NavBar = () => {
           <div className="d-flex align-items-center ms-auto">
             {user ? (
               <Dropdown align="end">
-                <Dropdown.Toggle variant="link" id="dropdown-basic" className="custom-dropdown-toggle">
-                  <img src={CustomUserIcon} alt="User Icon" style={{ width: '38px', height: '38px' }} />
+                <Dropdown.Toggle
+                  variant="link"
+                  id="dropdown-basic"
+                  className="custom-dropdown-toggle"
+                >
+                  <img
+                    src={CustomUserIcon}
+                    alt="User Icon"
+                    style={{ width: "38px", height: "38px" }}
+                  />
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.ItemText>{user.first} {user.last}</Dropdown.ItemText>
+                  <Dropdown.ItemText>
+                    {user.first} {user.last}
+                  </Dropdown.ItemText>
                   <Dropdown.Divider />
-                  <Dropdown.Item as={RouterLink} to="/your-listings">Your Listings</Dropdown.Item>
+                  <Dropdown.Item as={RouterLink} to="/your-listings">
+                    Your Listings
+                  </Dropdown.Item>
+                  <Dropdown.Item as={RouterLink} to="/your-bookings">
+                    Your Bookings
+                  </Dropdown.Item>
                   <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

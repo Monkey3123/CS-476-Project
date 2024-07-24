@@ -16,7 +16,8 @@ import CarDetail from "./components/CarsPage/CarDetail";
 import ListACarPage from "./components/ListACarPage/ListACarPage";
 import { useUserContext } from "./hooks/useUserContext";
 import MyListings from "./components/Menubar/MyListings";
-import RedirectPage from './components/RedirectPage/RedirectPage';
+import MyBookings from "./components/Menubar/MyBookings";
+import RedirectPage from "./components/RedirectPage/RedirectPage";
 
 function App() {
   const { user } = useUserContext();
@@ -36,6 +37,7 @@ function App() {
           />
           <Route path="/car/:id" element={<CarDetail />} />
           <Route path="/your-listings" element={<MyListings />} />
+          <Route path="/your-bookings" element={<MyBookings />} />
         </Routes>
       </div>
     </Router>

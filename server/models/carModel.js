@@ -59,6 +59,9 @@ const carSchema = new Schema({
   listerid: {
     type: String,
   },
+  renterid: {
+    type: String,
+  },
   booked: {
     type: Boolean,
   },

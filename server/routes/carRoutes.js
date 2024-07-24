@@ -5,6 +5,8 @@ import {
   getCar,
   getlisterCars,
   booked,
+  getBookedCars,
+  Unbooked,
 } from "../controllers/carController.js";
 import requiretoke from "../middleware/requiretoke.js";
 
@@ -16,8 +18,10 @@ router.post("/list", listCar);
 router.get("/getCar", getallCar);
 
 router.post("/getlisterCars", getlisterCars);
+router.post("/getBookedCars", getBookedCars);
 
 router.put("/booked", booked);
+router.put("/Unbooked", Unbooked);
 
 router.get("/:id", getCar);
 

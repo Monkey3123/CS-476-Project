@@ -11,7 +11,8 @@ import {
   faCheckCircle,
   faCalendarAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import { useBooked, UseBooked } from "../../hooks/useBooked";
+import { useBooked } from "../../hooks/useBooked";
+import { useUnbooked } from "../../hooks/useUnbooked";
 
 const CarDetail = () => {
   const { id } = useParams();
@@ -21,6 +22,7 @@ const CarDetail = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const { booked } = useBooked();
+  const { Unbooked } = useUnbooked();
   const handleRentClick = async () => {
     if (!user) {
       setShowAlert(true);
@@ -29,6 +31,18 @@ const CarDetail = () => {
     } else {
       // Booking logic #tejas
       await booked(car._id);
+      setShowModal(true);
+    }
+  };
+
+  const handleUnrentClick = async () => {
+    if (!user) {
+      setShowAlert(true);
+    } else if (car.renterid != user.id) {
+      alert("You did not book this car");
+    } else {
+      // Booking logic #tejas
+      await Unbooked(car._id);
       setShowModal(true);
     }
   };
@@ -165,18 +179,35 @@ const CarDetail = () => {
             <Card.Text>
               <strong>Total:</strong> ${Math.round(car.dailyRate * 1.1)}
             </Card.Text>
-            <button
-              onClick={handleRentClick}
-              className="btn"
-              style={{
-                backgroundColor: "#324b5f",
-                color: "#ffffff",
-                borderColor: "#001f3f",
-                width: "100%",
-              }}
-            >
-              Book Now
-            </button>
+            {!car.booked && (
+              <button
+                onClick={handleRentClick}
+                className="btn"
+                style={{
+                  backgroundColor: "#324b5f",
+                  color: "#ffffff",
+                  borderColor: "#001f3f",
+                  width: "100%",
+                }}
+              >
+                Book Now
+              </button>
+            )}
+
+            {car.booked && (
+              <button
+                onClick={handleUnrentClick}
+                className="btn"
+                style={{
+                  backgroundColor: "#324b5f",
+                  color: "#ffffff",
+                  borderColor: "#001f3f",
+                  width: "100%",
+                }}
+              >
+                Cancel Booking
+              </button>
+            )}
           </div>
         </Col>
       </Row>

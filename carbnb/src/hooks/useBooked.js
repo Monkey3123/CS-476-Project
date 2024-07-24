@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useUserContext } from "./useUserContext";
 
 export const useBooked = () => {
-  const [error, setError] = useState(null);
+  const { user } = useUserContext();
   const booked = async (cid) => {
+    const rid = user.id;
     const response = await fetch("http://localhost:4000/api/carRoutes/booked", {
       method: "Put",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ cid }),
+      body: JSON.stringify({ cid, rid }),
     });
 
     const json = await response.json();
