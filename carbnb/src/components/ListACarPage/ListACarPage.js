@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import carBanner from "../../images/listingbanner.jpg";
 import "./ListACarPage.css";
 import Clock from "../Date/Clock";
 import Calender from "../Date/Calender";
