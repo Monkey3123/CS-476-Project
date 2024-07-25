@@ -11,7 +11,8 @@ import {
   faCheckCircle,
   faCalendarAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import { useBooked, UseBooked } from "../../hooks/useBooked";
+import { useBooked } from "../../hooks/useBooked";
+import { useListerName } from "../../hooks/useListerName";
 
 const CarDetail = () => {
   const { id } = useParams();
@@ -22,6 +23,11 @@ const CarDetail = () => {
   const [showModal, setShowModal] = useState(false);
   const [city, setCity] = useState("");
   const { booked } = useBooked();
+  const {
+    listerName,
+    isLoading: listerLoading,
+    error: listerError,
+  } = useListerName(car?.listerid);
 
   const handleRentClick = async () => {
     if (!user) {
@@ -29,7 +35,6 @@ const CarDetail = () => {
     } else if (car.listerid === user.id) {
       alert("You listed this car");
     } else {
-      // Booking logic #tejas
       await booked(car._id);
       setShowModal(true);
     }
@@ -49,7 +54,7 @@ const CarDetail = () => {
       if (car && car.lat && car.long) {
         try {
           const response = await fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${car.lat},${car.long}&key=AIzaSyBotUHtXai93ly5YG8OPEWTKKls5JpSCJ8`
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${car.lat},${car.long}&key=YOUR_API_KEY`
           );
           if (!response.ok) {
             throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -69,10 +74,12 @@ const CarDetail = () => {
       }
     };
 
-    fetchCityName();
+    if (car) {
+      fetchCityName();
+    }
   }, [car]);
 
-  if (isLoading) {
+  if (isLoading || listerLoading) {
     return (
       <Container
         className="d-flex justify-content-center align-items-center"
@@ -85,13 +92,13 @@ const CarDetail = () => {
     );
   }
 
-  if (error) {
+  if (error || listerError) {
     return (
       <Container
         className="d-flex justify-content-center align-items-center"
         style={{ height: "100vh" }}
       >
-        <p>{error}</p>
+        <p>{error || listerError}</p>
       </Container>
     );
   }
@@ -136,7 +143,8 @@ const CarDetail = () => {
               <div className="info-item">
                 <FontAwesomeIcon icon={faUser} className="info-icon" />
                 <span>
-                  <strong>Listed by:</strong> {car.listerid}
+                  <strong>Listed by:</strong> {listerName.first}{" "}
+                  {listerName.last}
                 </span>
               </div>
               <div className="info-item">
