@@ -12,8 +12,8 @@ const FindCars = () => {
   };
 
   return (
-    <div class="bground">
-      <div class="box">
+    <div className="bground">
+      <div className="box">
         <h1 className="display-1 text-primary text-center font-weight-bold">
           FindCars
         </h1>

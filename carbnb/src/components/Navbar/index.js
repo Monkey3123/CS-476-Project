@@ -120,8 +120,8 @@ const NavBar = () => {
                     {user.first} {user.last}
                   </Dropdown.ItemText>
                   <Dropdown.Divider />
-                  <Dropdown.Item as={RouterLink} to="/your-listings">
-                    Your Listings
+                  <Dropdown.Item as={RouterLink} to="/my-listings">
+                    My Listings
                   </Dropdown.Item>
                   <Dropdown.Item as={RouterLink} to="/your-bookings">
                     Your Bookings

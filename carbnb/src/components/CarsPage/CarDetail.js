@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Spinner, Modal } from "react-bootstrap";
 import SnackbarAlert from "../RedirectPage/SnackbarAlert";
@@ -12,7 +12,7 @@ import {
   faCalendarAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { useBooked } from "../../hooks/useBooked";
-import { useUnbooked } from "../../hooks/useUnbooked";
+import { useListerName } from "../../hooks/useListerName";
 
 const CarDetail = () => {
   const { id } = useParams();
@@ -21,15 +21,14 @@ const CarDetail = () => {
   const { user } = useUserContext();
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [city, setCity] = useState("");
   const { booked } = useBooked();
-  const { Unbooked } = useUnbooked();
   const handleRentClick = async () => {
     if (!user) {
       setShowAlert(true);
     } else if (car.listerid === user.id) {
       alert("You listed this car");
     } else {
-      // Booking logic #tejas
       await booked(car._id);
       setShowModal(true);
     }
@@ -56,7 +55,37 @@ const CarDetail = () => {
     navigate(-1);
   };
 
-  if (isLoading) {
+  useEffect(() => {
+    const fetchCityName = async () => {
+      if (car && car.lat && car.long) {
+        try {
+          const response = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${car.lat},${car.long}&key=YOUR_API_KEY`
+          );
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+          }
+          const data = await response.json();
+          const results = data.results;
+          if (results && results.length > 0) {
+            const addressComponents = results[0].address_components;
+            const cityComponent = addressComponents.find((component) =>
+              component.types.includes("locality")
+            );
+            setCity(cityComponent ? cityComponent.long_name : "Unknown City");
+          }
+        } catch (error) {
+          console.error("Error fetching city name:", error);
+        }
+      }
+    };
+
+    if (car) {
+      fetchCityName();
+    }
+  }, [car]);
+
+  if (isLoading || listerLoading) {
     return (
       <Container
         className="d-flex justify-content-center align-items-center"
@@ -69,13 +98,13 @@ const CarDetail = () => {
     );
   }
 
-  if (error) {
+  if (error || listerError) {
     return (
       <Container
         className="d-flex justify-content-center align-items-center"
         style={{ height: "100vh" }}
       >
-        <p>{error}</p>
+        <p>{error || listerError}</p>
       </Container>
     );
   }
@@ -120,7 +149,8 @@ const CarDetail = () => {
               <div className="info-item">
                 <FontAwesomeIcon icon={faUser} className="info-icon" />
                 <span>
-                  <strong>Listed by:</strong> {car.listerid}
+                  <strong>Listed by:</strong> {listerName.first}{" "}
+                  {listerName.last}
                 </span>
               </div>
               <div className="info-item">
@@ -155,7 +185,7 @@ const CarDetail = () => {
                 <strong>Description:</strong> {car.description}
               </Card.Text>
               <Card.Text>
-                <strong>Location:</strong> {car.location}
+                <strong>Location:</strong> {city}
               </Card.Text>
               <Card.Text>
                 <strong>Available From:</strong> {car.fromDate} {car.fromTime}

@@ -44,7 +44,7 @@ const Home = () => {
       <Element name="about">
         <section id="about" className="about-section">
           <div className="container">
-            <h2 className="section-title">About CaRnR</h2>
+            <h2 className="section-title1">About CaRnR</h2>
             <p className="section-text">
               CaRnR is your ultimate platform for renting cars hassle-free. Whether
               you're planning a road trip or need a special car for an occasion,
@@ -62,7 +62,7 @@ const Home = () => {
       <Element name="services">
         <section id="services" className="services-section">
           <div className="container">
-            <h2 className="section-title">Our Services</h2>
+            <h2 className="section-title1">Our Services</h2>
             <p className="section-text">
               We offer a wide range of car rental services to meet your needs:
             </p>
@@ -95,7 +95,7 @@ const Home = () => {
       <Element name="testimonials">
         <section id="testimonials" className="testimonials-section">
           <div className="container">
-            <h2 className="section-title">Testimonials</h2>
+            <h2 className="section-title1">Testimonials</h2>
             <div className="testimonials">
               <div className="testimonial">
                 <p>"CaRnR made our road trip unforgettable! Great service and amazing cars!" - John Doe</p>
@@ -111,7 +111,7 @@ const Home = () => {
       <Element name="complaint">
         <section id="complaint" className="complaint-section">
           <div className="container">
-            <h2 className="section-title">Complaint Box</h2>
+            <h2 className="section-title1">Complaint Box</h2>
             <form className="complaint-form">
               <div className="form-group">
                 <label htmlFor="name">Name:</label>

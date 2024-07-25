@@ -1,3 +1,4 @@
+// userController.js
 import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 
@@ -23,7 +24,6 @@ const loginUser = async (req, res) => {
 const signupUser = async (req, res) => {
   const { first, last, email, password } = req.body;
 
-  //res.json({ mssg: "signup user" });
   try {
     const user = await User.signup(first, last, email, password);
     const token = createToken(user._id);
@@ -34,5 +34,19 @@ const signupUser = async (req, res) => {
   }
 };
 
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id).select("first last");
+    if (!user) {
+      throw new Error("User not found");
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+};
+
 export default loginUser;
-export { signupUser };
+export { signupUser, getUserById };

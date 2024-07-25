@@ -1,6 +1,7 @@
 import express from "express";
-import listCar from "../controllers/carController.js";
 import {
+  validateCar,
+  listCar,
   getallCar,
   getCar,
   getlisterCars,
@@ -13,7 +14,7 @@ import requiretoke from "../middleware/requiretoke.js";
 const router = express.Router();
 
 // router.use(requiretoke);
-router.post("/list", listCar);
+router.post("/list", validateCar, listCar);
 
 router.get("/getCar", getallCar);
 

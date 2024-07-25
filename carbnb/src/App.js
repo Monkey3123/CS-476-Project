@@ -36,7 +36,7 @@ function App() {
             element={user ? <ListACarPage /> : <RedirectPage />}
           />
           <Route path="/car/:id" element={<CarDetail />} />
-          <Route path="/your-listings" element={<MyListings />} />
+          <Route path="/my-listings" element={<MyListings />} />
           <Route path="/your-bookings" element={<MyBookings />} />
         </Routes>
       </div>
