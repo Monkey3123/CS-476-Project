@@ -10,8 +10,11 @@ import { faUser, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { useBooked } from "../../hooks/useBooked";
 import { useListerName } from "../../hooks/useListerName";
 import { useUnbooked } from "../../hooks/useUnbooked";
+import { usedeleteList } from "../../hooks/usedeleteList";
+import { useLocation } from "react-router-dom";
 
 const CarDetail = () => {
+  const location = useLocation();
   const { id } = useParams();
   const navigate = useNavigate();
   const { car, isLoading, error } = useFetchCar(id);
@@ -21,12 +24,14 @@ const CarDetail = () => {
   const [city, setCity] = useState("");
   const { booked } = useBooked();
   const { Unbooked } = useUnbooked();
+  const { deleteList } = usedeleteList();
   const {
     listerName,
     isLoading: listerLoading,
     error: listerError,
   } = useListerName(car?.listerid);
 
+  console.log(location);
   const handleRentClick = async () => {
     if (!user) {
       setShowAlert(true);
@@ -46,6 +51,18 @@ const CarDetail = () => {
     } else {
       // Booking logic #tejas
       await Unbooked(car._id);
+      setShowModal(true);
+    }
+  };
+
+  const handleUnlistClick = async () => {
+    if (!user) {
+      setShowAlert(true);
+    } else if (car.listerid !== user.id) {
+      alert("You did not list this car");
+    } else {
+      // Booking logic #tejas
+      await deleteList(car._id);
       setShowModal(true);
     }
   };
@@ -213,7 +230,7 @@ const CarDetail = () => {
             <Card.Text>
               <strong>Total:</strong> ${Math.round(car.dailyRate * 1.1)}
             </Card.Text>
-            {!car.booked && (
+            {user.id !== car.listerid && user.id !== car.renterid && (
               <button
                 onClick={handleRentClick}
                 className="btn"
@@ -228,7 +245,7 @@ const CarDetail = () => {
               </button>
             )}
 
-            {car.booked && (
+            {user.id === car.renterid && (
               <button
                 onClick={handleUnrentClick}
                 className="btn"
@@ -240,6 +257,21 @@ const CarDetail = () => {
                 }}
               >
                 Cancel Booking
+              </button>
+            )}
+
+            {user.id === car.listerid && (
+              <button
+                onClick={handleUnlistClick}
+                className="btn"
+                style={{
+                  backgroundColor: "#324b5f",
+                  color: "#ffffff",
+                  borderColor: "#001f3f",
+                  width: "100%",
+                }}
+              >
+                Delete Listing
               </button>
             )}
           </div>

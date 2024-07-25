@@ -5,7 +5,7 @@ export const useBooked = () => {
   const booked = async (cid) => {
     const rid = user.id;
     const response = await fetch("http://localhost:4000/api/carRoutes/booked", {
-      method: "Put",
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ cid, rid }),
     });

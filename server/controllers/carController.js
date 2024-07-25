@@ -160,9 +160,24 @@ const Unbooked = async (req, res) => {
     }
     cars.booked = false;
     cars.renterid = "";
-    const result = await Car.replaceOne({ _id: cid }, cars);
+    await Car.replaceOne({ _id: cid }, cars);
 
     res.status(200).json({ message: "Car sucessfully UnBooked" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Failed to fetch cars" });
+  }
+};
+
+const deleteList = async (req, res) => {
+  const cid = req.body.cid;
+  if (!cid) {
+    return res.status(400).json({ message: "Error: Car ID not found" });
+  }
+  try {
+    await Car.deleteOne({ _id: cid });
+
+    res.status(200).json({ message: "Car sucessfully Unlisted" });
   } catch (err) {
     console.error(err);
     res.status(500).send({ message: "Failed to fetch cars" });
@@ -178,4 +193,5 @@ export {
   booked,
   Unbooked,
   getBookedCars,
+  deleteList,
 };
