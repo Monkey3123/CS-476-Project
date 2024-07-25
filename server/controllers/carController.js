@@ -69,27 +69,6 @@ const getallCar = async (req, res) => {
   }
 };
 
-const booked = async (req, res) => {
-  const cid = req.body.cid;
-  if (!cid) {
-    return res.status(400).json({ message: "Error: Car ID not found" });
-  }
-  try {
-    const cars = await Car.findById(cid);
-
-    if (!cars) {
-      return res.status(404).json({ message: "Car not found" });
-    }
-    cars.booked = true;
-    const result = await Car.replaceOne({ _id: cid }, cars);
-
-    res.status(200).json({ message: "Car sucessfully Booked" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send({ message: "Failed to fetch cars" });
-  }
-};
-
 const getCar = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -159,7 +138,7 @@ const booked = async (req, res) => {
     }
     cars.booked = true;
     cars.renterid = rid;
-    const result = await Car.replaceOne({ _id: cid }, cars);
+    await Car.replaceOne({ _id: cid }, cars);
 
     res.status(200).json({ message: "Car sucessfully Booked" });
   } catch (err) {
@@ -190,10 +169,13 @@ const Unbooked = async (req, res) => {
   }
 };
 
-export default listCar;
-export { getallCar };
-export { getCar };
-export { getlisterCars };
-export { booked };
-export { getBookedCars };
-export { Unbooked };
+export {
+  validateCar,
+  listCar,
+  getallCar,
+  getCar,
+  getlisterCars,
+  booked,
+  Unbooked,
+  getBookedCars,
+};

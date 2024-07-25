@@ -6,13 +6,10 @@ import "./CarDetail.css";
 import { useFetchCar } from "../../hooks/usegetcar";
 import { useUserContext } from "../../hooks/useUserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUser,
-  faCheckCircle,
-  faCalendarAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { useBooked } from "../../hooks/useBooked";
 import { useListerName } from "../../hooks/useListerName";
+import { useUnbooked } from "../../hooks/useUnbooked";
 
 const CarDetail = () => {
   const { id } = useParams();
@@ -23,6 +20,13 @@ const CarDetail = () => {
   const [showModal, setShowModal] = useState(false);
   const [city, setCity] = useState("");
   const { booked } = useBooked();
+  const { Unbooked } = useUnbooked();
+  const {
+    listerName,
+    isLoading: listerLoading,
+    error: listerError,
+  } = useListerName(car?.listerid);
+
   const handleRentClick = async () => {
     if (!user) {
       setShowAlert(true);
@@ -37,7 +41,7 @@ const CarDetail = () => {
   const handleUnrentClick = async () => {
     if (!user) {
       setShowAlert(true);
-    } else if (car.renterid != user.id) {
+    } else if (car.renterid !== user.id) {
       alert("You did not book this car");
     } else {
       // Booking logic #tejas
