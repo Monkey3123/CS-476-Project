@@ -1,5 +1,5 @@
 "use client";
-import "./mapStyles.css";
+import "../Styles/MapStyles.css";
 import React, { useState, useEffect, useRef } from "react";
 import {
   APIProvider,

@@ -1,6 +1,6 @@
-import "./CarPage.css";
-import Card from "./Card";
-import { useFetchCars } from "../../hooks/usegetallCar";
+import "../components/Styles/CarPage.css";
+import Card from "../components/Assets/Card";
+import { useFetchCars } from "../hooks/usegetallCar";
 import { useState } from "react";
 import { FaSortAmountDown, FaSortAmountUp } from "react-icons/fa";
 
@@ -21,7 +21,9 @@ const CarPage = () => {
         <button
           onClick={handleSortChange}
           className="sort-btn"
-          aria-label={`Sort by price ${sortOption === "asc" ? "ascending" : "descending"}`}
+          aria-label={`Sort by price ${
+            sortOption === "asc" ? "ascending" : "descending"
+          }`}
         >
           {sortOption === "asc" ? <FaSortAmountDown /> : <FaSortAmountUp />}
         </button>

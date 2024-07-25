@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Spinner, Modal } from "react-bootstrap";
-import SnackbarAlert from "../RedirectPage/SnackbarAlert";
-import "./CarDetail.css";
-import { useFetchCar } from "../../hooks/usegetcar";
-import { useUserContext } from "../../hooks/useUserContext";
+import SnackbarAlert from "../components/Navigation/SnackbarAlert";
+import "../components/Styles/CarDetail.css";
+import { useFetchCar } from "../hooks/usegetcar";
+import { useUserContext } from "../hooks/useUserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { useBooked } from "../../hooks/useBooked";
-import { useListerName } from "../../hooks/useListerName";
-import { useUnbooked } from "../../hooks/useUnbooked";
-import { usedeleteList } from "../../hooks/usedeleteList";
+import { useBooked } from "../hooks/useBooked";
+import { useListerName } from "../hooks/useListerName";
+import { useUnbooked } from "../hooks/useUnbooked";
+import { usedeleteList } from "../hooks/usedeleteList";
 import { useLocation } from "react-router-dom";
 
 const CarDetail = () => {

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import carBanner from "../../images/option2.jpg";
-import "./SignupPage.css";
-import { useSignup } from "../../hooks/useSignup";
+import React, { useState } from "react";
+import carBanner from "../images/option2.jpg";
+import "../components/Styles/SignupPage.css";
+import { useSignup } from "../hooks/useSignup";
 import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {

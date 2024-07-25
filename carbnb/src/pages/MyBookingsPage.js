@@ -1,8 +1,8 @@
 import React from "react";
-import { useFetchBookedCars } from "../../hooks/useGetBooked";
+import { useFetchBookedCars } from "../hooks/useGetBooked";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./Listings.css";
+import "../components/Styles/Listings.css";
 
 const MyBookings = () => {
   const { Bookings, isLoading, error } = useFetchBookedCars();

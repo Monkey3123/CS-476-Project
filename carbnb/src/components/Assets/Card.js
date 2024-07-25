@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./Card.css";
+import "../Styles/Card.css";
 
 const Card = ({ id, imgSrc, imgAlt, title, description, price }) => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const Card = ({ id, imgSrc, imgAlt, title, description, price }) => {
 
   const truncate = (str, maxLength) => {
     if (str.length <= maxLength) return str;
-    return str.slice(0, maxLength) + '...';
+    return str.slice(0, maxLength) + "...";
   };
 
   return (

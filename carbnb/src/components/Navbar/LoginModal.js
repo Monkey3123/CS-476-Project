@@ -1,24 +1,20 @@
 import React, { useState } from "react";
 import { Modal } from "bootstrap";
-import { Link } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
 import SignUpModal from "./SignUpModal";
-import "./LoginModal.css";
+import "../Styles/LoginModal.css";
 
 function LoginModal() {
-  const [show, setShow] = useState(false);
   const modalRef = React.createRef();
 
   const handleClose = () => {
     const modal = Modal.getInstance(modalRef.current);
     modal.hide();
-    setShow(false);
   };
 
   const handleShow = () => {
     const modal = new Modal(modalRef.current);
     modal.show();
-    setShow(true);
   };
 
   const [email, setemail] = useState("");
@@ -31,7 +27,6 @@ function LoginModal() {
     const res = await login(email, password);
     if (res) {
       modal.hide();
-      setShow(false);
     }
   };
 
@@ -40,7 +35,11 @@ function LoginModal() {
       <a href="#" className="nav-link" onClick={handleShow}>
         <button
           className="btn"
-          style={{ backgroundColor: '#324b5f', color: '#ffffff', borderColor: '#001f3f' }}
+          style={{
+            backgroundColor: "#324b5f",
+            color: "#ffffff",
+            borderColor: "#001f3f",
+          }}
         >
           Log In
         </button>
@@ -70,7 +69,9 @@ function LoginModal() {
             <div className="modal-body">
               <form className="login" onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                  <label htmlFor="exampleInputEmail1" className="form-label">
+                    Email address
+                  </label>
                   <input
                     type="email"
                     className="form-control"
@@ -79,10 +80,14 @@ function LoginModal() {
                     value={email}
                     onChange={(e) => setemail(e.target.value)}
                   />
-                  <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                  <div id="emailHelp" className="form-text">
+                    We'll never share your email with anyone else.
+                  </div>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                  <label htmlFor="exampleInputPassword1" className="form-label">
+                    Password
+                  </label>
                   <input
                     type="password"
                     className="form-control"
@@ -95,14 +100,19 @@ function LoginModal() {
                   type="submit"
                   disabled={isLoading}
                   className="btn"
-                  style={{ backgroundColor: '#324b5f', color: '#ffffff', borderColor: '#001f3f' }}
+                  style={{
+                    backgroundColor: "#324b5f",
+                    color: "#ffffff",
+                    borderColor: "#001f3f",
+                  }}
                 >
                   Submit
                 </button>
                 {error && <div className="error">{error}</div>}
                 <div className="sign-up-link">
-                  <div onClick={handleClose}><span>Need an account? </span>
-                  <SignUpModal />
+                  <div onClick={handleClose}>
+                    <span>Need an account? </span>
+                    <SignUpModal />
                   </div>
                 </div>
               </form>

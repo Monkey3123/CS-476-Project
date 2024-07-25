@@ -1,9 +1,9 @@
 import React from "react";
-import Calender from "./Calender";
-import Clock from "./Clock";
-import Map from "./Map";
+import Calender from "../components/Assets/Calender";
+import Clock from "../components/Assets/Clock";
+import Map from "../components/Assets/Map";
 import { useNavigate } from "react-router-dom";
-import "./FindCars.css";
+import "../components/Styles/FindCars.css";
 const FindCars = () => {
   const navigate = useNavigate();
 

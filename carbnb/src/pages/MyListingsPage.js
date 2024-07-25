@@ -1,9 +1,8 @@
 import React from "react";
-import { useFetchListerCars } from "../../hooks/useCarListings";
+import { useFetchListerCars } from "../hooks/useCarListings";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./Listings.css";
-
+import "../components/Styles/Listings.css";
 const MyListings = () => {
   const { listings, isLoading, error } = useFetchListerCars();
 

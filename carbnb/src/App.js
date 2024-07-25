@@ -1,18 +1,17 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import NavBar from "./components/Navbar";
-import Home from "./components/Home/Home";
-import RentalDetails from "./components/RentalDetails/RentalDetails";
-import SignUpPage from "./components/SignUpPage/SignUpPage";
-import FindCars from "./components/Date/FindCars";
-import CarPage from "./components/CarsPage/CarPage";
-import CarDetail from "./components/CarsPage/CarDetail";
-import ListACarPage from "./components/ListACarPage/ListACarPage";
+import NavBar from "./components/Navbar/Navbar";
+import Home from "./pages/HomePage";
+import SignUpPage from "./pages/SignUpPage";
+import FindCars from "./pages/FindCarsPage";
+import CarPage from "./pages/RentCarPage";
+import CarDetail from "./pages/CarDetailPage";
+import ListACarPage from "./pages/ListACarPage";
 import { useUserContext } from "./hooks/useUserContext";
-import MyListings from "./components/Menubar/MyListings";
-import MyBookings from "./components/Menubar/MyBookings";
-import RedirectPage from "./components/RedirectPage/RedirectPage";
+import MyListings from "./pages/MyListingsPage";
+import MyBookings from "./pages/MyBookingsPage";
+import RedirectPage from "./components/Navigation/RedirectPage";
 
 function App() {
   const { user } = useUserContext();
@@ -22,7 +21,6 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/rental-details" element={<RentalDetails />} />
           <Route path="/SignUpPage" element={<SignUpPage />} />
           <Route path="FindCars" element={<FindCars />} />
           <Route path="CarPage" element={<CarPage />} />
