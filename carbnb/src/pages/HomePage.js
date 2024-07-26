@@ -130,46 +130,6 @@ const Home = () => {
         </section>
       </Element>
 
-      <Element name="complaint">
-        <section id="complaint" className="complaint-section">
-          <div className="container">
-            <h2 className="section-title1">Complaint Box</h2>
-            <form className="complaint-form">
-              <div className="form-group">
-                <label htmlFor="name">Name:</label>
-                <input
-                  type="text"
-                  id="name"
-                  className="form-control"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">Email:</label>
-                <input
-                  type="email"
-                  id="email"
-                  className="form-control"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="message">Complaint:</label>
-                <textarea
-                  id="message"
-                  className="form-control"
-                  rows="4"
-                  required
-                ></textarea>
-              </div>
-              <button type="submit" className="btn fancy-button">
-                Submit
-              </button>
-            </form>
-          </div>
-        </section>
-      </Element>
-
       <Element name="contact">
         <section id="contact" className="contact-section">
           <div className="container">

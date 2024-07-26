@@ -78,17 +78,6 @@ const NavBar = () => {
               </li>
               <li className="nav-item">
                 <ScrollLink
-                  to="complaint"
-                  smooth={true}
-                  duration={5}
-                  className="nav-link"
-                  style={{ cursor: "pointer" }}
-                >
-                  Complaints
-                </ScrollLink>
-              </li>
-              <li className="nav-item">
-                <ScrollLink
                   to="contact"
                   smooth={true}
                   duration={5}
