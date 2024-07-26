@@ -81,7 +81,7 @@ const CarDetail = () => {
       if (car && car.lat && car.long) {
         try {
           const response = await fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${car.lat},${car.long}&key=YOUR_API_KEY`
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${car.lat},${car.long}&key=AIzaSyBotUHtXai93ly5YG8OPEWTKKls5JpSCJ8`
           );
           if (!response.ok) {
             throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -137,12 +137,21 @@ const CarDetail = () => {
         message="You need to be logged in to book a car."
         onClose={handleCloseAlert}
       />
+
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Booking Confirmation</Modal.Title>
+          {user.id === car.renterid && (
+            <Modal.Title>Booking Cancellation</Modal.Title>
+          )}
+          {user.id !== car.listerid && user.id !== car.renterid && (
+            <Modal.Title>Booking Confirmation</Modal.Title>
+          )}
+          {user.id === car.listerid && (
+            <Modal.Title>Listing deleted</Modal.Title>
+          )}
         </Modal.Header>
         <Modal.Body>
-          Your booking request for {car.make} {car.model} has been confirmed!
+          Your request for {car.make} {car.model} has been confirmed!
         </Modal.Body>
         <Modal.Footer>
           <button

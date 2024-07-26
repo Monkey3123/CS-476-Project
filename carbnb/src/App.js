@@ -30,7 +30,7 @@ function App() {
           />
           <Route path="/car/:id" element={<CarDetail />} />
           <Route path="/my-listings" element={<MyListings />} />
-          <Route path="/your-bookings" element={<MyBookings />} />
+          <Route path="/my-bookings" element={<MyBookings />} />
         </Routes>
       </div>
     </Router>
