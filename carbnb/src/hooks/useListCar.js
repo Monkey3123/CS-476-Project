@@ -1,11 +1,23 @@
+//
+//Custom Hook: useListCar
+//
+//This custom React hook manages the listing of a car. It provides functionality to:
+// - Manage error and loading states.
+// - Perform a POST request to the backend API to list a car with details and a photo.
+//
+//The hook uses the `useUserContext` to get the current user's ID and includes it in the request.
+//It returns an object with the `listCar` function, error state, and loading state.
+//
 import { useState } from "react";
 import { useUserContext } from "./useUserContext";
 
 export const useListCar = () => {
+  // State variables to manage error and loading states
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useUserContext();
 
+  // Function to list a car, accepting car details and a photo
   const listCar = async (carDetails, carPhoto) => {
     setIsLoading(true);
     setError(null);
@@ -15,7 +27,7 @@ export const useListCar = () => {
       ...carDetails,
       photo: carPhoto,
       listerid: user.id,
-      booked: false, // Ensure this is a boolean
+      booked: false,
     };
 
     try {

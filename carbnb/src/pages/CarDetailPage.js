@@ -1,5 +1,13 @@
+//
+//CarDetail Component
+//
+//This component fetches and displays details of a car. It provides functionalities
+//for users to book, unbook, or delete a car listing. Users need to be logged in to
+//perform these actions. The component also shows a modal for confirmation and alerts
+//if a user needs to log in.
+
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Container, Row, Col, Card, Spinner, Modal } from "react-bootstrap";
 import SnackbarAlert from "../components/Navigation/SnackbarAlert";
 import "../components/Styles/CarDetail.css";
@@ -10,78 +18,85 @@ import { faUser, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { useBooked } from "../hooks/useBooked";
 import { useListerName } from "../hooks/useListerName";
 import { useUnbooked } from "../hooks/useUnbooked";
-import { usedeleteList } from "../hooks/usedeleteList";
-import { useLocation } from "react-router-dom";
+import { useDeleteList } from "../hooks/usedeleteList";
 
 const CarDetail = () => {
-  const location = useLocation();
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const { car, isLoading, error } = useFetchCar(id);
-  const { user } = useUserContext();
-  const [showAlert, setShowAlert] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [city, setCity] = useState("");
-  const { booked } = useBooked();
-  const { Unbooked } = useUnbooked();
-  const { deleteList } = usedeleteList();
+  // Hooks and State Definitions
+  const location = useLocation(); // Get the current location object
+  const { id } = useParams(); // Get car ID from route parameters
+  const navigate = useNavigate(); // Function to navigate programmatically
+  const { car, isLoading, error } = useFetchCar(id); // Fetch car data using custom hook
+  const { user } = useUserContext(); // Access user context for authentication info
+  const [showAlert, setShowAlert] = useState(false); // State to manage alert visibility
+  const [showModal, setShowModal] = useState(false); // State to manage modal visibility
+  const [city, setCity] = useState(""); // State to store the city name
+  const { booked } = useBooked(); // Custom hook for booking a car
+  const { Unbooked } = useUnbooked(); // Custom hook for unbooking a car
+  const { deleteList } = useDeleteList(); // Custom hook for deleting a car listing
   const {
     listerName,
     isLoading: listerLoading,
     error: listerError,
-  } = useListerName(car?.listerid);
+  } = useListerName(car?.listerid); // Fetch lister's name using custom hook
 
   console.log(location);
+
+  // Handle car booking action
   const handleRentClick = async () => {
     if (!user) {
-      setShowAlert(true);
+      setShowAlert(true); // Show alert if user is not logged in
     } else if (car.listerid === user.id) {
-      alert("You listed this car");
+      alert("You listed this car"); // Alert if user is the car lister
     } else {
-      await booked(car._id);
-      setShowModal(true);
+      await booked(car._id); // Proceed with booking
+      setShowModal(true); // Show confirmation modal
     }
   };
 
+  // Handle car unbooking action
   const handleUnrentClick = async () => {
     if (!user) {
-      setShowAlert(true);
+      setShowAlert(true); // Show alert if user is not logged in
     } else if (car.renterid !== user.id) {
-      alert("You did not book this car");
+      alert("You did not book this car"); // Alert if user did not book the car
     } else {
-      // Booking logic #tejas
-      await Unbooked(car._id);
-      setShowModal(true);
+      // Unbooking logic
+      await Unbooked(car._id); // Proceed with unbooking
+      setShowModal(true); // Show confirmation modal
     }
   };
 
+  // Handle car listing deletion action
   const handleUnlistClick = async () => {
     if (!user) {
-      setShowAlert(true);
+      setShowAlert(true); // Show alert if user is not logged in
     } else if (car.listerid !== user.id) {
-      alert("You did not list this car");
+      alert("You did not list this car"); // Alert if user did not list the car
     } else {
-      // Booking logic #tejas
-      await deleteList(car._id);
-      setShowModal(true);
+      // Deleting listing logic
+      await deleteList(car._id); // Proceed with deleting the listing
+      setShowModal(true); // Show confirmation modal
     }
   };
 
+  // Close the alert
   const handleCloseAlert = () => {
     setShowAlert(false);
   };
 
+  // Close the modal and navigate back
   const handleCloseModal = () => {
     setShowModal(false);
-    navigate(-1);
+    navigate(-1); // Navigate back to previous page
   };
 
+  // Fetch city name based on latitude and longitude
   useEffect(() => {
     const fetchCityName = async () => {
       if (car && car.lat && car.long) {
         try {
           const response = await fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${car.lat},${car.long}&key=AIzaSyBotUHtXai93ly5YG8OPEWTKKls5JpSCJ8`
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${car.lat},${car.long}&key=YOUR_API_KEY`
           );
           if (!response.ok) {
             throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -106,6 +121,7 @@ const CarDetail = () => {
     }
   }, [car]);
 
+  // Render loading spinner if data is loading
   if (isLoading || listerLoading) {
     return (
       <Container
@@ -119,6 +135,7 @@ const CarDetail = () => {
     );
   }
 
+  // Render error message if there's an error
   if (error || listerError) {
     return (
       <Container
@@ -130,6 +147,7 @@ const CarDetail = () => {
     );
   }
 
+  // Render car details
   return (
     <Container className="my-5 car-detail-container">
       <SnackbarAlert

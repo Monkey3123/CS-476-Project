@@ -1,3 +1,9 @@
+//CarPage Component
+//
+//This component fetches and displays a list of cars available for rent.
+//It includes functionality to sort the cars by price in ascending or descending order.
+//The component shows a loading message while data is being fetched and an error message if an error occurs.
+
 import "../components/Styles/CarPage.css";
 import Card from "../components/Assets/Card";
 import { useFetchCars } from "../hooks/usegetallCar";
@@ -5,10 +11,15 @@ import { useState } from "react";
 import { FaSortAmountDown, FaSortAmountUp } from "react-icons/fa";
 
 const CarPage = () => {
+  // Destructuring the result of useFetchCars hook
   const { cars, isLoading, error, setSortOrder } = useFetchCars();
+  // State to manage the sort option (ascending or descending)
   const [sortOption, setSortOption] = useState("asc");
 
+  //Handles the sort option change between ascending and descending
+
   const handleSortChange = () => {
+    // Toggle the sort order
     const newSortOrder = sortOption === "asc" ? "desc" : "asc";
     setSortOption(newSortOrder);
     setSortOrder(newSortOrder);
@@ -28,9 +39,12 @@ const CarPage = () => {
           {sortOption === "asc" ? <FaSortAmountDown /> : <FaSortAmountUp />}
         </button>
       </div>
+      {/* Display loading message while data is being fetched */}
       {isLoading && <p>Loading cars...</p>}
+      {/* Display error message if an error occurs during fetching */}
       {error && <p>{error}</p>}
       <div className="cards-container">
+        {/* Render a Card component for each car */}
         {cars.map((car) => (
           <Card
             key={car._id}

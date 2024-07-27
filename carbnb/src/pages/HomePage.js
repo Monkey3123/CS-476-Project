@@ -1,3 +1,14 @@
+// Home Component
+//
+// This component renders the homepage of the CaRnR web application. It includes:
+// - A banner section with a background image and call-to-action buttons.
+// - An about section describing the purpose of CaRnR.
+// - A services section highlighting different rental options available.
+// - A testimonials section showcasing user reviews.
+// - A contact section with email and social media information.
+// - A footer with copyright information.
+//
+
 import React from "react";
 import { Link } from "react-router-dom";
 import carBanner from "../images/car-banner.jpg";
@@ -11,6 +22,7 @@ import { Element } from "react-scroll";
 const Home = () => {
   return (
     <div className="home-page">
+      {/* Banner section with a background image and call-to-action buttons */}
       <div
         className="banner"
         style={{
@@ -41,6 +53,7 @@ const Home = () => {
         </div>
       </div>
 
+      {/* About section explaining the purpose of CaRnR */}
       <Element name="about">
         <section id="about" className="about-section">
           <div className="container">
@@ -59,6 +72,7 @@ const Home = () => {
         </section>
       </Element>
 
+      {/* Services section highlighting the different rental options */}
       <Element name="services">
         <section id="services" className="services-section">
           <div className="container">
@@ -108,6 +122,7 @@ const Home = () => {
         </section>
       </Element>
 
+      {/* Testimonials section featuring user reviews */}
       <Element name="testimonials">
         <section id="testimonials" className="testimonials-section">
           <div className="container">
@@ -130,6 +145,7 @@ const Home = () => {
         </section>
       </Element>
 
+      {/* Contact section with email and social media information */}
       <Element name="contact">
         <section id="contact" className="contact-section">
           <div className="container">
@@ -145,6 +161,7 @@ const Home = () => {
         </section>
       </Element>
 
+      {/* Footer with copyright information */}
       <footer className="bg-body-tertiary">
         <p className="p-3 m-0 text-center">
           &copy; {new Date().getFullYear()} CaRnR. All rights reserved.

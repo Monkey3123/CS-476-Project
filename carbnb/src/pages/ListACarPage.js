@@ -1,14 +1,28 @@
+//
+//ListACarPage Component
+//
+//This React component provides a multi-step form for users to list their car for rent on the CaRnR platform.
+//It includes the following steps:
+// 1. Welcome Section: Introduction and start button.
+// 2. Car Details: Form fields to input car specifications (make, model, year, etc.).
+// 3. Photos: Option to upload a car photo.
+// 4. Pricing & Availability: Form for pricing, availability, and location selection using a map.
+//
+//The component handles form navigation, file uploads, and form submission. It uses hooks for managing state
+//and navigating between steps, and integrates with a custom hook for listing the car and handling errors.
 import React, { useState } from "react";
-import "../components/Styles/ListACarPage.css";
-import Clock from "../components/Assets/Clock";
-import Calender from "../components/Assets/Calender";
-import MyMap from "../components/Assets/Map";
-import { useListCar } from "../hooks/useListCar";
-import { useNavigate } from "react-router-dom";
+import "../components/Styles/ListACarPage.css"; // Import custom styles
+import Clock from "../components/Assets/Clock"; // Import Clock component
+import Calender from "../components/Assets/Calender"; // Import Calendar component
+import MyMap from "../components/Assets/Map"; // Import Map component
+import { useListCar } from "../hooks/useListCar"; // Custom hook for listing cars
+import { useNavigate } from "react-router-dom"; // Hook for navigation
 
+// Main component for listing a car
 const ListACarPage = () => {
-  const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(0);
+  // State hooks
+  const navigate = useNavigate(); // Hook for navigation
+  const [currentStep, setCurrentStep] = useState(0); // Step in the form
   const [carDetails, setCarDetails] = useState({
     make: "",
     model: "",
@@ -27,11 +41,12 @@ const ListACarPage = () => {
     fromTime: "10:00",
     toTime: "10:00",
   });
-  const [carPhoto, setCarPhoto] = useState(null);
-  const [errors, setErrors] = useState({});
+  const [carPhoto, setCarPhoto] = useState(null); // State for car photo
+  const [errors, setErrors] = useState({}); // State for form errors
 
-  const { listCar } = useListCar();
+  const { listCar } = useListCar(); // Hook function for listing the car
 
+  // Handle changes to input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCarDetails({
@@ -40,6 +55,7 @@ const ListACarPage = () => {
     });
   };
 
+  // Handle changes to date fields
   const handleDateChange = (name, value) => {
     setCarDetails({
       ...carDetails,
@@ -47,6 +63,7 @@ const ListACarPage = () => {
     });
   };
 
+  // Handle changes to time fields
   const handleTimeChange = (name, value) => {
     setCarDetails({
       ...carDetails,
@@ -54,19 +71,22 @@ const ListACarPage = () => {
     });
   };
 
+  // Move to the next step
   const handleNext = () => {
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
     }
   };
 
+  // Move to the previous step
   const handlePrev = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
   };
 
-  const uploadFile = async (type) => {
+  // Upload file to the cloudinary api server
+  const uploadFile = async () => {
     const formData = new FormData();
     formData.append("file", carPhoto);
     formData.append("upload_preset", "User images");
@@ -84,6 +104,7 @@ const ListACarPage = () => {
     }
   };
 
+  // Handle the selection of location on the map
   const handleLocationSelect = ({ lat, lng }) => {
     setCarDetails((prevDetails) => ({
       ...prevDetails,
@@ -93,6 +114,7 @@ const ListACarPage = () => {
     console.log("Location Selected:", lat, lng);
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitting Car Details:", carDetails);
@@ -112,6 +134,7 @@ const ListACarPage = () => {
 
   return (
     <div>
+      {/* Conditional rendering based on the current step */}
       {currentStep === 0 ? (
         <div className="welcome-section">
           <div className="welcome-text">
@@ -124,6 +147,7 @@ const ListACarPage = () => {
         </div>
       ) : (
         <div className="list-car-page">
+          {/* Step progress indicator */}
           <div className="step-progress">
             <div className={`step ${currentStep >= 1 ? "completed" : ""}`}>
               1. Car Details
@@ -135,10 +159,12 @@ const ListACarPage = () => {
               3. Pricing & Availability
             </div>
           </div>
+          {/* Display form errors */}
           {errors.form && (
             <div className="alert alert-danger">{errors.form}</div>
           )}
           <form onSubmit={handleSubmit} encType="multipart/form-data">
+            {/* Car Details Form */}
             {currentStep === 1 && (
               <div className="step-content">
                 <h2>Car Details</h2>
@@ -263,6 +289,7 @@ const ListACarPage = () => {
               </div>
             )}
 
+            {/* Photos Upload Form */}
             {currentStep === 2 && (
               <div className="step-content">
                 <h2>Photos</h2>
@@ -281,6 +308,7 @@ const ListACarPage = () => {
               </div>
             )}
 
+            {/* Pricing & Availability Form */}
             {currentStep === 3 && (
               <div className="step-content">
                 <h2>Pricing & Availability</h2>
@@ -301,7 +329,6 @@ const ListACarPage = () => {
                 {errors.dailyRate && (
                   <div className="invalid-feedback">{errors.dailyRate}</div>
                 )}
-
                 <label>Choose Pickup and Dropoff Location</label>
                 <div className="d-flex justify-content-center">
                   <MyMap
@@ -315,7 +342,6 @@ const ListACarPage = () => {
                 {errors.long && (
                   <div className="invalid-feedback">{errors.long}</div>
                 )}
-
                 <div className="date-time-picker">
                   <label>From Date</label>
                   <Calender
@@ -341,6 +367,7 @@ const ListACarPage = () => {
               </div>
             )}
 
+            {/* Navigation Buttons */}
             <div className="navigation-buttons mt-3 d-flex justify-content-between">
               {currentStep > 0 && (
                 <button
@@ -378,4 +405,5 @@ const ListACarPage = () => {
     </div>
   );
 };
+
 export default ListACarPage;
