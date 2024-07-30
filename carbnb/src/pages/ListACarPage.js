@@ -123,7 +123,9 @@ const ListACarPage = () => {
       if (carPhoto) {
         imgURL = await uploadFile();
       }
+      console.time("listCar");
       await listCar(carDetails, imgURL);
+      console.timeEnd("listCar");
       setCarPhoto(null);
       navigate("/");
     } catch (error) {

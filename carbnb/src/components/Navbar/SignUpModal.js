@@ -32,7 +32,9 @@ const SignUpModal = () => {
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
+    console.time("Signup");
     const res = await signup(first, last, email, password); // Call signup function from the hook
+    console.timeEnd("Signup");
     if (res) {
       handleClose(); // Close the modal if signup is successful
     }
