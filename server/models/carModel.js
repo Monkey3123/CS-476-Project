@@ -11,11 +11,11 @@ const carSchema = new Schema({
   },
 
   year: {
-    type: String,
+    type: Number,
   },
 
   odometer: {
-    type: String,
+    type: Number,
   },
   transmission: {
     type: String,
@@ -24,7 +24,7 @@ const carSchema = new Schema({
     type: String,
   },
   seatingCapacity: {
-    type: String,
+    type: Number,
   },
   color: {
     type: String,
@@ -33,7 +33,7 @@ const carSchema = new Schema({
     type: String,
   },
   dailyRate: {
-    type: String,
+    type: Number,
   },
   lat: {
     type: String,

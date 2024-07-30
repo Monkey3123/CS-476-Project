@@ -1,6 +1,7 @@
 import { check, validationResult } from "express-validator";
 import Car from "../models/carModel.js";
 import mongoose from "mongoose";
+import Factory from "./factory.js";
 const validateCar = [
   check("make").notEmpty().withMessage("Make is required"),
   check("model").notEmpty().withMessage("Model is required"),
@@ -29,35 +30,14 @@ const listCar = async (req, res) => {
   }
 
   try {
-    const carmodel = new Car({
-      make: req.body.make,
-      model: req.body.model,
-      year: req.body.year,
-      odometer: req.body.odometer,
-      transmission: req.body.transmission,
-      fuelType: req.body.fuelType,
-      seatingCapacity: req.body.seatingCapacity,
-      color: req.body.color,
-      description: req.body.description,
-      dailyRate: req.body.dailyRate,
-      lat: req.body.lat,
-      long: req.body.long,
-      fromDate: req.body.fromDate,
-      toDate: req.body.toDate,
-      fromTime: req.body.fromTime,
-      toTime: req.body.toTime,
-      photo: req.body.photo,
-      listerid: req.body.listerid,
-      booked: req.body.booked,
-    });
-
-    await carmodel.save();
+    const carmodel = Factory.createObject("createCar", req);
     res.status(200).send({ message: "Car listed successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).send({ message: "Failed to list car" });
   }
 };
+
 const getallCar = async (req, res) => {
   try {
     const cars = await Car.find({ booked: false });

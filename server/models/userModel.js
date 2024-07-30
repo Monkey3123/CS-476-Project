@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import validator from "validator";
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -23,29 +22,6 @@ const userSchema = new Schema({
     required: true,
   },
 });
-
-userSchema.statics.signup = async function (first, last, email, password) {
-  if (!first || !last || !email || !password) {
-    throw Error("All fields must be filled ");
-  }
-  if (!validator.isEmail(email)) {
-    throw Error("Email not valid");
-  }
-  if (!validator.isStrongPassword(password)) {
-    throw Error("Password too weak");
-  }
-
-  const exists = await this.findOne({ email });
-  if (exists) {
-    throw Error("Email in use");
-  }
-
-  const salt = await bcrypt.genSalt(10);
-  const hash = await bcrypt.hash(password, salt);
-  const user = await this.create({ first, last, email, password: hash });
-
-  return user;
-};
 
 userSchema.statics.login = async function (email, password) {
   if (!email || !password) {
