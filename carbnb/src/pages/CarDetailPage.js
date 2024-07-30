@@ -158,13 +158,13 @@ const CarDetail = () => {
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          {user.id === car.renterid && (
+          {user && user.id === car.renterid && (
             <Modal.Title>Booking Cancellation</Modal.Title>
           )}
-          {user.id !== car.listerid && user.id !== car.renterid && (
+          {user && user.id !== car.listerid && user.id !== car.renterid && (
             <Modal.Title>Booking Confirmation</Modal.Title>
           )}
-          {user.id === car.listerid && (
+          {user && user.id === car.listerid && (
             <Modal.Title>Listing deleted</Modal.Title>
           )}
         </Modal.Header>
@@ -257,7 +257,7 @@ const CarDetail = () => {
             <Card.Text>
               <strong>Total:</strong> ${Math.round(car.dailyRate * 1.1)}
             </Card.Text>
-            {user.id !== car.listerid && user.id !== car.renterid && (
+            {user && user.id !== car.listerid && user.id !== car.renterid && (
               <button
                 onClick={handleRentClick}
                 className="btn"
@@ -272,7 +272,7 @@ const CarDetail = () => {
               </button>
             )}
 
-            {user.id === car.renterid && (
+            {user && user.id === car.renterid && (
               <button
                 onClick={handleUnrentClick}
                 className="btn"
@@ -287,7 +287,7 @@ const CarDetail = () => {
               </button>
             )}
 
-            {user.id === car.listerid && (
+            {user && user.id === car.listerid && (
               <button
                 onClick={handleUnlistClick}
                 className="btn"
