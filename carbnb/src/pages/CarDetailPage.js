@@ -96,7 +96,7 @@ const CarDetail = () => {
       if (car && car.lat && car.long) {
         try {
           const response = await fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${car.lat},${car.long}&key=YOUR_API_KEY`
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${car.lat},${car.long}&key=AIzaSyBotUHtXai93ly5YG8OPEWTKKls5JpSCJ8`
           );
           if (!response.ok) {
             throw new Error(`Error: ${response.status} ${response.statusText}`);
