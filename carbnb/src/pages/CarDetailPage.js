@@ -19,7 +19,6 @@ import { useBooked } from "../hooks/useBooked";
 import { useListerName } from "../hooks/useListerName";
 import { useUnbooked } from "../hooks/useUnbooked";
 import { useDeleteList } from "../hooks/usedeleteList";
-import { useLocation } from "react-router-dom";
 
 const CarDetail = () => {
   // Hooks and State Definitions

@@ -4,7 +4,7 @@
 // It includes date and time pickers and a map component. The user can
 // submit the form to navigate to the CarPage.
 
-import React from "react";
+import React, { useState } from "react";
 import Calender from "../components/Assets/Calender"; // Component for date selection
 import Clock from "../components/Assets/Clock"; // Component for time selection
 import Map from "../components/Assets/Map"; // Component to display a map
@@ -15,6 +15,11 @@ import "../components/Styles/FindCars.css"; // Styles specific to this component
 const FindCars = () => {
   // Hook to programmatically navigate to different routes
   const navigate = useNavigate();
+  const [location, setLocation] = useState({ lat: null, lng: null });
+
+  const handleLocationSelect = (lat, lng) => {
+    setLocation({ lat, lng });
+  };
 
   // Function to navigate to the CarPage route when called
   const CarPage = () => {
@@ -30,7 +35,7 @@ const FindCars = () => {
         </h1>
         <div className="d-flex justify-content-center">
           {/* Map component to display a map */}
-          <Map />
+          <Map onLocationSelect={handleLocationSelect} />
         </div>
         <div className="row">
           <div className="col-4" />
