@@ -46,12 +46,15 @@ const MyListings = () => {
                 <p
                   style={{
                     color: "#324b5f",
-                    fontSize: "1.2rem", // Corrected unit to 'rem'
+                    fontSize: "1.2rem", 
                     fontWeight: "bold",
                   }}
                 >
                   ${car.dailyRate} CAD day
                 </p>
+                {car.booked && (
+                  <span className="booked-tag">Booked</span>
+                )}
               </div>
             </div>
           </Link>

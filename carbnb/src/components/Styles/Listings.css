@@ -77,3 +77,15 @@
   text-overflow: ellipsis;
   word-break: break-word;
 }
+
+.booked-tag {
+  display: inline-block;
+  background-color: #325f41; 
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-top: 10px; 
+  width: 71px;
+}
