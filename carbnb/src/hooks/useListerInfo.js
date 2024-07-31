@@ -1,19 +1,19 @@
-// Custom React Hook for Fetching Lister's Name
+// Custom React Hook for Fetching Lister's Info
 //
-// This custom hook, `useListerName`, is used to fetch and manage the state of a lister's name
+// This custom hook, `useListerInfo`, is used to fetch and manage the state of a lister's info
 // based on the provided `listerId`. It handles the following:
-// - `listerName`: State to store the lister's first and last name.
+// - `listerInfo`: State to store the lister's Info.
 // - `error`: State to store any error message encountered during the fetch operation.
 // - `isLoading`: State to track the loading status of the fetch operation.
 //
-// The hook makes an API call to retrieve the lister's name, updates the state accordingly,
-// and returns the lister's name, loading status, and any errors encountered.
+// The hook makes an API call to retrieve the lister's info, updates the state accordingly,
+// and returns the lister's info, loading status, and any errors encountered.
 
 import { useState, useEffect } from "react";
 
-export const useListerName = (listerId) => {
-  // State to store the lister's name (first and last).
-  const [listerName, setListerName] = useState({ first: "", last: "" });
+export const useListerInfo = (listerId) => {
+  // State to store the lister's info (first and last and email).
+  const [listerInfo, setListerInfo] = useState({ first: "", last: "", email: "" });
 
   // State to store any error message encountered during the fetch operation.
   const [error, setError] = useState(null);
@@ -22,13 +22,13 @@ export const useListerName = (listerId) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Function to fetch the lister's name from the API.
-    const fetchListerName = async () => {
+    // Function to fetch the lister's info from the API.
+    const fetchListerInfo = async () => {
       // Return early if no listerId is provided.
       if (!listerId) return;
 
       try {
-        // Make an API request to fetch the lister's name.
+        // Make an API request to fetch the lister's info.
         const response = await fetch(
           `http://localhost:4000/api/userRoutes/${listerId}`
         );
@@ -38,9 +38,10 @@ export const useListerName = (listerId) => {
           throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
 
-        // Parse the response JSON and set the lister's name state.
+        // Parse the response JSON and set the lister's info state.
         const data = await response.json();
-        setListerName({ first: data.first, last: data.last });
+        console.log('Fetched Data:', data); // Debugging line
+        setListerInfo({ first: data.first, last: data.last, email: data.email});
       } catch (error) {
         // Set the error state if an error is encountered.
         setError(error.message);
@@ -51,9 +52,9 @@ export const useListerName = (listerId) => {
     };
 
     // Call the fetch function.
-    fetchListerName();
+    fetchListerInfo();
   }, [listerId]);
 
-  // Return the lister's name, loading status, and any error encountered.
-  return { listerName, isLoading, error };
+  // Return the lister's info, loading status, and any error encountered.
+  return { listerInfo, isLoading, error };
 };

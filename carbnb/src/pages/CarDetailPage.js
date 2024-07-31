@@ -14,9 +14,9 @@ import "../components/Styles/CarDetail.css";
 import { useFetchCar } from "../hooks/usegetcar";
 import { useUserContext } from "../hooks/useUserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faCheckCircle, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { useBooked } from "../hooks/useBooked";
-import { useListerName } from "../hooks/useListerName";
+import { useListerInfo } from "../hooks/useListerInfo";
 import { useUnbooked } from "../hooks/useUnbooked";
 import { useDeleteList } from "../hooks/usedeleteList";
 
@@ -34,10 +34,10 @@ const CarDetail = () => {
   const { Unbooked } = useUnbooked(); // Custom hook for unbooking a car
   const { deleteList } = useDeleteList(); // Custom hook for deleting a car listing
   const {
-    listerName,
+    listerInfo,
     isLoading: listerLoading,
     error: listerError,
-  } = useListerName(car?.listerid); // Fetch lister's name using custom hook
+  } = useListerInfo(car?.listerid); // Fetch lister's info using custom hook
 
   console.log(location);
 
@@ -197,8 +197,14 @@ const CarDetail = () => {
               <div className="info-item">
                 <FontAwesomeIcon icon={faUser} className="info-icon" />
                 <span>
-                  <strong>Listed by:</strong> {listerName.first}{" "}
-                  {listerName.last}
+                  <strong>Listed by:</strong> {listerInfo.first}{" "}
+                  {listerInfo.last}
+                </span>
+              </div>
+              <div className="info-item">
+                <FontAwesomeIcon icon={faEnvelope} className="info-icon" />
+                <span>
+                  <strong>Contact:</strong> {listerInfo.email? listerInfo.email : 'No email available'}
                 </span>
               </div>
               <div className="info-item">
