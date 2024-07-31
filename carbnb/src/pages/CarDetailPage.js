@@ -19,6 +19,7 @@ import { useBooked } from "../hooks/useBooked";
 import { useListerName } from "../hooks/useListerName";
 import { useUnbooked } from "../hooks/useUnbooked";
 import { useDeleteList } from "../hooks/usedeleteList";
+import { useLocation } from "react-router-dom";
 
 const CarDetail = () => {
   // Hooks and State Definitions
@@ -257,7 +258,7 @@ const CarDetail = () => {
             <Card.Text>
               <strong>Total:</strong> ${Math.round(car.dailyRate * 1.1)}
             </Card.Text>
-            {user && user.id !== car.listerid && user.id !== car.renterid && (
+            {!user && (
               <button
                 onClick={handleRentClick}
                 className="btn"
@@ -272,6 +273,20 @@ const CarDetail = () => {
               </button>
             )}
 
+            {user && user.id !== car.listerid && user.id !== car.renterid && (
+              <button
+                onClick={handleRentClick}
+                className="btn"
+                style={{
+                  backgroundColor: "#324b5f",
+                  color: "#ffffff",
+                  borderColor: "#001f3f",
+                  width: "100%",
+                }}
+              >
+                Book Now
+              </button>
+            )}
             {user && user.id === car.renterid && (
               <button
                 onClick={handleUnrentClick}
