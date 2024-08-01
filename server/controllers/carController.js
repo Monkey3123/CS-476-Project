@@ -1,5 +1,5 @@
 import { check, validationResult } from "express-validator";
-import Car from "../models/carModel.js";
+import { Car, CarModel } from "../models/carModel.js";
 import mongoose from "mongoose";
 import Factory from "./factory.js";
 const validateCar = [
@@ -111,14 +111,7 @@ const booked = async (req, res) => {
     return res.status(400).json({ message: "Error: Car ID not found" });
   }
   try {
-    const cars = await Car.findById(cid);
-
-    if (!cars) {
-      return res.status(404).json({ message: "Car not found" });
-    }
-    cars.booked = true;
-    cars.renterid = rid;
-    await Car.replaceOne({ _id: cid }, cars);
+    await CarModel.bookcar(cid, rid);
 
     res.status(200).json({ message: "Car sucessfully Booked" });
   } catch (err) {
