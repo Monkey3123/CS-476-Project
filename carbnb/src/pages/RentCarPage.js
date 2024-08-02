@@ -7,7 +7,7 @@
 import "../components/Styles/CarPage.css";
 import Card from "../components/Assets/Card";
 import { useFetchCars } from "../hooks/usegetallCar";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FaSortAmountDown, FaSortAmountUp } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 
@@ -16,7 +16,6 @@ const CarPage = () => {
   const queryParams = new URLSearchParams(location.search);
   const lat = queryParams.get("lat");
   const lng = queryParams.get("lng");
-  console.log(lat, lng);
   // Destructuring the result of useFetchCars hook
   const { cars, isLoading, error, setSortOrder } = useFetchCars(lat, lng); // Pass lat and lng to the hook
 

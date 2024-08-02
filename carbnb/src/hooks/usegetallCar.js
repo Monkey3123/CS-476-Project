@@ -1,18 +1,3 @@
-//
-//Custom React Hook: useFetchCars
-//
-//This custom hook manages the state and side effects for fetching and sorting car data.
-//It provides the following functionalities:
-// - Fetches car data from a given API endpoint on component mount.
-// - Handles loading state and error management.
-// - Allows sorting of cars based on their daily rate, either in ascending or descending order.
-//
-//Returns:
-// - `cars`: The list of fetched and sorted cars.
-// - `isLoading`: Boolean indicating if data is still being fetched.
-// - `error`: Any error message encountered during data fetching.
-// - `setSortOrder`: Function to set the sort order for the cars.
-//
 import { useState, useEffect } from "react";
 
 export const useFetchCars = (lat, lng) => {
@@ -53,7 +38,9 @@ export const useFetchCars = (lat, lng) => {
       }
     };
 
-    fetchCars(); // Fetch car data on component mount
+    if (lat && lng) {
+      fetchCars(); // Fetch car data when lat and lng are available
+    }
   }, [lat, lng]); // Include lat and lng as dependencies
 
   // Sorting cars whenever the cars array or sortOrder changes
@@ -68,7 +55,7 @@ export const useFetchCars = (lat, lng) => {
       });
       setCars(sortedCars); // Update the sorted cars list
     }
-  }, [cars, sortOrder]);
+  }, [sortOrder]); // Remove cars from dependencies to prevent unnecessary re-renders
 
   // Return state variables and setter function
   return { cars, isLoading, error, setSortOrder };

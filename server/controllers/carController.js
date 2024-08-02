@@ -66,17 +66,18 @@ const getallCarbylocation = async (req, res) => {
   try {
     // Find all cars that are not booked
     const latitude = req.body.lat;
-    const longitude = req.body.long;
+    const longitude = req.body.lng;
     const cars = await Car.aggregate([
       {
         $geoNear: {
           near: {
             type: "Point",
-            coordinates: [longitude, latitude],
+            coordinates: [parseFloat(longitude), parseFloat(latitude)],
           },
           key: "location",
-          maxDistance: 1609 * 1000, // 1 mile in meters
+          maxDistance: parseFloat(1000) * 1609, // 1 mile in meters
           distanceField: "dist.calculated",
+          // distanceField: "dist.calculated",
           // maxDistance: 1609 * 1000, // 1 mile in meters
           spherical: true,
         },

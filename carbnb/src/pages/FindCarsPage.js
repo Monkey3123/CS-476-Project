@@ -19,7 +19,6 @@ const FindCars = () => {
 
   const handleLocationSelect = (lat, lng) => {
     setLocation({ lat, lng });
-    console.log("Location for search", location);
   };
 
   // Function to navigate to the CarPage route when called
