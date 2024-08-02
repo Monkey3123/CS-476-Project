@@ -29,7 +29,7 @@ export const useFetchCars = () => {
 
       try {
         const response = await fetch(
-          "http://localhost:4000/api/carRoutes/getcar"
+          "http://localhost:4000/api/carRoutes/getcarbylocation"
         );
         const json = await response.json();
 

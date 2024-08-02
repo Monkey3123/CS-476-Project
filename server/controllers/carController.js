@@ -62,8 +62,7 @@ const listCar = async (req, res) => {
   }
 };
 
-// Handler to get all available cars
-const getallCar = async (req, res) => {
+const getallCarbylocation = async (req, res) => {
   try {
     // Find all cars that are not booked
     const latitude = req.body.lat;
@@ -85,6 +84,18 @@ const getallCar = async (req, res) => {
         $match: { booked: false }, // Filter out booked cars
       },
     ]);
+    res.status(200).json(cars);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Failed to fetch cars" });
+  }
+};
+
+// Handler to get all available cars
+const getallCar = async (req, res) => {
+  try {
+    // Find all cars that are not booked
+    const cars = await Car.find({ booked: false });
     res.status(200).json(cars);
   } catch (err) {
     console.error(err);
@@ -228,4 +239,5 @@ export {
   Unbooked,
   getBookedCars,
   deleteList,
+  getallCarbylocation,
 };
