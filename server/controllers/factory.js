@@ -25,6 +25,9 @@ class Factory {
       photo: data.body.photo,
       listerid: data.body.listerid,
       booked: data.body.booked,
+      location: {
+        coordinates: [req.body.long, req.body.lat],
+      },
     });
   }
 

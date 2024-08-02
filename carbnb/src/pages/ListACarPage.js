@@ -40,6 +40,10 @@ const ListACarPage = () => {
     toDate: new Date(),
     fromTime: "10:00",
     toTime: "10:00",
+    location: {
+      type: "Point",
+      coordinates: ["", ""], // Initialize coordinates
+    },
   });
   const [carPhoto, setCarPhoto] = useState(null); // State for car photo
   const [errors, setErrors] = useState({}); // State for form errors
@@ -106,10 +110,16 @@ const ListACarPage = () => {
 
   // Handle the selection of location on the map
   const handleLocationSelect = ({ lat, lng }) => {
+    console.log("Location which got selcted", lat, lng);
+
     setCarDetails((prevDetails) => ({
       ...prevDetails,
       lat: lat,
       long: lng,
+      location: {
+        type: "Point",
+        coordinates: [lng, lat],
+      },
     }));
     console.log("Location Selected:", lat, lng);
   };

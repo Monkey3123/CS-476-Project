@@ -114,8 +114,13 @@ const carSchema = new Schema({
   booked: {
     type: Boolean,
   },
+  location: {
+    type: { type: String, enum: ["Point"], default: "Point" },
+    coordinates: { type: [Number], required: true },
+  },
 });
 
+carSchema.index({ location: "2dsphere" });
 // Create a Mongoose model for the Car schema
 const Car = mongoose.model("Car", carSchema);
 
