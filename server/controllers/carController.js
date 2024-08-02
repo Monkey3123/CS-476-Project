@@ -77,6 +77,7 @@ const getallCarbylocation = async (req, res) => {
           key: "location",
           maxDistance: 1609 * 1000, // 1 mile in meters
           distanceField: "dist.calculated",
+          // maxDistance: 1609 * 1000, // 1 mile in meters
           spherical: true,
         },
       },

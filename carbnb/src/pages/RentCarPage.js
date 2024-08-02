@@ -7,17 +7,23 @@
 import "../components/Styles/CarPage.css";
 import Card from "../components/Assets/Card";
 import { useFetchCars } from "../hooks/usegetallCar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaSortAmountDown, FaSortAmountUp } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 
 const CarPage = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const lat = queryParams.get("lat");
+  const lng = queryParams.get("lng");
+
   // Destructuring the result of useFetchCars hook
-  const { cars, isLoading, error, setSortOrder } = useFetchCars();
+  const { cars, isLoading, error, setSortOrder } = useFetchCars(lat, lng); // Pass lat and lng to the hook
+
   // State to manage the sort option (ascending or descending)
   const [sortOption, setSortOption] = useState("asc");
 
-  //Handles the sort option change between ascending and descending
-
+  // Handles the sort option change between ascending and descending
   const handleSortChange = () => {
     // Toggle the sort order
     const newSortOrder = sortOption === "asc" ? "desc" : "asc";
