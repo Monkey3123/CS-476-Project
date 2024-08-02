@@ -43,39 +43,6 @@ const userSchema = new Schema({
   },
 });
 
-// Static method to handle user signup
-userSchema.statics.signup = async function (first, last, email, password) {
-  // Check if all required fields are provided
-  if (!first || !last || !email || !password) {
-    throw Error("All fields must be filled");
-  }
-
-  // Validate email format
-  if (!validator.isEmail(email)) {
-    throw Error("Email not valid");
-  }
-
-  // Check password strength
-  if (!validator.isStrongPassword(password)) {
-    throw Error("Password too weak");
-  }
-
-  // Check if email is already in use
-  const exists = await this.findOne({ email });
-  if (exists) {
-    throw Error("Email in use");
-  }
-
-  // Generate salt and hash the password
-  const salt = await bcrypt.genSalt(10);
-  const hash = await bcrypt.hash(password, salt);
-
-  // Create a new user and save to the database
-  const user = await this.create({ first, last, email, password: hash });
-
-  return user;
-};
-
 // Static method to handle user login
 userSchema.statics.login = async function (email, password) {
   // Check if all required fields are provided

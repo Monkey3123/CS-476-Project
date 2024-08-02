@@ -19,10 +19,11 @@
 //Each endpoint handles specific requests related to car listings and performs CRUD operations on the Car model.
 //
 import { check, validationResult } from "express-validator";
-import Car from "../models/carModel.js";
+import { Car, CarModel } from "../models/carModel.js";
 import mongoose from "mongoose";
 
 // Validation rules for car data
+import Factory from "./factory.js";
 const validateCar = [
   check("make").notEmpty().withMessage("Make is required"),
   check("model").notEmpty().withMessage("Model is required"),
@@ -53,31 +54,7 @@ const listCar = async (req, res) => {
   }
 
   try {
-    // Create a new car instance with request data
-    const carmodel = new Car({
-      make: req.body.make,
-      model: req.body.model,
-      year: req.body.year,
-      odometer: req.body.odometer,
-      transmission: req.body.transmission,
-      fuelType: req.body.fuelType,
-      seatingCapacity: req.body.seatingCapacity,
-      color: req.body.color,
-      description: req.body.description,
-      dailyRate: req.body.dailyRate,
-      lat: req.body.lat,
-      long: req.body.long,
-      fromDate: req.body.fromDate,
-      toDate: req.body.toDate,
-      fromTime: req.body.fromTime,
-      toTime: req.body.toTime,
-      photo: req.body.photo,
-      listerid: req.body.listerid,
-      booked: req.body.booked,
-    });
-
-    // Save the car to the database
-    await carmodel.save();
+    const carmodel = Factory.createObject("createCar", req);
     res.status(200).send({ message: "Car listed successfully" });
   } catch (err) {
     console.error(err);
@@ -167,16 +144,7 @@ const booked = async (req, res) => {
   }
 
   try {
-    const car = await Car.findById(cid);
-
-    if (!car) {
-      return res.status(404).json({ message: "Car not found" });
-    }
-
-    // Update car status to booked and assign renter ID
-    car.booked = true;
-    car.renterid = rid;
-    await Car.replaceOne({ _id: cid }, car);
+    await CarModel.bookcar(cid, rid);
 
     res.status(200).json({ message: "Car successfully booked" });
   } catch (err) {

@@ -12,8 +12,7 @@
 
 import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
-
-// Function to create a JSON Web Token with a 3-day expiration
+import Factory from "./factory.js";
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
 };
@@ -41,9 +40,7 @@ const signupUser = async (req, res) => {
   const { first, last, email, password } = req.body;
 
   try {
-    // Register new user using the User model's signup method
-    const user = await User.signup(first, last, email, password);
-    // Generate a token for the newly created user
+    const user = Factory.createObject("createUser", req);
     const token = createToken(user._id);
     const { _id: id } = user;
     // Respond with user details and token

@@ -10,8 +10,7 @@
 //
 //
 import mongoose from "mongoose";
-
-// Define a new schema for the Car model using mongoose.Schema
+import Email from "../controllers/mail.js";
 const Schema = mongoose.Schema;
 
 // Define the car schema with fields and their types
@@ -28,12 +27,12 @@ const carSchema = new Schema({
 
   // The year of manufacture of the car
   year: {
-    type: String,
+    type: Number,
   },
 
   // The car's odometer reading
   odometer: {
-    type: String,
+    type: Number,
   },
 
   // Type of transmission (e.g., automatic, manual)
@@ -48,7 +47,7 @@ const carSchema = new Schema({
 
   // Seating capacity of the car
   seatingCapacity: {
-    type: String,
+    type: Number,
   },
 
   // Color of the car
@@ -63,7 +62,7 @@ const carSchema = new Schema({
 
   // Daily rental rate for the car
   dailyRate: {
-    type: String,
+    type: Number,
   },
 
   // Latitude coordinate for the car's location
@@ -120,5 +119,36 @@ const carSchema = new Schema({
 // Create a Mongoose model for the Car schema
 const Car = mongoose.model("Car", carSchema);
 
-// Export the Car model to be used in other parts of the application
-export default Car;
+class CarModel {
+  static observers = [];
+
+  static addObserver(observer) {
+    this.observers.push(observer);
+  }
+
+  static removeObserver(observer) {
+    this.observers = this.observers.filter((o) => o !== observer);
+  }
+
+  static notifyObservers(data) {
+    this.observers.forEach((observer) => observer.update(data));
+  }
+
+  static async bookcar(cid, rid) {
+    const cars = await Car.findById(cid);
+
+    if (!cars) {
+      throw Error("Not Found");
+    }
+    cars.booked = true;
+    cars.renterid = rid;
+    await Car.replaceOne({ _id: cid }, cars);
+
+    this.notifyObservers({ cid, rid });
+  }
+}
+
+const email = new Email();
+CarModel.addObserver(email);
+
+export { Car, CarModel };
