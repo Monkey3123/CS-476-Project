@@ -23,6 +23,7 @@ import {
   getBookedCars,
   Unbooked,
   deleteList,
+  getallCarbylocation,
 } from "../controllers/carController.js";
 
 // Creating an instance of the Express Router
@@ -33,6 +34,8 @@ router.post("/list", validateCar, listCar);
 
 // Route to get all cars (GET request)
 router.get("/getCar", getallCar);
+
+router.get("/getCarbylocation", getallCarbylocation);
 
 // Route to get cars listed by the user (POST request)
 router.post("/getlisterCars", getlisterCars);

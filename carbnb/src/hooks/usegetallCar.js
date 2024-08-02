@@ -15,7 +15,7 @@
 //
 import { useState, useEffect } from "react";
 
-export const useFetchCars = () => {
+export const useFetchCars = (lat, lng) => {
   const [cars, setCars] = useState([]); // Stores the list of cars
   const [error, setError] = useState(null); // Stores any error message
   const [isLoading, setIsLoading] = useState(true); // Indicates if data is loading
@@ -29,7 +29,14 @@ export const useFetchCars = () => {
 
       try {
         const response = await fetch(
-          "http://localhost:4000/api/carRoutes/getcar"
+          "http://localhost:4000/api/carRoutes/getcarbylocation",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ lat, lng }), // Include lat and lng in the request body
+          }
         );
         const json = await response.json();
 
@@ -47,7 +54,7 @@ export const useFetchCars = () => {
     };
 
     fetchCars(); // Fetch car data on component mount
-  }, []);
+  }, [lat, lng]); // Include lat and lng as dependencies
 
   // Sorting cars whenever the cars array or sortOrder changes
   useEffect(() => {
