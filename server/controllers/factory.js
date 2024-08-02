@@ -26,7 +26,7 @@ class Factory {
       listerid: data.body.listerid,
       booked: data.body.booked,
       location: {
-        coordinates: [req.body.long, req.body.lat],
+        coordinates: [data.body.long, data.body.lat],
       },
     });
   }
