@@ -19,11 +19,12 @@ const FindCars = () => {
 
   const handleLocationSelect = (lat, lng) => {
     setLocation({ lat, lng });
+    console.log("Location for search", lng, lat);
   };
 
   // Function to navigate to the CarPage route when called
   const CarPage = () => {
-    navigate("/CarPage");
+    navigate(`/CarPage?lat=${location.lat}&lng=${location.lng}`);
   };
 
   // JSX to render the "Find Cars" page
