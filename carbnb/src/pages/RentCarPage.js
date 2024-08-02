@@ -16,7 +16,7 @@ const CarPage = () => {
   const queryParams = new URLSearchParams(location.search);
   const lat = queryParams.get("lat");
   const lng = queryParams.get("lng");
-
+  console.log(lat, lng);
   // Destructuring the result of useFetchCars hook
   const { cars, isLoading, error, setSortOrder } = useFetchCars(lat, lng); // Pass lat and lng to the hook
 

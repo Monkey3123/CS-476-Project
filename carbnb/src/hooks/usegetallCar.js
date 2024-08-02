@@ -29,7 +29,7 @@ export const useFetchCars = (lat, lng) => {
 
       try {
         const response = await fetch(
-          "http://localhost:4000/api/carRoutes/getcarbylocation",
+          "http://localhost:4000/api/carRoutes/getCarbylocation",
           {
             method: "POST",
             headers: {
