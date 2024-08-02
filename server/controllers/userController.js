@@ -40,9 +40,9 @@ const signupUser = async (req, res) => {
   const { first, last, email, password } = req.body;
 
   try {
-    const user = Factory.createObject("createUser", req);
+    const user = await Factory.createObject("createUser", req);
     const token = createToken(user._id);
-    const { _id: id } = user;
+    const id = user._id;
     // Respond with user details and token
     res.status(200).json({ id, first, last, email, token });
   } catch (error) {
