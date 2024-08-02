@@ -66,7 +66,25 @@ const listCar = async (req, res) => {
 const getallCar = async (req, res) => {
   try {
     // Find all cars that are not booked
-    const cars = await Car.find({ booked: false });
+    const latitude = req.body.lat;
+    const longitude = req.body.long;
+    const cars = await Car.aggregate([
+      {
+        $geoNear: {
+          near: {
+            type: "Point",
+            coordinates: [longitude, latitude],
+          },
+          key: "location",
+          maxDistance: 1609 * 1000, // 1 mile in meters
+          distanceField: "dist.calculated",
+          spherical: true,
+        },
+      },
+      {
+        $match: { booked: false }, // Filter out booked cars
+      },
+    ]);
     res.status(200).json(cars);
   } catch (err) {
     console.error(err);
