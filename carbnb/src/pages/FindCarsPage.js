@@ -48,7 +48,7 @@ const FindCars = () => {
         </div>
       ) : (
         <div className="find-cars-box">
-          <div className="d-flex justify-content-center">
+          <div className="map-style" >
             <Map onLocationSelect={handleLocationSelect} />
           </div>
           <div className="button-container">

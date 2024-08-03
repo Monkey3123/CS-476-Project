@@ -56,8 +56,6 @@
     margin-top: 2rem; 
 }
 
-
-
 .find-cars-button {
     background-color: #324b5f;
     color: white;
@@ -70,10 +68,20 @@
     margin-top: 1rem; 
 }
 
+.map-style {
+    width: 200%;
+}
+
 /* Responsive design adjustments */
 @media (max-width: 768px) {
     .find-cars-box {
         max-width: 100%;
         padding: 1rem;
     }
+    
+    .map-style {
+        width: 193%;
+        padding: 1rem;
+    }
+    
 }
