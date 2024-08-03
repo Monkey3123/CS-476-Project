@@ -26,7 +26,7 @@ const FindCars = () => {
         <div className="welcome-text">
           <h1>Find Your Perfect Car</h1>
           <p>
-            Use the map below to select your location. Once you've chosen a spot, click "Search" to view available cars near you.
+            Use the map to select your location. Once you've chosen a spot, you’ll see available cars near you.
           </p>
           <button className="btn fancy-button" onClick={() => setCurrentStep(1)}>
             Get Started
