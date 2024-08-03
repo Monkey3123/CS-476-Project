@@ -1,73 +1,51 @@
-// FindCars component:
-//
-// This component displays a form for finding cars
-// It includes date and time pickers and a map component. The user can
-// submit the form to navigate to the CarPage.
-
 import React, { useState } from "react";
-import Calender from "../components/Assets/Calender"; // Component for date selection
-import Clock from "../components/Assets/Clock"; // Component for time selection
 import Map from "../components/Assets/Map"; // Component to display a map
 import { useNavigate } from "react-router-dom"; // Hook for navigation
 import "../components/Styles/FindCars.css"; // Styles specific to this component
 
-// Functional component to handle the "Find Cars" page
 const FindCars = () => {
-  // Hook to programmatically navigate to different routes
   const navigate = useNavigate();
+  const [currentStep, setCurrentStep] = useState(0);
   const [location, setLocation] = useState({ lat: null, lng: null });
 
   const handleLocationSelect = (lat, lng) => {
     setLocation({ lat, lng });
   };
 
-  // Function to navigate to the CarPage route when called
-  const CarPage = () => {
-    navigate(`/CarPage?lat=${location.lat.lat}&lng=${location.lat.lng}`);
+  const handleSubmit = () => {
+    if (location.lat.lat && location.lat.lng) {
+      navigate(`/CarPage?lat=${location.lat.lat}&lng=${location.lat.lng}`);
+    } else {
+      alert("Please select a location on the map.");
+    }
   };
 
-  // JSX to render the "Find Cars" page
   return (
-    <div className="bground">
-      <div className="box">
-        <h1 className="display-1 text-primary text-center font-weight-bold">
-          FindCars
-        </h1>
-        <div className="d-flex justify-content-center">
-          {/* Map component to display a map */}
-          <Map onLocationSelect={handleLocationSelect} />
-        </div>
-        <div className="row">
-          <div className="col-4" />
-
-          <div className="col-sm-3">
-            <h3>From Date</h3>
-            {/* Calendar component for selecting the starting date */}
-            <Calender />
-            <h3>From Time</h3>
-            {/* Clock component for selecting the starting time */}
-            <Clock />
-          </div>
-
-          <div className="col">
-            <h3>To Date</h3>
-            {/* Calendar component for selecting the ending date */}
-            <Calender />
-            <h3>To Time</h3>
-            {/* Clock component for selecting the ending time */}
-            <Clock />
-          </div>
-        </div>
-        <div className="d-flex justify-content-center">
-          {/* Button to submit the form and navigate to CarPage */}
-          <button className="btn btn-primary" onClick={CarPage}>
-            Submit
+    <div className="find-cars-container">
+      {currentStep === 0 ? (
+        <div className="welcome-text">
+          <h1>Find Your Perfect Car</h1>
+          <p>
+            Use the map below to select your location. Once you've chosen a spot, click "Search" to view available cars near you.
+          </p>
+          <button className="btn fancy-button" onClick={() => setCurrentStep(1)}>
+            Get Started
           </button>
         </div>
-      </div>
+      ) : (
+        <div className="find-cars-box">
+          <div className="d-flex justify-content-center">
+            <Map onLocationSelect={handleLocationSelect} />
+          </div>
+          <div className="button-container">
+            <button className="find-cars-button" onClick={handleSubmit}>
+              Search
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-// Exporting the component for use in other parts of the application
 export default FindCars;
