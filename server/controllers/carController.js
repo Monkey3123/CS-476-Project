@@ -75,7 +75,7 @@ const getallCarbylocation = async (req, res) => {
             coordinates: [parseFloat(longitude), parseFloat(latitude)],
           },
           key: "location",
-          maxDistance: parseFloat(30) * 1609, // 1 mile in meters
+          maxDistance: parseFloat(10) * 1609, // 1 mile in meters
           distanceField: "dist.calculated",
           // distanceField: "dist.calculated",
           // maxDistance: 1609 * 1000, // 1 mile in meters
