@@ -13,22 +13,27 @@ const FindCars = () => {
   };
 
   const handleSubmit = () => {
-    if (location.lat.lat && location.lat.lng) {
-      navigate(`/CarPage?lat=${location.lat.lat}&lng=${location.lat.lng}`);
-    } else {
+    try {
+      const lat = location.lat.lat;
+      const lng = location.lat.lng;
+      navigate(`/CarPage?lat=${lat}&lng=${lng}`);
+    } catch (error) {
       alert("Please select a location on the map.");
     }
   };
-
   return (
     <div className="find-cars-container">
       {currentStep === 0 ? (
         <div className="welcome-text">
           <h1>Find Your Perfect Car</h1>
           <p>
-            Use the map to select your location. Once you've chosen a spot, you’ll see available cars near you.
+            Use the map to select your location. Once you've chosen a spot,
+            you’ll see available cars near you.
           </p>
-          <button className="btn fancy-button" onClick={() => setCurrentStep(1)}>
+          <button
+            className="btn fancy-button"
+            onClick={() => setCurrentStep(1)}
+          >
             Get Started
           </button>
         </div>
