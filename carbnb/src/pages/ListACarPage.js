@@ -150,8 +150,8 @@ const ListACarPage = () => {
       {currentStep === 0 ? (
         <div className="welcome-section">
           <div className="welcome-text">
-            <h1>Welcome to CaRnR</h1>
-            <p>List your car and start earning today!</p>
+            <h1>Ready to List Your Car?</h1>
+            <p>Share your vehicle with our community and start making money today!</p>
             <button className="btn fancy-button" onClick={handleNext}>
               Get Started
             </button>
